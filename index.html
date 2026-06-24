@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farrel Ariq Nadhil | Portofolio Frontend Engineer</title>
-    <!-- Tailwind CSS & FontAwesome Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -52,20 +51,16 @@
 </head>
 <body class="text-gray-200 font-sans relative antialiased">
 
-    <!-- CANVAS UNTUK EFEK GALAXY BERGERAK -->
     <canvas id="galaxyCanvas"></canvas>
 
-    <!-- NAVBAR RESPONSIF -->
     <nav class="sticky top-0 z-50 bg-galaxy-dark/70 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- LOGO FRONTEND DEV CUSTOM -->
                 <div class="flex-shrink-0 cursor-pointer hover:opacity-80 transition" onclick="window.scrollTo(0,0)">
                     <span class="text-xl font-bold font-mono tracking-tight">
-                        <span class="text-purple-500">&lt;</span><span class="text-white">FARREL</span><span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">.FRONTEND</span><span class="text-purple-500 ml-1">/&gt;</span>
+                        <span class="text-white">FARREL</span><span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">.FRONTEND</span>
                     </span>
                 </div>
-                <!-- Menu Desktop -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-6 font-medium">
                         <a href="#home" class="hover:text-blue-400 transition">Home</a>
@@ -75,7 +70,6 @@
                         <a href="#education" class="hover:text-blue-400 transition">Edukasi</a>
                     </div>
                 </div>
-                <!-- Tombol Menu HP -->
                 <div class="md:hidden">
                     <button id="menuBtn" class="text-gray-400 hover:text-white focus:outline-none">
                         <i class="fas fa-bars text-xl"></i>
@@ -83,7 +77,6 @@
                 </div>
             </div>
         </div>
-        <!-- Dropdown Menu HP -->
         <div id="mobileMenu" class="hidden md:hidden bg-galaxy-dark/95 border-b border-gray-800 px-4 pt-2 pb-4 space-y-2">
             <a href="#home" class="block py-2 hover:text-blue-400 transition">Home</a>
             <a href="#about" class="block py-2 hover:text-blue-400 transition">Tentang</a>
@@ -93,7 +86,6 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
     <section id="home" class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 relative">
         <div class="max-w-4xl mx-auto text-center z-10">
             <div class="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
@@ -107,7 +99,6 @@
                 Berpengalaman menerjemahkan kebutuhan sistem dan prototipe Figma menjadi aplikasi mobile (Kotlin/Jetpack Compose) serta platform web full-stack (Laravel) yang kokoh dan skalabel.
             </p>
             
-            <!-- Kontak & Sosmed Quick Link -->
             <div class="flex flex-wrap justify-center gap-4 text-sm mb-8">
                 <a href="mailto:farrelariq3@gmail.com" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10"><i class="fas fa-envelope text-blue-400"></i> farrelariq3@gmail.com</a>
                 <a href="tel:+6289520667843" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10"><i class="fas fa-phone text-blue-400"></i> +6289520667843</a>
@@ -124,7 +115,6 @@
         </div>
     </section>
 
-    <!-- SUMMARY / ABOUT SECTION -->
     <section id="about" class="py-20 max-w-5xl mx-auto px-4">
         <div class="bg-galaxy-card/40 backdrop-blur-md border border-gray-800 p-8 rounded-2xl">
             <h2 class="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-3">
@@ -150,7 +140,6 @@
         </div>
     </section>
 
-    <!-- SKILLS SECTION -->
     <section id="skills" class="py-20 max-w-5xl mx-auto px-4">
         <h2 class="text-2xl sm:text-3xl font-bold mb-10 text-center"><i class="fas fa-code-branch text-blue-400 mr-3"></i>Core Skills & Tech Stack</h2>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -194,12 +183,10 @@
         </div>
     </section>
 
-    <!-- EXPERIENCE SECTION -->
     <section id="experience" class="py-20 max-w-5xl mx-auto px-4">
         <h2 class="text-2xl sm:text-3xl font-bold mb-12 text-center"><i class="fas fa-briefcase text-purple-400 mr-3"></i>Pengalaman Proyek</h2>
         <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 sm:before:left-1/2 before:w-0.5 before:bg-gray-800">
             
-            <!-- Proyek 1: Homi -->
             <div class="relative flex flex-col sm:flex-row items-start sm:items-center group">
                 <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-purple-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark"></div>
                 <div class="w-full sm:w-1/2 sm:pr-8 pl-8 sm:pl-0 sm:text-right">
@@ -222,7 +209,6 @@
                 </div>
             </div>
 
-            <!-- Proyek 2: Lumina -->
             <div class="relative flex flex-col sm:flex-row items-start sm:items-center group">
                 <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-blue-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark"></div>
                 <div class="w-full sm:w-1/2 sm:order-2 sm:pl-8 pl-8 sm:text-left">
@@ -243,7 +229,6 @@
                 </div>
             </div>
 
-            <!-- Proyek 3: Agrifuture -->
             <div class="relative flex flex-col sm:flex-row items-start sm:items-center group">
                 <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-indigo-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark"></div>
                 <div class="w-full sm:w-1/2 sm:pr-8 pl-8 sm:pl-0 sm:text-right">
@@ -264,7 +249,6 @@
                 </div>
             </div>
 
-            <!-- Proyek 4: Clarity -->
             <div class="relative flex flex-col sm:flex-row items-start sm:items-center group">
                 <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-green-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark"></div>
                 <div class="w-full sm:w-1/2 sm:order-2 sm:pl-8 pl-8 sm:text-left">
@@ -288,9 +272,7 @@
         </div>
     </section>
 
-    <!-- EDUCATION & AWARDS -->
     <section id="education" class="py-20 max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-8">
-        <!-- Edukasi -->
         <div class="bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl">
             <h3 class="text-xl font-bold mb-4 text-white"><i class="fas fa-university text-blue-400 mr-2"></i> Pendidikan</h3>
             <div class="border-l-2 border-blue-500 pl-4">
@@ -301,7 +283,6 @@
             </div>
         </div>
 
-        <!-- Penghargaan & Sertifikasi -->
         <div class="bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl">
             <h3 class="text-xl font-bold mb-4 text-white"><i class="fas fa-award text-purple-400 mr-2"></i> Penghargaan & Sertifikat</h3>
             <ul class="space-y-4 text-sm text-gray-400">
@@ -323,13 +304,11 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="bg-galaxy-dark/90 py-8 border-t border-gray-800 text-center text-xs text-gray-500 relative z-10">
         <p>&copy; 2026 Farrel Ariq Nadhil. Semua Hak Dilindungi.</p>
         <p class="mt-1">Dibuat menggunakan HTML5 Canvas, Tailwind CSS & dihost melalui Vercel.</p>
     </footer>
 
-    <!-- INTERACTIVE JAVASCRIPT: NAVBAR RESPONSIVE & GALAXY EFFECT -->
     <script>
         // 1. Toggling Menu Navigasi di HP
         const menuBtn = document.getElementById('menuBtn');
@@ -344,12 +323,31 @@
             link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
 
-        // 2. Efek Animasi Galaxy Bergerak (HTML5 Canvas)
+        // 2. Efek Animasi Galaxy Bergerak Interaktif (HTML5 Canvas)
         const canvas = document.getElementById('galaxyCanvas');
         const ctx = canvas.getContext('2d');
 
         let stars = [];
         const numStars = 120; // Jumlah bintang malam
+        
+        // Objek kursor mouse untuk interaksi di komputer
+        const mouse = {
+            x: undefined,
+            y: undefined,
+            radius: 120 // Area radius interaksi mouse
+        }
+
+        // Listener pergerakan mouse
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        // Reset mouse ketika keluar dari layar browser
+        window.addEventListener('mouseout', function() {
+            mouse.x = undefined;
+            mouse.y = undefined;
+        });
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -364,10 +362,9 @@
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 radius: Math.random() * 1.5 + 0.5,
-                // Beri variasi warna galaxy cerah (biru, ungu, putih)
                 color: ['#ffffff', '#3B82F6', '#8B5CF6', '#A78BFA'][Math.floor(Math.random() * 4)],
-                speedX: (Math.random() - 0.5) * 0.2, // kecepatan gerak horizontal lembut
-                speedY: (Math.random() - 0.5) * 0.2, // kecepatan gerak vertikal lembut
+                speedX: (Math.random() - 0.5) * 0.2,
+                speedY: (Math.random() - 0.5) * 0.2,
                 opacity: Math.random(),
                 fadeSpeed: Math.random() * 0.01 + 0.005
             });
@@ -380,21 +377,40 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             stars.forEach(star => {
-                // Update posisi bintang
+                // Update posisi reguler bintang
                 star.x += star.speedX;
                 star.y += star.speedY;
 
-                // Memantul/muncul kembali jika keluar dari layar HP atau Laptop
+                // Memantul jika keluar dari layar
                 if (star.x < 0 || star.x > canvas.width) star.speedX = -star.speedX;
                 if (star.y < 0 || star.y > canvas.height) star.speedY = -star.speedY;
 
-                // Efek kelap-kelip galaxy interaktif
+                // Efek kelap-kelip
                 star.opacity += star.fadeSpeed;
                 if (star.opacity <= 0.1 || star.opacity >= 1) {
                     star.fadeSpeed = -star.fadeSpeed;
                 }
 
-                // Gambar bintang ke layar
+                // FITUR INTERAKTIF MOUSE: Constellation Effect
+                if (mouse.x !== undefined && mouse.y !== undefined) {
+                    let dx = mouse.x - star.x;
+                    let dy = mouse.y - star.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    // Jika kursor mendekati partikel bintang
+                    if (distance < mouse.radius) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = star.color;
+                        // Opasitas garis menguat jika mouse semakin dekat
+                        ctx.globalAlpha = 1 - (distance / mouse.radius);
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(star.x, star.y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.stroke();
+                    }
+                }
+
+                // Gambar bintangnya sendiri
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
                 ctx.fillStyle = star.color;
@@ -402,7 +418,7 @@
                 ctx.fill();
             });
 
-            ctx.globalAlpha = 1.0; // Reset alpha
+            ctx.globalAlpha = 1.0; // Reset alpha master
             requestAnimationFrame(animate);
         }
 
