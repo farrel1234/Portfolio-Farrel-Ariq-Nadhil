@@ -51,9 +51,10 @@
         }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Pengaturan agar embed Sonic tidak menghalangi klik web */
+        /* Pengaturan agar gambar Sonic transparan dan tidak menghalangi klik web */
         #sonic-chaser {
-            pointer-events: none;
+            pointer-events: none; /* Kursor akan tembus, tidak bisa diklik */
+            filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.4)); /* Efek bayangan biru tipis */
             will-change: transform, left, top;
         }
     </style>
@@ -66,12 +67,7 @@
         <source src="bg-music.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="sonic-chaser" class="fixed z-[100] w-20 hidden md:block" style="left: -100px; top: -100px;">
-        <div class="tenor-gif-embed" data-postid="4919805285878699535" data-share-method="host" data-aspect-ratio="0.608434" data-width="100%">
-            <a href="https://tenor.com/view/tiodipsy-animated-stickers-gif-4919805285878699535">Tiodipsy Animated Sticker</a> from <a href="https://tenor.com/search/tiodipsy-stickers">Tiodipsy Stickers</a>
-        </div> 
-        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-    </div>
+    <img id="sonic-chaser" src="https://media.tenor.com/8QeA4zB0vTEAAAAi/sonic-running.gif" alt="Running Sonic" class="fixed z-[100] w-12 h-12 hidden md:block" style="left: -100px; top: -100px;">
 
     <button id="musicToggle" class="fixed bottom-6 right-6 z-50 bg-galaxy-card/80 backdrop-blur-md border border-gray-600 p-3 rounded-full shadow-lg hover:bg-gray-800 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(124,58,237,0.4)] transition-all duration-300 focus:outline-none flex items-center justify-center w-12 h-12 group">
         <i id="musicIcon" class="fas fa-volume-mute text-gray-400 group-hover:text-white transition-colors"></i>
@@ -149,20 +145,20 @@
                 <i class="fas fa-user-astronaut text-purple-400"></i> Executive Summary
             </h2>
             <p class="text-gray-300 leading-relaxed mb-6 text-sm sm:text-base">
-                I possess a strong academic foundation in software development, ranging from UI/UX design to modern web and mobile production[cite: 5]. With proven success in Project-Based Learning (PBL) environments, I have led frontend and AI workflow integrations, successfully securing <strong class="text-white">1st Place at the PBL Expo 2024</strong> through an interactive data analytics platform[cite: 7].
+                I possess a strong academic foundation in software development, ranging from UI/UX design to modern web and mobile production. With proven success in Project-Based Learning (PBL) environments, I have led frontend and AI workflow integrations, successfully securing <strong class="text-white">1st Place at the PBL Expo 2024</strong> through an interactive data analytics platform.
             </p>
             <div class="grid sm:grid-cols-3 gap-6 pt-4 border-t border-gray-800 text-sm">
                 <div class="hover:-translate-y-1 transition-transform">
                     <h4 class="font-bold text-white mb-2"><i class="fas fa-magic text-blue-400 mr-2"></i>Design to Code</h4>
-                    <p class="text-gray-400">Capable of seamlessly translating complex workflows and Figma prototypes into responsive, modular code bases[cite: 10].</p>
+                    <p class="text-gray-400">Capable of seamlessly translating complex workflows and Figma prototypes into responsive, modular code bases.</p>
                 </div>
                 <div class="hover:-translate-y-1 transition-transform">
                     <h4 class="font-bold text-white mb-2"><i class="fas fa-layer-group text-purple-400 mr-2"></i>Full-Stack Capability</h4>
-                    <p class="text-gray-400">Architecting secure backend services (Laravel, REST APIs) paired flawlessly with efficient MySQL management[cite: 11].</p>
+                    <p class="text-gray-400">Architecting secure backend services (Laravel, REST APIs) paired flawlessly with efficient MySQL management.</p>
                 </div>
                 <div class="hover:-translate-y-1 transition-transform">
                     <h4 class="font-bold text-white mb-2"><i class="fas fa-users text-indigo-400 mr-2"></i>Agile Collaboration</h4>
-                    <p class="text-gray-400">Collaborating effectively within cross-functional teams to ensure tight API contracts and data synchronization[cite: 12].</p>
+                    <p class="text-gray-400">Collaborating effectively within cross-functional teams to ensure tight API contracts and data synchronization.</p>
                 </div>
             </div>
         </div>
@@ -175,11 +171,11 @@
             <div class="reveal opacity-0 translate-y-10 transition-all duration-700 delay-100 ease-out bg-galaxy-card/50 backdrop-blur-sm border border-gray-800 p-6 rounded-xl hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(124,58,237,0.15)] transition-all">
                 <h3 class="font-bold text-white mb-4 flex items-center gap-2"><i class="fas fa-laptop-code text-blue-400"></i> Domains</h3>
                 <ul class="text-gray-400 text-sm space-y-2">
-                    <li>• Mobile App Development [cite: 14]</li>
-                    <li>• Full-Stack Web Development [cite: 14]</li>
-                    <li>• RESTful API Integration [cite: 14]</li>
-                    <li>• UI/UX Design & System Analysis [cite: 14]</li>
-                    <li>• OCR & Object-Detection [cite: 14]</li>
+                    <li>• Mobile App Development</li>
+                    <li>• Full-Stack Web Development</li>
+                    <li>• RESTful API Integration</li>
+                    <li>• UI/UX Design & System Analysis</li>
+                    <li>• OCR & Object-Detection</li>
                 </ul>
             </div>
 
@@ -222,13 +218,13 @@
                     <h3 class="text-lg font-bold text-white mt-1">
                         <a href="https://besthomi.online/" target="_blank" class="hover:text-purple-400 transition underline decoration-purple-500/50 underline-offset-4">Homi</a> - Housing Management System
                     </h3>
-                    <p class="text-xs text-gray-400 mb-2">Team Member | Batam, Indonesia [cite: 19, 20]</p>
+                    <p class="text-xs text-gray-400 mb-2">Team Member | Batam, Indonesia</p>
                 </div>
                 <div class="w-full sm:w-1/2 pl-8 sm:pl-8 mt-2 sm:mt-0">
                     <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 hover:border-purple-500/50 hover:shadow-[0_0_20px_rgba(124,58,237,0.1)] transition-all duration-300 text-sm text-gray-400 space-y-3">
                         <div class="space-y-2">
-                            <p>• Developed a comprehensive housing management platform utilizing Laravel and MySQL to streamline resident services and administration[cite: 21, 22].</p>
-                            <p>• Engineered automated PDF document generation and integrated an OCR-based payment verification system, accelerating the validation process by up to 40%[cite: 24].</p>
+                            <p>• Developed a comprehensive housing management platform utilizing Laravel and MySQL to streamline resident services and administration.</p>
+                            <p>• Engineered automated PDF document generation and integrated an OCR-based payment verification system, accelerating the validation process by up to 40%.</p>
                         </div>
                         <a href="https://www.youtube.com/watch?v=Pw9TlcWuV5A" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold hover:scale-105 transition-all">
                             <i class="fab fa-youtube text-red-500"></i> Watch Demo
@@ -242,13 +238,13 @@
                 <div class="w-full sm:w-1/2 sm:order-2 sm:pl-8 pl-8 sm:text-left">
                     <span class="text-blue-400 text-xs font-bold tracking-wider">FEB 2024 - JUNE 2025</span>
                     <h3 class="text-lg font-bold text-white mt-1">Lumina AI Pothole Detection</h3>
-                    <p class="text-xs text-gray-400 mb-2">AI & Frontend Developer | Batam, Indonesia [cite: 25, 26]</p>
+                    <p class="text-xs text-gray-400 mb-2">AI & Frontend Developer | Batam, Indonesia</p>
                 </div>
                 <div class="w-full sm:w-1/2 sm:order-1 sm:pr-8 pl-8 sm:pl-0 mt-2 sm:mt-0">
                     <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(37,99,235,0.1)] transition-all duration-300 text-sm text-gray-400 space-y-3">
                         <div class="space-y-2">
-                            <p>• Built a responsive mobile-based crowdsourced road damage reporting system using Kotlin, Laravel, and MySQL[cite: 27].</p>
-                            <p>• Integrated YOLO-based image detection models directly into the mobile interface for highly accurate, real-time road damage identification[cite: 28].</p>
+                            <p>• Built a responsive mobile-based crowdsourced road damage reporting system using Kotlin, Laravel, and MySQL.</p>
+                            <p>• Integrated YOLO-based image detection models directly into the mobile interface for highly accurate, real-time road damage identification.</p>
                         </div>
                         <a href="https://www.youtube.com/watch?v=sBUe6fRDZ5w" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold hover:scale-105 transition-all">
                             <i class="fab fa-youtube text-red-500"></i> Watch Demo
@@ -262,13 +258,13 @@
                 <div class="w-full sm:w-1/2 sm:pr-8 pl-8 sm:pl-0 sm:text-right">
                     <span class="text-indigo-400 text-xs font-bold tracking-wider">SEP 2024 - JAN 2025</span>
                     <h3 class="text-lg font-bold text-white mt-1">AGRIFUTURE - Learning Platform</h3>
-                    <p class="text-xs text-gray-400 mb-2">Android Developer [cite: 30, 31]</p>
+                    <p class="text-xs text-gray-400 mb-2">Android Developer</p>
                 </div>
                 <div class="w-full sm:w-1/2 pl-8 sm:pl-8 mt-2 sm:mt-0">
                     <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 hover:border-indigo-500/50 hover:shadow-[0_0_20px_rgba(99,102,241,0.1)] transition-all duration-300 text-sm text-gray-400 space-y-3">
                         <div class="space-y-2">
-                            <p>• Implemented modular mobile application features utilizing Kotlin, Jetpack Compose, Retrofit, and REST API integrations[cite: 33].</p>
-                            <p>• Partnered closely with backend developers to align API contracts, ensuring seamless data synchronization and communication[cite: 34].</p>
+                            <p>• Implemented modular mobile application features utilizing Kotlin, Jetpack Compose, Retrofit, and REST API integrations.</p>
+                            <p>• Partnered closely with backend developers to align API contracts, ensuring seamless data synchronization and communication.</p>
                         </div>
                         <a href="https://www.youtube.com/watch?v=dm3yY5fFbBo" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold hover:scale-105 transition-all">
                             <i class="fab fa-youtube text-red-500"></i> Watch Demo
@@ -282,13 +278,13 @@
                 <div class="w-full sm:w-1/2 sm:order-2 sm:pl-8 pl-8 sm:text-left">
                     <span class="text-green-400 text-xs font-bold tracking-wider">FEB 2024 - JUL 2024</span>
                     <h3 class="text-lg font-bold text-white mt-1">Clarity - Data Visualization</h3>
-                    <p class="text-xs text-gray-400 mb-2">Full-Stack Web Developer <span class="text-yellow-400 ml-2 bg-yellow-500/10 px-2 py-0.5 rounded border border-yellow-500/20"><i class="fas fa-trophy"></i> 1st Place</span> [cite: 35, 36]</p>
+                    <p class="text-xs text-gray-400 mb-2">Full-Stack Web Developer <span class="text-yellow-400 ml-2 bg-yellow-500/10 px-2 py-0.5 rounded border border-yellow-500/20"><i class="fas fa-trophy"></i> 1st Place</span></p>
                 </div>
                 <div class="w-full sm:w-1/2 sm:order-1 sm:pr-8 pl-8 sm:pl-0 mt-2 sm:mt-0">
                     <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 hover:border-green-500/50 hover:shadow-[0_0_20px_rgba(34,197,94,0.1)] transition-all duration-300 text-sm text-gray-400 space-y-3">
                         <div class="space-y-2">
-                            <p>• Transformed complex International Office activity logs into highly interactive reporting dashboards using Laravel, Bootstrap, and D3.js[cite: 37, 38].</p>
-                            <p>• Collaborated effectively within a 6-member engineering team to successfully secure <strong class="text-white">1st Place at the PBL Expo 2024</strong>[cite: 39].</p>
+                            <p>• Transformed complex International Office activity logs into highly interactive reporting dashboards using Laravel, Bootstrap, and D3.js.</p>
+                            <p>• Collaborated effectively within a 6-member engineering team to successfully secure <strong class="text-white">1st Place at the PBL Expo 2024</strong>.</p>
                         </div>
                         <a href="https://www.youtube.com/watch?v=z_HbitSwZqs" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold hover:scale-105 transition-all">
                             <i class="fab fa-youtube text-red-500"></i> Watch Demo
@@ -305,9 +301,9 @@
             <h3 class="text-xl font-bold mb-4 text-white"><i class="fas fa-university text-blue-400 mr-2"></i> Education</h3>
             <div class="border-l-2 border-blue-500 pl-4">
                 <h4 class="font-bold text-white text-base">Batam State Polytechnic</h4>
-                <p class="text-sm text-gray-400">Bachelor of Applied Science in Software Engineering Technology [cite: 41, 42]</p>
-                <p class="text-xs text-blue-400 mt-1 font-semibold">GPA: 3.81 / 4.00 (2023 - Present) [cite: 42, 43]</p>
-                <p class="text-xs text-gray-500 mt-3 leading-relaxed">Key Focus Areas: Android Mobile Development, Web Engineering, Database Design, System Analysis, Software Project Management[cite: 44].</p>
+                <p class="text-sm text-gray-400">Bachelor of Applied Science in Software Engineering Technology</p>
+                <p class="text-xs text-blue-400 mt-1 font-semibold">GPA: 3.81 / 4.00 (2023 - Present)</p>
+                <p class="text-xs text-gray-500 mt-3 leading-relaxed">Key Focus Areas: Android Mobile Development, Web Engineering, Database Design, System Analysis, Software Project Management.</p>
             </div>
         </div>
 
@@ -318,14 +314,14 @@
                     <i class="fas fa-trophy text-yellow-500 mt-1"></i>
                     <div>
                         <strong class="text-white block">1st Place Winner - PBL Expo 2024</strong>
-                        Awarded for the development and integration of Clarity: Interactive Data Analytics System[cite: 46].
+                        Awarded for the development and integration of Clarity: Interactive Data Analytics System.
                     </div>
                 </li>
                 <li class="flex items-start gap-3">
                     <i class="fas fa-certificate text-purple-400 mt-1"></i>
                     <div>
                         <strong class="text-white block">MSIB Batch 7 Certified</strong>
-                        Android Mobile Development & UI/UX Design at Infinite Learning (2024)[cite: 47].
+                        Android Mobile Development & UI/UX Design at Infinite Learning (2024).
                     </div>
                 </li>
             </ul>
@@ -411,9 +407,9 @@
         
         const mouse = { x: undefined, y: undefined, radius: 120 };
         
-        // Posisi awal Sonic
-        let sonicX = window.innerWidth / 2;
-        let sonicY = window.innerHeight / 2;
+        // Posisi awal Sonic di luar layar
+        let sonicX = -100;
+        let sonicY = -100;
 
         window.addEventListener('mousemove', function(event) {
             mouse.x = event.clientX; 
@@ -485,11 +481,12 @@
 
             ctx.globalAlpha = 1.0;
 
-            // ---- LOGIC SONIC MENGEJAR MOUSE (Tenor Wrapper) ----
+            // ---- LOGIC SONIC MENGEJAR MOUSE ----
             if (mouse.x !== undefined && mouse.y !== undefined && sonic) {
                 let dxSonic = mouse.x - sonicX;
                 let dySonic = mouse.y - sonicY;
                 
+                // Kecepatan lari Sonic
                 let speed = 0.06; 
                 
                 sonicX += dxSonic * speed;
@@ -499,6 +496,7 @@
 
                 sonic.style.left = sonicX + 'px';
                 sonic.style.top = sonicY + 'px';
+                // Posisikan Sonic dengan offset agar kursor ada di tengah badannya
                 sonic.style.transform = `translate(-50%, -50%) scaleX(${scaleX})`;
             }
 
