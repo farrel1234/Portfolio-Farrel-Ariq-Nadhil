@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farrel Ariq Nadhil | Portofolio Frontend Engineer</title>
+    <title>Farrel Ariq Nadhil | Frontend Engineer Portfolio</title>
     <!-- Tailwind CSS & FontAwesome Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,21 +24,13 @@
         }
     </script>
     <style>
-        /* Sembunyikan scrollbar bawaan untuk tampilan lebih sleek */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0B0F19;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1F2937;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #374151;
-        }
-        /* Efek canvas background tetap di belakang */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0B0F19; }
+        ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #374151; }
+        
+        /* Galaxy Canvas Background */
         #galaxyCanvas {
             position: fixed;
             top: 0;
@@ -48,52 +40,55 @@
             z-index: -1;
             background-color: #05070F;
         }
-        /* Animasi putar untuk ikon musik saat nyala */
-        .spin-slow {
-            animation: spin 4s linear infinite;
+        
+        /* Slow spin for music icon */
+        .spin-slow { animation: spin 4s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Blinking Cursor for Typing Effect */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
         }
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
-<body class="text-gray-200 font-sans relative antialiased">
+<body class="text-gray-200 font-sans relative antialiased overflow-x-hidden">
 
-    <!-- CANVAS UNTUK EFEK GALAXY BERGERAK -->
+    <!-- CANVAS BACKGROUND -->
     <canvas id="galaxyCanvas"></canvas>
 
-    <!-- ELEMEN AUDIO BACKGROUND -->
-    <!-- Pastikan file bg-music.mp3 ada di folder yang sama -->
+    <!-- AUDIO BACKGROUND -->
     <audio id="bgMusic" loop preload="auto">
         <source src="bg-music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- TOMBOL MUSIK MELAYANG DI POJOK KANAN BAWAH -->
-    <button id="musicToggle" class="fixed bottom-6 right-6 z-50 bg-galaxy-card/80 backdrop-blur-md border border-gray-600 p-3 rounded-full shadow-lg shadow-purple-500/20 hover:bg-gray-800 hover:border-purple-400 transition-all duration-300 focus:outline-none flex items-center justify-center w-12 h-12 group">
+    <!-- FLOATING MUSIC BUTTON -->
+    <button id="musicToggle" class="fixed bottom-6 right-6 z-50 bg-galaxy-card/80 backdrop-blur-md border border-gray-600 p-3 rounded-full shadow-lg hover:bg-gray-800 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(124,58,237,0.4)] transition-all duration-300 focus:outline-none flex items-center justify-center w-12 h-12 group">
         <i id="musicIcon" class="fas fa-volume-mute text-gray-400 group-hover:text-white transition-colors"></i>
     </button>
 
-    <!-- NAVBAR RESPONSIF -->
+    <!-- NAVBAR -->
     <nav class="sticky top-0 z-50 bg-galaxy-dark/70 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- LOGO FRONTEND DEV CUSTOM (CLEAN) -->
+                <!-- LOGO -->
                 <div class="flex-shrink-0 cursor-pointer hover:opacity-80 transition" onclick="window.scrollTo(0,0)">
                     <span class="text-xl font-bold font-mono tracking-tight">
                         <span class="text-white">FARREL</span><span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">.FRONTEND</span>
                     </span>
                 </div>
-                <!-- Menu Desktop -->
+                <!-- Desktop Menu -->
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-6 font-medium">
+                    <div class="ml-10 flex items-baseline space-x-6 font-medium text-sm">
                         <a href="#home" class="hover:text-blue-400 transition">Home</a>
-                        <a href="#about" class="hover:text-blue-400 transition">Tentang</a>
-                        <a href="#skills" class="hover:text-blue-400 transition">Keahlian</a>
-                        <a href="#experience" class="hover:text-blue-400 transition">Pengalaman</a>
-                        <a href="#education" class="hover:text-blue-400 transition">Edukasi</a>
+                        <a href="#about" class="hover:text-blue-400 transition">About</a>
+                        <a href="#skills" class="hover:text-blue-400 transition">Skills</a>
+                        <a href="#experience" class="hover:text-blue-400 transition">Experience</a>
+                        <a href="#education" class="hover:text-blue-400 transition">Education</a>
                     </div>
                 </div>
-                <!-- Tombol Menu HP -->
+                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
                     <button id="menuBtn" class="text-gray-400 hover:text-white focus:outline-none">
                         <i class="fas fa-bars text-xl"></i>
@@ -101,68 +96,74 @@
                 </div>
             </div>
         </div>
-        <!-- Dropdown Menu HP -->
-        <div id="mobileMenu" class="hidden md:hidden bg-galaxy-dark/95 border-b border-gray-800 px-4 pt-2 pb-4 space-y-2">
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-galaxy-dark/95 border-b border-gray-800 px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
             <a href="#home" class="block py-2 hover:text-blue-400 transition">Home</a>
-            <a href="#about" class="block py-2 hover:text-blue-400 transition">Tentang</a>
-            <a href="#skills" class="block py-2 hover:text-blue-400 transition">Keahlian</a>
-            <a href="#experience" class="block py-2 hover:text-blue-400 transition">Pengalaman</a>
-            <a href="#education" class="block py-2 hover:text-blue-400 transition">Edukasi</a>
+            <a href="#about" class="block py-2 hover:text-blue-400 transition">About</a>
+            <a href="#skills" class="block py-2 hover:text-blue-400 transition">Skills</a>
+            <a href="#experience" class="block py-2 hover:text-blue-400 transition">Experience</a>
+            <a href="#education" class="block py-2 hover:text-blue-400 transition">Education</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
     <section id="home" class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 relative">
-        <div class="max-w-4xl mx-auto text-center z-10">
+        <div class="max-w-4xl mx-auto text-center z-10 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
             <div class="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
-                MSIB Batch 7 Alumni • Android Mobile Dev & UI/UX
+                MSIB Batch 7 Alumni • Android & UI/UX Design
             </div>
             <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-4">
                 Hi, I'm <span class="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">Farrel Ariq Nadhil</span>
             </h1>
-            <p class="text-xl sm:text-2xl font-medium text-gray-400 mb-6">Aspiring Software Engineering Professional</p>
+            
+            <!-- Typing Effect Subtitle -->
+            <p class="text-xl sm:text-2xl font-medium text-gray-400 mb-6 h-8">
+                <span id="typing-text" class="typing-cursor"></span>
+            </p>
+
             <p class="text-gray-400 max-w-2xl mx-auto mb-8 text-sm sm:text-base leading-relaxed">
-                Berpengalaman menerjemahkan kebutuhan sistem dan prototipe Figma menjadi aplikasi mobile (Kotlin/Jetpack Compose) serta platform web full-stack (Laravel) yang kokoh dan skalabel.
+                Experienced in translating complex system requirements and Figma prototypes into robust, scalable mobile applications (Kotlin/Jetpack Compose) and full-stack web platforms (Laravel).
             </p>
             
-            <!-- Kontak & Sosmed Quick Link -->
+            <!-- Quick Links -->
             <div class="flex flex-wrap justify-center gap-4 text-sm mb-8">
-                <a href="mailto:farrelariq3@gmail.com" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10"><i class="fas fa-envelope text-blue-400"></i> farrelariq3@gmail.com</a>
-                <a href="tel:+6289520667843" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10"><i class="fas fa-phone text-blue-400"></i> +6289520667843</a>
+                <a href="mailto:farrelariq3@gmail.com" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-blue-400"><i class="fas fa-envelope text-blue-400"></i> farrelariq3@gmail.com</a>
+                <a href="tel:+6289520667843" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-blue-400"><i class="fas fa-phone text-blue-400"></i> +6289520667843</a>
                 <span class="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10"><i class="fas fa-map-marker-alt text-blue-400"></i> Batam, Indonesia</span>
             </div>
 
+            <!-- Action Buttons -->
             <div class="flex justify-center gap-4">
-                <a href="#experience" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg shadow-lg shadow-blue-500/20 transition">Lihat Project</a>
+                <a href="#experience" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all hover:scale-105">View Projects</a>
                 <div class="flex items-center gap-3 ml-2">
-                    <a href="https://github.com" target="_blank" class="text-gray-400 hover:text-white text-2xl transition"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-blue-400 text-2xl transition"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com" target="_blank" class="text-gray-400 hover:text-white hover:scale-110 text-2xl transition-all"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-blue-400 hover:scale-110 text-2xl transition-all"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SUMMARY / ABOUT SECTION -->
-    <section id="about" class="py-20 max-w-5xl mx-auto px-4">
-        <div class="bg-galaxy-card/40 backdrop-blur-md border border-gray-800 p-8 rounded-2xl">
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-20 max-w-5xl mx-auto px-4 reveal opacity-0 translate-y-10 transition-all duration-700 delay-100 ease-out">
+        <div class="bg-galaxy-card/40 backdrop-blur-md border border-gray-800 p-8 rounded-2xl hover:border-gray-600 transition-colors duration-300">
             <h2 class="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-3">
-                <i class="fas fa-user-astronaut text-purple-400"></i> Summary Berkas
+                <i class="fas fa-user-astronaut text-purple-400"></i> Executive Summary
             </h2>
             <p class="text-gray-300 leading-relaxed mb-6 text-sm sm:text-base">
-                Memiliki fondasi akademis yang kuat dalam pengembangan perangkat lunak bergerak dari tahap desain UI/UX hingga produksi web dan mobile. Terbukti sukses dalam lingkungan Project-Based Learning (PBL), memimpin integrasi frontend & alur kerja AI, serta berhasil meraih Juara 1 di PBL Expo 2024 melalui platform analitik data yang interaktif.
+                I possess a strong academic foundation in software development, ranging from UI/UX design to modern web and mobile production. With proven success in Project-Based Learning (PBL) environments, I have led frontend and AI workflow integrations, successfully securing **1st Place at the PBL Expo 2024** through an interactive data analytics platform.
             </p>
             <div class="grid sm:grid-cols-3 gap-6 pt-4 border-t border-gray-800 text-sm">
-                <div>
+                <div class="hover:-translate-y-1 transition-transform">
                     <h4 class="font-bold text-white mb-2"><i class="fas fa-magic text-blue-400 mr-2"></i>Design to Code</h4>
-                    <p class="text-gray-400">Mampu mengubah alur kerja kompleks dan prototipe Figma menjadi kode modular yang responsif.</p>
+                    <p class="text-gray-400">Capable of seamlessly translating complex workflows and Figma prototypes into responsive, modular code bases.</p>
                 </div>
-                <div>
+                <div class="hover:-translate-y-1 transition-transform">
                     <h4 class="font-bold text-white mb-2"><i class="fas fa-layer-group text-purple-400 mr-2"></i>Full-Stack Capability</h4>
-                    <p class="text-gray-400">Merancang layanan backend aman (Laravel, REST APIs) berpasangan dengan MySQL.</p>
+                    <p class="text-gray-400">Architecting secure backend services (Laravel, REST APIs) paired flawlessly with efficient MySQL management.</p>
                 </div>
-                <div>
+                <div class="hover:-translate-y-1 transition-transform">
                     <h4 class="font-bold text-white mb-2"><i class="fas fa-users text-indigo-400 mr-2"></i>Agile Collaboration</h4>
-                    <p class="text-gray-400">Bekerja optimal dalam tim lintas fungsi untuk sinkronisasi data dan kontrak API.</p>
+                    <p class="text-gray-400">Collaborating effectively within cross-functional teams to ensure tight API contracts and data synchronization.</p>
                 </div>
             </div>
         </div>
@@ -170,42 +171,42 @@
 
     <!-- SKILLS SECTION -->
     <section id="skills" class="py-20 max-w-5xl mx-auto px-4">
-        <h2 class="text-2xl sm:text-3xl font-bold mb-10 text-center"><i class="fas fa-code-branch text-blue-400 mr-3"></i>Core Skills & Tech Stack</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold mb-10 text-center reveal opacity-0 translate-y-10 transition-all duration-700 ease-out"><i class="fas fa-code-branch text-blue-400 mr-3"></i>Core Skills & Tech Stack</h2>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <div class="bg-galaxy-card/50 backdrop-blur-sm border border-gray-800 p-6 rounded-xl">
+            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 delay-100 ease-out bg-galaxy-card/50 backdrop-blur-sm border border-gray-800 p-6 rounded-xl hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(124,58,237,0.15)] transition-all">
                 <h3 class="font-bold text-white mb-4 flex items-center gap-2"><i class="fas fa-laptop-code text-blue-400"></i> Domains</h3>
                 <ul class="text-gray-400 text-sm space-y-2">
                     <li>• Mobile App Development</li>
                     <li>• Full-Stack Web Development</li>
                     <li>• RESTful API Integration</li>
                     <li>• UI/UX Design & System Analysis</li>
-                    <li>• OCR & Object-Detection Integration</li>
+                    <li>• OCR & Object-Detection</li>
                 </ul>
             </div>
 
-            <div class="bg-galaxy-card/50 backdrop-blur-sm border border-gray-800 p-6 rounded-xl">
+            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 delay-200 ease-out bg-galaxy-card/50 backdrop-blur-sm border border-gray-800 p-6 rounded-xl hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(124,58,237,0.15)] transition-all">
                 <h3 class="font-bold text-white mb-4 flex items-center gap-2"><i class="fas fa-cubes text-purple-400"></i> Frameworks</h3>
                 <div class="flex flex-wrap gap-2">
-                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs">Laravel</span>
-                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs">Jetpack Compose</span>
-                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs">Tailwind CSS</span>
-                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs">Bootstrap</span>
-                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs">Retrofit</span>
-                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs">D3.js</span>
+                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs hover:bg-white/10 transition-colors">Laravel</span>
+                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs hover:bg-white/10 transition-colors">Jetpack Compose</span>
+                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs hover:bg-white/10 transition-colors">Tailwind CSS</span>
+                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs hover:bg-white/10 transition-colors">Bootstrap</span>
+                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs hover:bg-white/10 transition-colors">Retrofit</span>
+                    <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs hover:bg-white/10 transition-colors">D3.js</span>
                 </div>
             </div>
 
-            <div class="bg-galaxy-card/50 backdrop-blur-sm border border-gray-800 p-6 rounded-xl sm:col-span-2 lg:col-span-1">
+            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 delay-300 ease-out bg-galaxy-card/50 backdrop-blur-sm border border-gray-800 p-6 rounded-xl sm:col-span-2 lg:col-span-1 hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(124,58,237,0.15)] transition-all">
                 <h3 class="font-bold text-white mb-4 flex items-center gap-2"><i class="fas fa-language text-indigo-400"></i> Tools & Languages</h3>
                 <div class="flex flex-wrap gap-2">
                     <span class="bg-blue-500/10 border border-blue-500/30 text-blue-300 px-2 py-1 rounded text-xs">Kotlin (Proficient)</span>
-                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs">PHP</span>
-                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs">JavaScript</span>
-                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs">Python</span>
-                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs">MySQL</span>
-                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs">Figma</span>
-                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs">Git / Postman</span>
+                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs hover:bg-white/10 transition-colors">PHP</span>
+                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs hover:bg-white/10 transition-colors">JavaScript</span>
+                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs hover:bg-white/10 transition-colors">Python</span>
+                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs hover:bg-white/10 transition-colors">MySQL</span>
+                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs hover:bg-white/10 transition-colors">Figma</span>
+                    <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-xs hover:bg-white/10 transition-colors">Git / Postman</span>
                 </div>
             </div>
 
@@ -214,90 +215,90 @@
 
     <!-- EXPERIENCE SECTION -->
     <section id="experience" class="py-20 max-w-5xl mx-auto px-4">
-        <h2 class="text-2xl sm:text-3xl font-bold mb-12 text-center"><i class="fas fa-briefcase text-purple-400 mr-3"></i>Pengalaman Proyek</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold mb-12 text-center reveal opacity-0 translate-y-10 transition-all duration-700 ease-out"><i class="fas fa-briefcase text-purple-400 mr-3"></i>Project Experience</h2>
         <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 sm:before:left-1/2 before:w-0.5 before:bg-gray-800">
             
-            <!-- Proyek 1: Homi -->
-            <div class="relative flex flex-col sm:flex-row items-start sm:items-center group">
-                <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-purple-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark"></div>
+            <!-- Project 1: Homi -->
+            <div class="relative flex flex-col sm:flex-row items-start sm:items-center group reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
+                <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-purple-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark group-hover:scale-125 transition-transform"></div>
                 <div class="w-full sm:w-1/2 sm:pr-8 pl-8 sm:pl-0 sm:text-right">
-                    <span class="text-purple-400 text-xs font-bold">Aug 2025 - Present</span>
+                    <span class="text-purple-400 text-xs font-bold tracking-wider">AUG 2025 - PRESENT</span>
                     <h3 class="text-lg font-bold text-white mt-1">
                         <a href="https://besthomi.online/" target="_blank" class="hover:text-purple-400 transition underline decoration-purple-500/50 underline-offset-4">Homi</a> - Housing Management System
                     </h3>
                     <p class="text-xs text-gray-400 mb-2">Team Member | Batam, Indonesia</p>
                 </div>
                 <div class="w-full sm:w-1/2 pl-8 sm:pl-8 mt-2 sm:mt-0">
-                    <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 text-sm text-gray-400 space-y-3">
+                    <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 hover:border-purple-500/50 hover:shadow-[0_0_20px_rgba(124,58,237,0.1)] transition-all duration-300 text-sm text-gray-400 space-y-3">
                         <div class="space-y-2">
-                            <p>• Mengembangkan platform manajemen perumahan komprehensif menggunakan Laravel dan MySQL untuk layanan warga.</p>
-                            <p>• Mengintegrasikan fitur dokumen PDF otomatis dan sistem verifikasi pembayaran berbasis OCR untuk mempercepat validasi hingga 40%.</p>
+                            <p>• Developed a comprehensive housing management platform utilizing Laravel and MySQL to streamline resident services and administration.</p>
+                            <p>• Engineered automated PDF document generation and integrated an OCR-based payment verification system, accelerating the validation process by up to 40%.</p>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=Pw9TlcWuV5A" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold transition">
-                            <i class="fab fa-youtube text-red-500"></i> Lihat Demo
+                        <a href="https://www.youtube.com/watch?v=Pw9TlcWuV5A" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold hover:scale-105 transition-all">
+                            <i class="fab fa-youtube text-red-500"></i> Watch Demo
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Proyek 2: Lumina -->
-            <div class="relative flex flex-col sm:flex-row items-start sm:items-center group">
-                <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-blue-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark"></div>
+            <!-- Project 2: Lumina -->
+            <div class="relative flex flex-col sm:flex-row items-start sm:items-center group reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
+                <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-blue-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark group-hover:scale-125 transition-transform"></div>
                 <div class="w-full sm:w-1/2 sm:order-2 sm:pl-8 pl-8 sm:text-left">
-                    <span class="text-blue-400 text-xs font-bold">Feb 2024 - June 2025</span>
+                    <span class="text-blue-400 text-xs font-bold tracking-wider">FEB 2024 - JUNE 2025</span>
                     <h3 class="text-lg font-bold text-white mt-1">Lumina AI Pothole Detection</h3>
-                    <p class="text-xs text-gray-400 mb-2">AI & Frontend Developer | Batam</p>
+                    <p class="text-xs text-gray-400 mb-2">AI & Frontend Developer | Batam, Indonesia</p>
                 </div>
                 <div class="w-full sm:w-1/2 sm:order-1 sm:pr-8 pl-8 sm:pl-0 mt-2 sm:mt-0">
-                    <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 text-sm text-gray-400 space-y-3">
+                    <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(37,99,235,0.1)] transition-all duration-300 text-sm text-gray-400 space-y-3">
                         <div class="space-y-2">
-                            <p>• Membangun sistem pelaporan lubang jalan berbasis mobile responsif menggunakan Kotlin, Laravel, dan MySQL.</p>
-                            <p>• Mengintegrasikan model deteksi gambar YOLO langsung ke interface mobile untuk identifikasi kerusakan jalan secara real-time.</p>
+                            <p>• Built a responsive mobile-based crowdsourced road damage reporting system using Kotlin, Laravel, and MySQL.</p>
+                            <p>• Integrated YOLO-based image detection models directly into the mobile interface for highly accurate, real-time road damage identification.</p>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=sBUe6fRDZ5w" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold transition">
-                            <i class="fab fa-youtube text-red-500"></i> Lihat Demo
+                        <a href="https://www.youtube.com/watch?v=sBUe6fRDZ5w" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold hover:scale-105 transition-all">
+                            <i class="fab fa-youtube text-red-500"></i> Watch Demo
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Proyek 3: Agrifuture -->
-            <div class="relative flex flex-col sm:flex-row items-start sm:items-center group">
-                <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-indigo-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark"></div>
+            <!-- Project 3: Agrifuture -->
+            <div class="relative flex flex-col sm:flex-row items-start sm:items-center group reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
+                <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-indigo-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark group-hover:scale-125 transition-transform"></div>
                 <div class="w-full sm:w-1/2 sm:pr-8 pl-8 sm:pl-0 sm:text-right">
-                    <span class="text-indigo-400 text-xs font-bold">Sep 2024 - Jan 2025</span>
+                    <span class="text-indigo-400 text-xs font-bold tracking-wider">SEP 2024 - JAN 2025</span>
                     <h3 class="text-lg font-bold text-white mt-1">AGRIFUTURE - Learning Platform</h3>
                     <p class="text-xs text-gray-400 mb-2">Android Developer</p>
                 </div>
                 <div class="w-full sm:w-1/2 pl-8 sm:pl-8 mt-2 sm:mt-0">
-                    <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 text-sm text-gray-400 space-y-3">
+                    <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 hover:border-indigo-500/50 hover:shadow-[0_0_20px_rgba(99,102,241,0.1)] transition-all duration-300 text-sm text-gray-400 space-y-3">
                         <div class="space-y-2">
-                            <p>• Mengimplementasikan fitur mobile modular memakai Jetpack Compose, Retrofit, dan integrasi REST API.</p>
-                            <p>• Menyelaraskan kontrak API bersama backend developer demi kelancaran sinkronisasi data layanan web dan aplikasi mobile.</p>
+                            <p>• Implemented modular mobile application features utilizing Kotlin, Jetpack Compose, Retrofit, and REST API integrations.</p>
+                            <p>• Partnered closely with backend developers to align API contracts, ensuring seamless data synchronization and communication.</p>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=dm3yY5fFbBo" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold transition">
-                            <i class="fab fa-youtube text-red-500"></i> Lihat Demo
+                        <a href="https://www.youtube.com/watch?v=dm3yY5fFbBo" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold hover:scale-105 transition-all">
+                            <i class="fab fa-youtube text-red-500"></i> Watch Demo
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Proyek 4: Clarity -->
-            <div class="relative flex flex-col sm:flex-row items-start sm:items-center group">
-                <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-green-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark"></div>
+            <!-- Project 4: Clarity -->
+            <div class="relative flex flex-col sm:flex-row items-start sm:items-center group reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
+                <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-green-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark group-hover:scale-125 transition-transform"></div>
                 <div class="w-full sm:w-1/2 sm:order-2 sm:pl-8 pl-8 sm:text-left">
-                    <span class="text-green-400 text-xs font-bold">Feb 2024 - Jul 2024</span>
+                    <span class="text-green-400 text-xs font-bold tracking-wider">FEB 2024 - JUL 2024</span>
                     <h3 class="text-lg font-bold text-white mt-1">Clarity - Data Visualization</h3>
-                    <p class="text-xs text-gray-400 mb-2">Full-Stack Web Developer <span class="text-yellow-400 ml-1"><i class="fas fa-trophy"></i> 1st Place</span></p>
+                    <p class="text-xs text-gray-400 mb-2">Full-Stack Web Developer <span class="text-yellow-400 ml-2 bg-yellow-500/10 px-2 py-0.5 rounded border border-yellow-500/20"><i class="fas fa-trophy"></i> 1st Place</span></p>
                 </div>
                 <div class="w-full sm:w-1/2 sm:order-1 sm:pr-8 pl-8 sm:pl-0 mt-2 sm:mt-0">
-                    <div class="bg-galaxy-card/40 p-5 rounded-xl border border-blue-900/50 text-sm text-gray-400 space-y-3">
+                    <div class="bg-galaxy-card/40 p-5 rounded-xl border border-gray-800 hover:border-green-500/50 hover:shadow-[0_0_20px_rgba(34,197,94,0.1)] transition-all duration-300 text-sm text-gray-400 space-y-3">
                         <div class="space-y-2">
-                            <p>• Mengubah log aktivitas International Office yang kompleks menjadi dasbor interaktif menggunakan Laravel, Bootstrap, dan D3.js.</p>
-                            <p>• Berkolaborasi dalam tim beranggotakan 6 orang dan sukses mengamankan peringkat Juara 1 pada PBL Expo 2024.</p>
+                            <p>• Transformed complex International Office activity logs into highly interactive reporting dashboards using Laravel, Bootstrap, and D3.js.</p>
+                            <p>• Collaborated effectively within a 6-member engineering team to successfully secure **1st Place at the PBL Expo 2024**.</p>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=z_HbitSwZqs" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold transition">
-                            <i class="fab fa-youtube text-red-500"></i> Lihat Demo
+                        <a href="https://www.youtube.com/watch?v=z_HbitSwZqs" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-md text-xs font-semibold hover:scale-105 transition-all">
+                            <i class="fab fa-youtube text-red-500"></i> Watch Demo
                         </a>
                     </div>
                 </div>
@@ -308,33 +309,33 @@
 
     <!-- EDUCATION & AWARDS -->
     <section id="education" class="py-20 max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-8">
-        <!-- Edukasi -->
-        <div class="bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl">
-            <h3 class="text-xl font-bold mb-4 text-white"><i class="fas fa-university text-blue-400 mr-2"></i> Pendidikan</h3>
+        <!-- Education -->
+        <div class="reveal opacity-0 translate-y-10 transition-all duration-700 delay-100 ease-out bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:border-blue-500/30 transition-colors">
+            <h3 class="text-xl font-bold mb-4 text-white"><i class="fas fa-university text-blue-400 mr-2"></i> Education</h3>
             <div class="border-l-2 border-blue-500 pl-4">
-                <h4 class="font-bold text-white text-base">Politeknik Negeri Batam</h4>
-                <p class="text-sm text-gray-400">Sarjana Terapan Teknologi Rekayasa Perangkat Lunak</p>
-                <p class="text-xs text-blue-400 mt-1 font-semibold">IPK: 3.81 / 4.00 (2023 - Sekarang)</p>
-                <p class="text-xs text-gray-500 mt-2">Fokus Utama: Android Mobile Development, Web Engineering, Database Design, System Analysis.</p>
+                <h4 class="font-bold text-white text-base">Batam State Polytechnic</h4>
+                <p class="text-sm text-gray-400">Bachelor of Applied Science in Software Engineering Technology</p>
+                <p class="text-xs text-blue-400 mt-1 font-semibold">GPA: 3.81 / 4.00 (2023 - Present)</p>
+                <p class="text-xs text-gray-500 mt-3 leading-relaxed">Key Focus Areas: Android Mobile Development, Web Engineering, Database Design, System Analysis, Software Project Management.</p>
             </div>
         </div>
 
-        <!-- Penghargaan & Sertifikasi -->
-        <div class="bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl">
-            <h3 class="text-xl font-bold mb-4 text-white"><i class="fas fa-award text-purple-400 mr-2"></i> Penghargaan & Sertifikat</h3>
-            <ul class="space-y-4 text-sm text-gray-400">
+        <!-- Awards & Certifications -->
+        <div class="reveal opacity-0 translate-y-10 transition-all duration-700 delay-200 ease-out bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:border-purple-500/30 transition-colors">
+            <h3 class="text-xl font-bold mb-4 text-white"><i class="fas fa-award text-purple-400 mr-2"></i> Awards & Certifications</h3>
+            <ul class="space-y-5 text-sm text-gray-400">
                 <li class="flex items-start gap-3">
                     <i class="fas fa-trophy text-yellow-500 mt-1"></i>
                     <div>
-                        <strong class="text-white block">Juara 1 - PBL Expo 2024</strong>
-                        Diberikan untuk kontribusi pengembangan Clarity: Interactive Data Analytics System.
+                        <strong class="text-white block">1st Place Winner - PBL Expo 2024</strong>
+                        Awarded for the development and integration of Clarity: Interactive Data Analytics System.
                     </div>
                 </li>
                 <li class="flex items-start gap-3">
                     <i class="fas fa-certificate text-purple-400 mt-1"></i>
                     <div>
                         <strong class="text-white block">MSIB Batch 7 Certified</strong>
-                        Android Mobile Development & UI/UX Design di Infinite Learning (2024).
+                        Android Mobile Development & UI/UX Design at Infinite Learning (2024).
                     </div>
                 </li>
             </ul>
@@ -343,13 +344,13 @@
 
     <!-- FOOTER -->
     <footer class="bg-galaxy-dark/90 py-8 border-t border-gray-800 text-center text-xs text-gray-500 relative z-10">
-        <p>&copy; 2026 Farrel Ariq Nadhil. Semua Hak Dilindungi.</p>
-        <p class="mt-1">Dibuat menggunakan HTML5 Canvas, Tailwind CSS & dihost melalui Vercel.</p>
+        <p>&copy; 2026 Farrel Ariq Nadhil. All Rights Reserved.</p>
+        <p class="mt-1">Built with HTML5 Canvas, Tailwind CSS & hosted on Vercel.</p>
     </footer>
 
-    <!-- INTERACTIVE JAVASCRIPT: NAVBAR RESPONSIVE, GALAXY EFFECT & AUDIO -->
+    <!-- INTERACTIVE JAVASCRIPT -->
     <script>
-        // 1. Toggling Menu Navigasi di HP
+        // 1. Mobile Menu Toggle
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         
@@ -357,12 +358,43 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Sembunyikan menu otomatis ketika salah satu link diklik
         document.querySelectorAll('#mobileMenu a').forEach(link => {
             link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
 
-        // 2. Audio Toggle Logic
+        // 2. Typing Effect for Subtitle
+        const textToType = "Aspiring Software Engineering Professional";
+        const typingElement = document.getElementById('typing-text');
+        let typeIndex = 0;
+
+        function typeWriter() {
+            if (typeIndex < textToType.length) {
+                typingElement.innerHTML += textToType.charAt(typeIndex);
+                typeIndex++;
+                setTimeout(typeWriter, 50); // Kecepatan ngetik
+            } else {
+                // Hapus kursor kedip setelah selesai
+                typingElement.classList.remove('typing-cursor');
+            }
+        }
+        // Mulai ngetik setelah jeda 500ms
+        setTimeout(typeWriter, 500);
+
+        // 3. Scroll Reveal Animation Observer
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    revealObserver.unobserve(entry.target); // Hanya animasi 1x saat di-scroll
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // 4. Audio Toggle Logic
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         const musicIcon = document.getElementById('musicIcon');
@@ -371,13 +403,11 @@
         musicToggle.addEventListener('click', () => {
             if (isPlaying) {
                 bgMusic.pause();
-                // Ubah ke ikon mute
                 musicIcon.classList.remove('fa-compact-disc', 'text-purple-400', 'spin-slow');
                 musicIcon.classList.add('fa-volume-mute', 'text-gray-400');
                 musicToggle.classList.remove('border-purple-500');
             } else {
                 bgMusic.play();
-                // Ubah ke ikon disc muter
                 musicIcon.classList.remove('fa-volume-mute', 'text-gray-400');
                 musicIcon.classList.add('fa-compact-disc', 'text-purple-400', 'spin-slow');
                 musicToggle.classList.add('border-purple-500');
@@ -385,27 +415,20 @@
             isPlaying = !isPlaying;
         });
 
-        // 3. Efek Animasi Galaxy Bergerak Interaktif (HTML5 Canvas)
+        // 5. Galaxy Canvas Animation
         const canvas = document.getElementById('galaxyCanvas');
         const ctx = canvas.getContext('2d');
-
         let stars = [];
         const numStars = 120;
         
-        const mouse = {
-            x: undefined,
-            y: undefined,
-            radius: 120
-        }
+        const mouse = { x: undefined, y: undefined, radius: 120 }
 
         window.addEventListener('mousemove', function(event) {
-            mouse.x = event.x;
-            mouse.y = event.y;
+            mouse.x = event.x; mouse.y = event.y;
         });
 
         window.addEventListener('mouseout', function() {
-            mouse.x = undefined;
-            mouse.y = undefined;
+            mouse.x = undefined; mouse.y = undefined;
         });
 
         function resizeCanvas() {
@@ -433,8 +456,7 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             stars.forEach(star => {
-                star.x += star.speedX;
-                star.y += star.speedY;
+                star.x += star.speedX; star.y += star.speedY;
 
                 if (star.x < 0 || star.x > canvas.width) star.speedX = -star.speedX;
                 if (star.y < 0 || star.y > canvas.height) star.speedY = -star.speedY;
