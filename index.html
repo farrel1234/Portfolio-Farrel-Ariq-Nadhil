@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farrel Ariq Nadhil | Frontend Engineer Portfolio</title>
+    <!-- Tailwind CSS & FontAwesome Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -50,37 +51,34 @@
             animation: blink 1s step-end infinite;
         }
         @keyframes blink { 50% { opacity: 0; } }
-
-        /* Pengaturan agar gambar Sonic transparan dan tidak menghalangi klik web */
-        #sonic-chaser {
-            pointer-events: none; /* Kursor akan tembus, tidak bisa diklik */
-            filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.4)); /* Efek bayangan biru tipis */
-            will-change: transform, left, top;
-        }
     </style>
 </head>
 <body class="text-gray-200 font-sans relative antialiased overflow-x-hidden">
 
+    <!-- CANVAS BACKGROUND -->
     <canvas id="galaxyCanvas"></canvas>
 
+    <!-- AUDIO BACKGROUND -->
     <audio id="bgMusic" loop preload="auto">
         <source src="bg-music.mp3" type="audio/mpeg">
     </audio>
 
-    <img id="sonic-chaser" src="https://media.tenor.com/8QeA4zB0vTEAAAAi/sonic-running.gif" alt="Running Sonic" class="fixed z-[100] w-12 h-12 hidden md:block" style="left: -100px; top: -100px;">
-
+    <!-- FLOATING MUSIC BUTTON -->
     <button id="musicToggle" class="fixed bottom-6 right-6 z-50 bg-galaxy-card/80 backdrop-blur-md border border-gray-600 p-3 rounded-full shadow-lg hover:bg-gray-800 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(124,58,237,0.4)] transition-all duration-300 focus:outline-none flex items-center justify-center w-12 h-12 group">
         <i id="musicIcon" class="fas fa-volume-mute text-gray-400 group-hover:text-white transition-colors"></i>
     </button>
 
+    <!-- NAVBAR -->
     <nav class="sticky top-0 z-50 bg-galaxy-dark/70 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
+                <!-- LOGO -->
                 <div class="flex-shrink-0 cursor-pointer hover:opacity-80 transition" onclick="window.scrollTo(0,0)">
                     <span class="text-xl font-bold font-mono tracking-tight">
                         <span class="text-white">FARREL</span><span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">.FRONTEND</span>
                     </span>
                 </div>
+                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-6 font-medium text-sm">
                         <a href="#home" class="hover:text-blue-400 transition">Home</a>
@@ -90,6 +88,7 @@
                         <a href="#education" class="hover:text-blue-400 transition">Education</a>
                     </div>
                 </div>
+                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
                     <button id="menuBtn" class="text-gray-400 hover:text-white focus:outline-none">
                         <i class="fas fa-bars text-xl"></i>
@@ -97,6 +96,7 @@
                 </div>
             </div>
         </div>
+        <!-- Mobile Menu Dropdown -->
         <div id="mobileMenu" class="hidden md:hidden bg-galaxy-dark/95 border-b border-gray-800 px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
             <a href="#home" class="block py-2 hover:text-blue-400 transition">Home</a>
             <a href="#about" class="block py-2 hover:text-blue-400 transition">About</a>
@@ -106,6 +106,7 @@
         </div>
     </nav>
 
+    <!-- HERO SECTION -->
     <section id="home" class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 relative">
         <div class="max-w-4xl mx-auto text-center z-10 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
             <div class="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
@@ -115,6 +116,7 @@
                 Hi, I'm <span class="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">Farrel Ariq Nadhil</span>
             </h1>
             
+            <!-- Typing Effect Subtitle -->
             <p class="text-xl sm:text-2xl font-medium text-gray-400 mb-6 h-8">
                 <span id="typing-text" class="typing-cursor"></span>
             </p>
@@ -123,12 +125,14 @@
                 Experienced in translating complex system requirements and Figma prototypes into robust, scalable mobile applications (Kotlin/Jetpack Compose) and full-stack web platforms (Laravel).
             </p>
             
+            <!-- Quick Links -->
             <div class="flex flex-wrap justify-center gap-4 text-sm mb-8">
-                <a href="mailto:farrelariq3@gmail.com" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-blue-400"><i class="fas fa-envelope text-blue-400"></i> farrelariq3@gmail.com</a>
+                <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=farrelariq3@gmail.com" target="_blank" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-blue-400"><i class="fas fa-envelope text-blue-400"></i> farrelariq3@gmail.com</a>
                 <a href="tel:+6289520667843" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-blue-400"><i class="fas fa-phone text-blue-400"></i> +6289520667843</a>
-                <span class="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10"><i class="fas fa-map-marker-alt text-blue-400"></i> Batam, Indonesia</span>
+                <a href="https://www.google.com/maps/place/Batam,+Batam+City,+Riau+Islands" target="_blank" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-blue-400"><i class="fas fa-map-marker-alt text-blue-400"></i> Batam, Indonesia</a>
             </div>
 
+            <!-- Action Buttons -->
             <div class="flex justify-center gap-4">
                 <a href="#experience" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all hover:scale-105">View Projects</a>
                 <div class="flex items-center gap-3 ml-2">
@@ -139,6 +143,7 @@
         </div>
     </section>
 
+    <!-- ABOUT SECTION -->
     <section id="about" class="py-20 max-w-5xl mx-auto px-4 reveal opacity-0 translate-y-10 transition-all duration-700 delay-100 ease-out">
         <div class="bg-galaxy-card/40 backdrop-blur-md border border-gray-800 p-8 rounded-2xl hover:border-gray-600 transition-colors duration-300">
             <h2 class="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-3">
@@ -164,6 +169,7 @@
         </div>
     </section>
 
+    <!-- SKILLS SECTION -->
     <section id="skills" class="py-20 max-w-5xl mx-auto px-4">
         <h2 class="text-2xl sm:text-3xl font-bold mb-10 text-center reveal opacity-0 translate-y-10 transition-all duration-700 ease-out"><i class="fas fa-code-branch text-blue-400 mr-3"></i>Core Skills & Tech Stack</h2>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -207,10 +213,12 @@
         </div>
     </section>
 
+    <!-- EXPERIENCE SECTION -->
     <section id="experience" class="py-20 max-w-5xl mx-auto px-4">
         <h2 class="text-2xl sm:text-3xl font-bold mb-12 text-center reveal opacity-0 translate-y-10 transition-all duration-700 ease-out"><i class="fas fa-briefcase text-purple-400 mr-3"></i>Project Experience</h2>
         <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 sm:before:left-1/2 before:w-0.5 before:bg-gray-800">
             
+            <!-- Project 1: Homi -->
             <div class="relative flex flex-col sm:flex-row items-start sm:items-center group reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
                 <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-purple-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark group-hover:scale-125 transition-transform"></div>
                 <div class="w-full sm:w-1/2 sm:pr-8 pl-8 sm:pl-0 sm:text-right">
@@ -233,6 +241,7 @@
                 </div>
             </div>
 
+            <!-- Project 2: Lumina -->
             <div class="relative flex flex-col sm:flex-row items-start sm:items-center group reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
                 <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-blue-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark group-hover:scale-125 transition-transform"></div>
                 <div class="w-full sm:w-1/2 sm:order-2 sm:pl-8 pl-8 sm:text-left">
@@ -253,6 +262,7 @@
                 </div>
             </div>
 
+            <!-- Project 3: Agrifuture -->
             <div class="relative flex flex-col sm:flex-row items-start sm:items-center group reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
                 <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-indigo-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark group-hover:scale-125 transition-transform"></div>
                 <div class="w-full sm:w-1/2 sm:pr-8 pl-8 sm:pl-0 sm:text-right">
@@ -273,6 +283,7 @@
                 </div>
             </div>
 
+            <!-- Project 4: Clarity -->
             <div class="relative flex flex-col sm:flex-row items-start sm:items-center group reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
                 <div class="absolute left-4 sm:left-1/2 w-4 height-4 bg-green-500 rounded-full transform -translate-x-1/2 z-10 border-4 border-galaxy-dark group-hover:scale-125 transition-transform"></div>
                 <div class="w-full sm:w-1/2 sm:order-2 sm:pl-8 pl-8 sm:text-left">
@@ -296,7 +307,9 @@
         </div>
     </section>
 
+    <!-- EDUCATION & AWARDS -->
     <section id="education" class="py-20 max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-8">
+        <!-- Education -->
         <div class="reveal opacity-0 translate-y-10 transition-all duration-700 delay-100 ease-out bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:border-blue-500/30 transition-colors">
             <h3 class="text-xl font-bold mb-4 text-white"><i class="fas fa-university text-blue-400 mr-2"></i> Education</h3>
             <div class="border-l-2 border-blue-500 pl-4">
@@ -307,6 +320,7 @@
             </div>
         </div>
 
+        <!-- Awards & Certifications -->
         <div class="reveal opacity-0 translate-y-10 transition-all duration-700 delay-200 ease-out bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:border-purple-500/30 transition-colors">
             <h3 class="text-xl font-bold mb-4 text-white"><i class="fas fa-award text-purple-400 mr-2"></i> Awards & Certifications</h3>
             <ul class="space-y-5 text-sm text-gray-400">
@@ -328,11 +342,13 @@
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="bg-galaxy-dark/90 py-8 border-t border-gray-800 text-center text-xs text-gray-500 relative z-10">
         <p>&copy; 2026 Farrel Ariq Nadhil. All Rights Reserved.</p>
         <p class="mt-1">Built with HTML5 Canvas, Tailwind CSS & hosted on Vercel.</p>
     </footer>
 
+    <!-- INTERACTIVE JAVASCRIPT -->
     <script>
         // 1. Mobile Menu Toggle
         const menuBtn = document.getElementById('menuBtn');
@@ -397,20 +413,15 @@
             isPlaying = !isPlaying;
         });
 
-        // 5. Galaxy Canvas & SONIC CHASER Animation
+        // 5. Galaxy Canvas Animation (Cleaned from Sonic Logic)
         const canvas = document.getElementById('galaxyCanvas');
         const ctx = canvas.getContext('2d');
-        const sonic = document.getElementById('sonic-chaser');
         
         let stars = [];
         const numStars = 120;
         
         const mouse = { x: undefined, y: undefined, radius: 120 };
         
-        // Posisi awal Sonic di luar layar
-        let sonicX = -100;
-        let sonicY = -100;
-
         window.addEventListener('mousemove', function(event) {
             mouse.x = event.clientX; 
             mouse.y = event.clientY;
@@ -480,26 +491,6 @@
             });
 
             ctx.globalAlpha = 1.0;
-
-            // ---- LOGIC SONIC MENGEJAR MOUSE ----
-            if (mouse.x !== undefined && mouse.y !== undefined && sonic) {
-                let dxSonic = mouse.x - sonicX;
-                let dySonic = mouse.y - sonicY;
-                
-                // Kecepatan lari Sonic
-                let speed = 0.06; 
-                
-                sonicX += dxSonic * speed;
-                sonicY += dySonic * speed;
-
-                let scaleX = dxSonic < 0 ? -1 : 1;
-
-                sonic.style.left = sonicX + 'px';
-                sonic.style.top = sonicY + 'px';
-                // Posisikan Sonic dengan offset agar kursor ada di tengah badannya
-                sonic.style.transform = `translate(-50%, -50%) scaleX(${scaleX})`;
-            }
-
             requestAnimationFrame(animate);
         }
 
