@@ -3,15 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farrel Ariq Nadhil | Senior Frontend & Mobile Engineer</title>
-    <!-- Tailwind CSS & FontAwesome -->
+    <title>Farrel Ariq Nadhil | Frontend Engineer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- THREE.JS & VANTA.JS (For WebGL 3D Particle Network) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-
     <script>
         tailwind.config = {
             theme: {
@@ -34,37 +29,26 @@
         .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
         
-        /* Smooth Modal Transitions */
         .modal-active { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
         .modal-hidden { opacity: 0; pointer-events: none; transform: scale(0.95) translateY(20px); }
 
-        /* Percikan Animasi Bergerak (Magical Sparks) */
-        .spark {
+        #vanilla-canvas {
             position: fixed;
-            width: 3px;
-            height: 3px;
-            background-color: #fff;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: -1;
-            box-shadow: 0 0 12px 2px rgba(124, 58, 237, 0.8), 0 0 20px 4px rgba(59, 130, 246, 0.6);
-            animation: floatUp linear infinite;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            20% { opacity: 1; transform: translateY(80vh) scale(1); }
-            80% { opacity: 1; transform: translateY(20vh) scale(1); }
-            100% { transform: translateY(-10vh) scale(0); opacity: 0; }
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            background-color: #05070F;
         }
     </style>
 </head>
 <body class="text-gray-200 font-sans relative antialiased overflow-x-hidden">
 
-    <!-- WebGL BACKGROUND & MAGICAL SPARKS CONTAINER -->
-    <div id="vanta-canvas" class="fixed inset-0 z-[-2] flex items-center justify-center overflow-hidden">
-        <span class="text-[20vw] font-bold text-blue-500/5 font-mono select-none pointer-events-none tracking-tighter mix-blend-screen">&lt;/&gt;</span>
+    <!-- LIGHTWEIGHT CANVAS BACKGROUND (SUNSET AESTHETIC) -->
+    <canvas id="vanilla-canvas"></canvas>
+
+    <div class="fixed inset-0 z-[-1] flex items-center justify-center overflow-hidden pointer-events-none">
+        <span class="text-[20vw] font-bold text-white/5 font-mono tracking-tighter mix-blend-screen">&lt;/&gt;</span>
     </div>
-    <div id="sparks-container" class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden"></div>
 
     <!-- AUDIO BACKGROUND -->
     <audio id="bgMusic" loop preload="auto"><source src="bg-music.mp3" type="audio/mpeg"></audio>
@@ -79,16 +63,16 @@
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0 cursor-pointer hover:opacity-80 transition" onclick="window.scrollTo(0,0)">
                     <span class="text-xl font-bold font-mono tracking-tight">
-                        <span class="text-white">FARREL</span><span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">.FRONTEND</span>
+                        <span class="text-white">FARREL</span><span class="bg-gradient-to-r from-orange-400 to-purple-500 bg-clip-text text-transparent">.FRONTEND</span>
                     </span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-6 font-medium text-sm">
-                        <a href="#home" class="hover:text-blue-400 transition">Home</a>
-                        <a href="#about" class="hover:text-blue-400 transition">About</a>
-                        <a href="#skills" class="hover:text-blue-400 transition">Skills</a>
-                        <a href="#experience" class="hover:text-blue-400 transition">Experience</a>
-                        <a href="#insights" class="hover:text-blue-400 transition">Insights</a>
+                        <a href="#home" class="hover:text-purple-400 transition">Home</a>
+                        <a href="#about" class="hover:text-purple-400 transition">About</a>
+                        <a href="#skills" class="hover:text-purple-400 transition">Skills</a>
+                        <a href="#experience" class="hover:text-purple-400 transition">Experience</a>
+                        <a href="#insights" class="hover:text-purple-400 transition">Insights</a>
                     </div>
                 </div>
                 <div class="md:hidden">
@@ -97,20 +81,20 @@
             </div>
         </div>
         <div id="mobileMenu" class="hidden md:hidden bg-galaxy-dark/95 border-b border-gray-800 px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
-            <a href="#about" class="block py-2 hover:text-blue-400">About</a>
-            <a href="#experience" class="block py-2 hover:text-blue-400">Experience</a>
-            <a href="#insights" class="block py-2 hover:text-blue-400">Insights</a>
+            <a href="#about" class="block py-2 hover:text-purple-400 pl-4">About</a>
+            <a href="#experience" class="block py-2 hover:text-purple-400 pl-4">Experience</a>
+            <a href="#insights" class="block py-2 hover:text-purple-400 pl-4">Insights</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
     <section id="home" class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 relative">
         <div class="max-w-4xl mx-auto text-center z-10 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-            <div class="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
+            <div class="inline-block bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
                 Software Engineer • UI/UX Enthusiast
             </div>
             <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight mb-4">
-                Hi, I'm <span class="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">Farrel Ariq Nadhil</span>
+                Hi, I'm <span class="bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">Farrel Ariq Nadhil</span>
             </h1>
             <p class="text-xl sm:text-2xl font-medium text-gray-400 mb-6 h-8"><span id="typing-text" class="typing-cursor"></span></p>
             <p class="text-gray-400 max-w-2xl mx-auto mb-8 text-sm sm:text-base leading-relaxed">
@@ -118,20 +102,21 @@
             </p>
             
             <div class="flex flex-wrap justify-center gap-4 text-sm mb-8">
-                <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=farrelariq3@gmail.com" target="_blank" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-blue-400"><i class="fas fa-envelope text-blue-400"></i> farrelariq3@gmail.com</a>
-                <a href="tel:+6289520667843" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-blue-400"><i class="fas fa-phone text-blue-400"></i> +6289520667843</a>
-                <a href="https://www.google.com/maps/place/Batam,+Batam+City,+Riau+Islands" target="_blank" class="flex items-center gap-2 hover:text-blue-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-blue-400"><i class="fas fa-map-marker-alt text-blue-400"></i> Batam, Indonesia</a>
+                <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=farrelariq3@gmail.com" target="_blank" class="flex items-center gap-2 hover:text-purple-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-purple-400"><i class="fas fa-envelope text-purple-400"></i> farrelariq3@gmail.com</a>
+                <a href="tel:+6289520667843" class="flex items-center gap-2 hover:text-purple-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-purple-400"><i class="fas fa-phone text-purple-400"></i> +6289520667843</a>
+                <a href="https://www.google.com/maps/place/Batam,+Batam+City,+Riau+Islands" target="_blank" class="flex items-center gap-2 hover:text-purple-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-purple-400"><i class="fas fa-map-marker-alt text-purple-400"></i> Batam, Indonesia</a>
             </div>
 
             <div class="flex justify-center gap-4">
-                <a href="#experience" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all hover:scale-105">Explore Architecture</a>
+                <a href="#experience" class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg shadow-[0_0_15px_rgba(124,58,237,0.4)] transition-all hover:scale-105">Explore Architecture</a>
             </div>
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section id="about" class="py-20 max-w-6xl mx-auto px-4 reveal opacity-0 translate-y-10 transition-all duration-700 ease-out">
-        <div class="bg-galaxy-card/60 backdrop-blur-xl border border-gray-800 p-8 rounded-3xl hover:border-gray-600 transition-colors duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+    <!-- ABOUT & SKILLS SECTION -->
+    <section id="about" class="py-20 max-w-6xl mx-auto px-4">
+        <!-- About Content -->
+        <div class="bg-galaxy-card/60 backdrop-blur-xl border border-gray-800 p-8 rounded-3xl hover:border-gray-600 transition-colors duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)] reveal opacity-0 translate-y-10 mb-12">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
                     <h2 class="text-3xl font-bold mb-6 text-white">Systemic Thinker, <br><span class="text-purple-400">Creative Problem Solver.</span></h2>
@@ -142,7 +127,8 @@
                         Beyond the screen, I recharge by exploring immersive gaming worlds and drawing creative UI inspiration from evening sunsets. Continuously seeking growth, my long-term aspiration involves pursuing a second bachelor's degree in the southwestern hemisphere.
                     </p>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <!-- Skills Cards -->
+                <div id="skills" class="grid grid-cols-2 gap-4">
                     <div class="bg-galaxy-dark/50 p-6 rounded-2xl border border-gray-800 text-center hover:-translate-y-2 hover:border-blue-500/50 transition-all">
                         <i class="fas fa-mobile-alt text-3xl text-blue-400 mb-3"></i>
                         <h4 class="font-bold text-white text-sm">Mobile Native</h4>
@@ -168,34 +154,24 @@
         </div>
     </section>
 
-    <!-- EXPERIENCE SECTION (Cards trigger the Novel-Style Modals) -->
+    <!-- EXPERIENCE SECTION (REORDERED) -->
     <section id="experience" class="py-20 max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-bold mb-16 text-center reveal opacity-0 translate-y-10 transition-all duration-700 ease-out"><i class="fas fa-book-open text-blue-400 mr-3"></i>Project Chronicles</h2>
+        <h2 class="text-3xl font-bold mb-16 text-center reveal opacity-0 translate-y-10 transition-all duration-700 ease-out"><i class="fas fa-book-open text-purple-400 mr-3"></i>Project Chronicles</h2>
         
         <div class="grid md:grid-cols-2 gap-8">
-            <!-- Card 1 -->
-            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(124,58,237,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-homi')">
-                <span class="text-purple-400 text-xs font-bold tracking-widest mb-2 block">VOLUME I • AUG 2025</span>
-                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">Homi Management System</h3>
-                <p class="text-sm text-gray-400 flex-grow mb-6">A comprehensive Laravel housing platform featuring automated document generation and OCR-based verification.</p>
+            <!-- Card 1: CLARITY -->
+            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-green-500/50 hover:shadow-[0_0_30px_rgba(34,197,94,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-clarity')">
+                <span class="text-green-400 text-xs font-bold tracking-widest mb-2 block">VOLUME I • FEB 2024</span>
+                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-green-400 transition-colors">Clarity Analytics</h3>
+                <p class="text-sm text-gray-400 flex-grow mb-6">Transformed complex activity logs into interactive D3.js reporting dashboards. 1st Place at the PBL Expo 2024.</p>
                 <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
                     <span class="text-xs text-gray-500 uppercase tracking-widest">Read Chapter <i class="fas fa-arrow-right ml-1"></i></span>
                 </div>
             </div>
 
-            <!-- Card 2 -->
-            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(37,99,235,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-lumina')">
-                <span class="text-blue-400 text-xs font-bold tracking-widest mb-2 block">VOLUME II • FEB 2024</span>
-                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">Lumina AI Pothole Detection</h3>
-                <p class="text-sm text-gray-400 flex-grow mb-6">A mobile-based crowdsourced road damage tracking system integrating YOLO-based image detection directly into Android.</p>
-                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
-                    <span class="text-xs text-gray-500 uppercase tracking-widest">Read Chapter <i class="fas fa-arrow-right ml-1"></i></span>
-                </div>
-            </div>
-            
-            <!-- Card 3 -->
+            <!-- Card 2: AGRIFUTURE -->
             <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-indigo-500/50 hover:shadow-[0_0_30px_rgba(99,102,241,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-agri')">
-                <span class="text-indigo-400 text-xs font-bold tracking-widest mb-2 block">VOLUME III • SEP 2024</span>
+                <span class="text-indigo-400 text-xs font-bold tracking-widest mb-2 block">VOLUME II • SEP 2024</span>
                 <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">Agrifuture Platform</h3>
                 <p class="text-sm text-gray-400 flex-grow mb-6">Android-based agricultural learning platform utilizing Jetpack Compose and Retrofit for highly responsive UI performance.</p>
                 <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
@@ -203,11 +179,21 @@
                 </div>
             </div>
 
-            <!-- Card 4 -->
-            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-green-500/50 hover:shadow-[0_0_30px_rgba(34,197,94,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-clarity')">
-                <span class="text-green-400 text-xs font-bold tracking-widest mb-2 block">VOLUME IV • FEB 2024</span>
-                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-green-400 transition-colors">Clarity Analytics</h3>
-                <p class="text-sm text-gray-400 flex-grow mb-6">Transformed complex activity logs into interactive D3.js reporting dashboards. 1st Place at the PBL Expo 2024.</p>
+            <!-- Card 3: LUMINA -->
+            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(37,99,235,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-lumina')">
+                <span class="text-blue-400 text-xs font-bold tracking-widest mb-2 block">VOLUME III • FEB 2024</span>
+                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">Lumina AI Pothole Detection</h3>
+                <p class="text-sm text-gray-400 flex-grow mb-6">A mobile-based crowdsourced road damage tracking system integrating YOLO-based image detection directly into Android.</p>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
+                    <span class="text-xs text-gray-500 uppercase tracking-widest">Read Chapter <i class="fas fa-arrow-right ml-1"></i></span>
+                </div>
+            </div>
+            
+            <!-- Card 4: HOMI -->
+            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(124,58,237,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-homi')">
+                <span class="text-purple-400 text-xs font-bold tracking-widest mb-2 block">VOLUME IV • AUG 2025</span>
+                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">Homi Management System</h3>
+                <p class="text-sm text-gray-400 flex-grow mb-6">A comprehensive Laravel housing platform featuring automated document generation and OCR-based verification.</p>
                 <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
                     <span class="text-xs text-gray-500 uppercase tracking-widest">Read Chapter <i class="fas fa-arrow-right ml-1"></i></span>
                 </div>
@@ -215,10 +201,41 @@
         </div>
     </section>
 
+    <!-- NEW SECTION: ENGINEERING INSIGHTS -->
+    <section id="insights" class="py-20 max-w-6xl mx-auto px-4 border-t border-gray-800/50">
+        <div class="mb-12 reveal opacity-0 translate-y-10 transition-all duration-700">
+            <h2 class="text-3xl font-bold text-white"><i class="fas fa-pen-nib text-orange-400 mr-3"></i>Engineering Insights</h2>
+            <p class="text-gray-400 mt-2 text-sm">Notes on architecture, UI/UX methodology, and technical challenges.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+            <a href="#" class="block bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:bg-galaxy-card/80 transition-all duration-300 reveal opacity-0 translate-y-10">
+                <div class="text-orange-400 text-xs font-bold mb-2">ANDROID ARCHITECTURE</div>
+                <h3 class="text-lg font-bold text-white mb-3 leading-snug">Modern Routing: Isolating Navigation</h3>
+                <p class="text-sm text-gray-400 mb-4 line-clamp-3">In Jetpack Compose, state hoisting can get messy. Here is my approach to decoupling the bottom navigation bar into a dedicated file to maintain a clean UI hierarchy.</p>
+                <span class="text-xs text-gray-500 border-t border-gray-800 block pt-3">5 min read</span>
+            </a>
+            
+            <a href="#" class="block bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:bg-galaxy-card/80 transition-all duration-300 reveal opacity-0 translate-y-10 delay-100">
+                <div class="text-purple-400 text-xs font-bold mb-2">DATA & UX</div>
+                <h3 class="text-lg font-bold text-white mb-3 leading-snug">Statistical Analysis for UX Inference</h3>
+                <p class="text-sm text-gray-400 mb-4 line-clamp-3">Designing software isn't just about writing code; it's about solving user problems. By applying rigorous statistical analysis to survey data, our team successfully pivoted the dashboard layout.</p>
+                <span class="text-xs text-gray-500 border-t border-gray-800 block pt-3">7 min read</span>
+            </a>
+
+            <a href="#" class="block bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:bg-galaxy-card/80 transition-all duration-300 reveal opacity-0 translate-y-10 delay-200">
+                <div class="text-yellow-400 text-xs font-bold mb-2">TEAM DYNAMICS</div>
+                <h3 class="text-lg font-bold text-white mb-3 leading-snug">The Blueprint of a 1st Place PBL Product</h3>
+                <p class="text-sm text-gray-400 mb-4 line-clamp-3">Winning the PBL Expo wasn't just about the tech stack. It required agile collaboration, strict REST API contracts, and an obsession with scalable deliverables.</p>
+                <span class="text-xs text-gray-500 border-t border-gray-800 block pt-3">6 min read</span>
+            </a>
+        </div>
+    </section>
+
     <!-- FOOTER -->
     <footer class="bg-galaxy-dark/90 py-10 border-t border-gray-800 text-center relative z-10">
         <p class="text-sm font-bold text-gray-300 mb-2">FARREL ARIQ NADHIL</p>
-        <p class="text-xs text-gray-500">© 2026 Engineered with WebGL, Tailwind CSS & Vanilla JS. Hosted on Vercel.</p>
+        <p class="text-xs text-gray-500">© 2026 Engineered with Lightweight HTML5 Canvas & Tailwind CSS. Hosted on Vercel.</p>
     </footer>
 
     <!-- ========================================================= -->
@@ -228,108 +245,7 @@
     <!-- Modal Backdrop -->
     <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[60] modal-hidden transition-all duration-500" onclick="closeAllModals()"></div>
 
-    <!-- Modal 1: HOMI -->
-    <div id="modal-homi" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(124,58,237,0.3)] custom-scrollbar">
-        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
-        <div class="flex flex-col md:flex-row h-full">
-            <!-- Novel Cover Poster -->
-            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-black relative overflow-hidden">
-                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <i class="fas fa-city text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
-                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Homi<br>System</h2>
-                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">VOLUME I</span>
-            </div>
-            <!-- Story & Synopsis -->
-            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
-                <span class="text-purple-400 text-xs font-bold tracking-widest mb-2 block uppercase">Digital Transformation Tale</span>
-                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Housing Management <br>System</h3>
-                
-                <div class="flex gap-2 mb-8">
-                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full">Laravel</span>
-                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full">MySQL</span>
-                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full">OCR Tech</span>
-                </div>
-
-                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
-                    <p><strong class="text-white">The Conflict:</strong> Housing administrations heavily relied on manual paperwork for resident services and payment verifications, causing significant delays and data discrepancies in Batam Center.</p>
-                    <p><strong class="text-white">The Resolution:</strong> We engineered a comprehensive digital platform. I specifically focused on the backend architecture, ensuring highly secure authentication and structuring robust API endpoints tested rigorously via Postman.</p>
-                    <p><strong class="text-white">The Climax:</strong> The integration of an OCR-based (Optical Character Recognition) payment verification pipeline and automated PDF letter generation successfully accelerated administrative validation by 40%.</p>
-                </div>
-
-                <div class="flex gap-4">
-                    <a href="https://besthomi.online/" target="_blank" class="flex-1 text-center bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-xl font-bold transition-colors"><i class="fas fa-external-link-alt mr-2"></i> Live Demo</a>
-                    <a href="https://www.youtube.com/watch?v=Pw9TlcWuV5A" target="_blank" class="flex-1 text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Trailer</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 2: LUMINA -->
-    <div id="modal-lumina" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(37,99,235,0.3)] custom-scrollbar">
-        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
-        <div class="flex flex-col md:flex-row h-full">
-            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-sky-900 to-black relative overflow-hidden">
-                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <i class="fas fa-road text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
-                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Lumina<br>A.I.</h2>
-                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">VOLUME II</span>
-            </div>
-            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
-                <span class="text-blue-400 text-xs font-bold tracking-widest mb-2 block uppercase">Artificial Intelligence Saga</span>
-                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Pothole Detection <br>System</h3>
-                
-                <div class="flex gap-2 mb-8">
-                    <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">Kotlin</span>
-                    <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">YOLO AI</span>
-                    <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">Laravel</span>
-                </div>
-
-                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
-                    <p><strong class="text-white">The Conflict:</strong> Road damages were causing accidents, but reporting them was tedious and tracking was non-existent.</p>
-                    <p><strong class="text-white">My Role:</strong> Serving as the AI & Frontend Developer, I bridged the gap between machine learning engineers and end-users. I was responsible for mapping intuitive user workflows and integrating the complex AI models.</p>
-                    <p><strong class="text-white">The Resolution:</strong> We successfully built a crowdsourced mobile system. By integrating YOLO-based image detection directly into the Android interface, we enabled highly accurate, real-time road damage identification via device cameras.</p>
-                </div>
-
-                <div class="flex gap-4">
-                    <a href="https://www.youtube.com/watch?v=sBUe6fRDZ5w" target="_blank" class="w-full text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Watch The Trailer</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 3: AGRIFUTURE -->
-    <div id="modal-agri" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(99,102,241,0.3)] custom-scrollbar">
-        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
-        <div class="flex flex-col md:flex-row h-full">
-            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900 via-violet-900 to-black relative overflow-hidden">
-                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <i class="fas fa-seedling text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
-                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Agri<br>Future</h2>
-                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">VOLUME III</span>
-            </div>
-            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
-                <span class="text-indigo-400 text-xs font-bold tracking-widest mb-2 block uppercase">Mobile Ecosystem Epic</span>
-                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Learning Platform <br>For Farmers</h3>
-                
-                <div class="flex gap-2 mb-8">
-                    <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full">Jetpack Compose</span>
-                    <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full">Retrofit</span>
-                </div>
-
-                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
-                    <p><strong class="text-white">The Vision:</strong> To create an educational hub providing localized training materials and live mentoring modules tailored for youth and beginner farmers.</p>
-                    <p><strong class="text-white">The Journey:</strong> I focused heavily on modern Android native development utilizing Kotlin and Jetpack Compose to ensure a highly reactive and declarative UI architecture.</p>
-                    <p><strong class="text-white">The Execution:</strong> Implemented robust network calls using Retrofit. By partnering closely with backend developers to strictly define REST API contracts, we achieved seamless data synchronization and zero-latency UI performance.</p>
-                </div>
-
-                <div class="flex gap-4">
-                    <a href="https://www.youtube.com/watch?v=dm3yY5fFbBo" target="_blank" class="w-full text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Watch The Trailer</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 4: CLARITY -->
+    <!-- Modal 1: CLARITY -->
     <div id="modal-clarity" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(34,197,94,0.3)] custom-scrollbar">
         <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
         <div class="flex flex-col md:flex-row h-full">
@@ -337,7 +253,7 @@
                 <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
                 <i class="fas fa-chart-pie text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
                 <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Clarity<br>Analytics</h2>
-                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">VOLUME IV</span>
+                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">VOLUME I</span>
             </div>
             <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
                 <span class="text-green-400 text-xs font-bold tracking-widest mb-2 block uppercase">Data Visualization Legend</span>
@@ -362,56 +278,219 @@
         </div>
     </div>
 
+    <!-- Modal 2: AGRIFUTURE -->
+    <div id="modal-agri" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(99,102,241,0.3)] custom-scrollbar">
+        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
+        <div class="flex flex-col md:flex-row h-full">
+            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900 via-violet-900 to-black relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                <i class="fas fa-seedling text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
+                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Agri<br>Future</h2>
+                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">VOLUME II</span>
+            </div>
+            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
+                <span class="text-indigo-400 text-xs font-bold tracking-widest mb-2 block uppercase">Mobile Ecosystem Epic</span>
+                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Learning Platform <br>For Farmers</h3>
+                
+                <div class="flex gap-2 mb-8">
+                    <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full">Jetpack Compose</span>
+                    <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full">Retrofit</span>
+                </div>
+
+                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
+                    <p><strong class="text-white">The Vision:</strong> To create an educational hub providing localized training materials and live mentoring modules specifically tailored for youth and beginner farmers.</p>
+                    <p><strong class="text-white">The Journey:</strong> I focused heavily on modern Android native development utilizing Kotlin and Jetpack Compose to ensure a highly reactive and declarative UI architecture.</p>
+                    <p><strong class="text-white">The Execution:</strong> Implemented robust network calls using Retrofit. By partnering closely with backend developers to strictly define REST API contracts, we achieved seamless data synchronization and zero-latency UI performance.</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <a href="https://www.youtube.com/watch?v=dm3yY5fFbBo" target="_blank" class="w-full text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Watch The Trailer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: LUMINA -->
+    <div id="modal-lumina" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(37,99,235,0.3)] custom-scrollbar">
+        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
+        <div class="flex flex-col md:flex-row h-full">
+            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-sky-900 to-black relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                <i class="fas fa-road text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
+                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Lumina<br>A.I.</h2>
+                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">VOLUME III</span>
+            </div>
+            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
+                <span class="text-blue-400 text-xs font-bold tracking-widest mb-2 block uppercase">Artificial Intelligence Saga</span>
+                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Pothole Detection <br>System</h3>
+                
+                <div class="flex gap-2 mb-8">
+                    <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">Kotlin</span>
+                    <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">YOLO AI</span>
+                    <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">Laravel</span>
+                </div>
+
+                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
+                    <p><strong class="text-white">The Conflict:</strong> Road damages were causing accidents, but reporting them was tedious and tracking was non-existent.</p>
+                    <p><strong class="text-white">My Role:</strong> Serving as the AI & Frontend Developer, I bridged the gap between machine learning engineers and end-users. I was responsible for mapping intuitive user workflows and integrating the complex AI models.</p>
+                    <p><strong class="text-white">The Resolution:</strong> We successfully built a crowdsourced mobile system. By integrating YOLO-based image detection directly into the Android interface, we enabled highly accurate, real-time road damage identification via device cameras.</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <a href="https://www.youtube.com/watch?v=sBUe6fRDZ5w" target="_blank" class="w-full text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Watch The Trailer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: HOMI -->
+    <div id="modal-homi" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(124,58,237,0.3)] custom-scrollbar">
+        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
+        <div class="flex flex-col md:flex-row h-full">
+            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-black relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                <i class="fas fa-city text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
+                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Homi<br>System</h2>
+                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">VOLUME IV</span>
+            </div>
+            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
+                <span class="text-purple-400 text-xs font-bold tracking-widest mb-2 block uppercase">Digital Transformation Tale</span>
+                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Housing Management <br>System</h3>
+                
+                <div class="flex gap-2 mb-8">
+                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full">Laravel</span>
+                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full">MySQL</span>
+                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full">OCR Tech</span>
+                </div>
+
+                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
+                    <p><strong class="text-white">The Conflict:</strong> Housing administrations heavily relied on manual paperwork for resident services and payment verifications, causing significant delays and data discrepancies in Batam Center.</p>
+                    <p><strong class="text-white">The Resolution:</strong> We engineered a comprehensive digital platform. I specifically focused on the backend architecture, ensuring highly secure authentication and structuring robust API endpoints tested rigorously via Postman.</p>
+                    <p><strong class="text-white">The Climax:</strong> The integration of an OCR-based (Optical Character Recognition) payment verification pipeline and automated PDF letter generation successfully accelerated administrative validation by 40%.</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <a href="https://besthomi.online/" target="_blank" class="flex-1 text-center bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-xl font-bold transition-colors"><i class="fas fa-external-link-alt mr-2"></i> Live Demo</a>
+                    <a href="https://www.youtube.com/watch?v=Pw9TlcWuV5A" target="_blank" class="flex-1 text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Trailer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- ========================================== -->
-    <!-- JAVASCRIPT LOGIC                           -->
+    <!-- JAVASCRIPT LOGIC (VANILLA - SUPER LIGHT)   -->
     <!-- ========================================== -->
     <script>
-        // --- 1. MEMBUAT EFEK SPARKS (PERCIKAN AJAIB) ---
-        const sparksContainer = document.getElementById('sparks-container');
-        const numSparks = 30; // Jumlah percikan
+        // --- 1. LIGHTWEIGHT VANILLA CANVAS BACKGROUND ---
+        const canvas = document.getElementById('vanilla-canvas');
+        const ctx = canvas.getContext('2d');
         
-        for(let i=0; i<numSparks; i++) {
-            let spark = document.createElement('div');
-            spark.classList.add('spark');
-            
-            // Random posisi horizontal (0% - 100%)
-            spark.style.left = Math.random() * 100 + 'vw';
-            // Random ukuran (2px - 5px)
-            let size = Math.random() * 3 + 2;
-            spark.style.width = size + 'px';
-            spark.style.height = size + 'px';
-            // Random durasi mengambang (5s - 15s)
-            let duration = Math.random() * 10 + 5;
-            spark.style.animationDuration = duration + 's';
-            // Random delay agar tidak muncul bersamaan
-            spark.style.animationDelay = Math.random() * 5 + 's';
-            
-            sparksContainer.appendChild(spark);
+        let width, height;
+        let particles = [];
+        
+        // Cek apakah perangkat adalah mobile (berdasarkan ukuran layar)
+        const isMobile = window.innerWidth < 768;
+        // Kurangi jumlah partikel drastis di HP agar super lancar
+        const particleCount = isMobile ? 30 : 80;
+
+        // Palet warna senja (Sunset Aesthetic)
+        const colors = ['#fb923c', '#f472b6', '#c084fc', '#818cf8'];
+        
+        let mouse = { x: null, y: null, radius: 100 };
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Hanya aktifkan pelacakan mouse di Desktop
+        if (!isMobile) {
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.x;
+                mouse.y = e.y;
+            });
+            window.addEventListener('mouseout', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
         }
 
-        // --- 2. WEBGL VANTA.JS NETWORK EFFECT ---
-        document.addEventListener("DOMContentLoaded", function() {
-            if (window.VANTA) {
-                VANTA.NET({
-                    el: "#vanta-canvas",
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    scale: 1.00,
-                    scaleMobile: 1.00,
-                    color: 0x3b82f6, 
-                    backgroundColor: 0x05070f, 
-                    points: 12.00,
-                    maxDistance: 22.00,
-                    spacing: 16.00
-                })
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
             }
-        });
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
 
-        // --- 3. MODAL LOGIC (POP-UPS BUKU) ---
+                if (this.x < 0 || this.x > width) this.speedX *= -1;
+                if (this.y < 0 || this.y > height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Gambar garis konstelasi jika partikel dekat dengan partikel lain (dan mouse di desktop)
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 80) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = particles[i].color + '40'; // 40 is hex for 25% opacity
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+
+                // Interaksi kursor mouse (Hanya desktop)
+                if (!isMobile && mouse.x != null) {
+                    const dxMouse = particles[i].x - mouse.x;
+                    const dyMouse = particles[i].y - mouse.y;
+                    const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+                    
+                    if (distMouse < mouse.radius) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = particles[i].color + '80'; // 80 is hex for 50% opacity
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // --- 2. MODAL LOGIC ---
         const backdrop = document.getElementById('modal-backdrop');
         
         function openModal(modalId) {
@@ -438,7 +517,7 @@
             document.body.style.overflow = 'auto';
         }
 
-        // --- 4. TYPING EFFECT ---
+        // --- 3. TYPING EFFECT ---
         const textToType = "Architecting the Web & Mobile Future";
         const typingElement = document.getElementById('typing-text');
         let typeIndex = 0;
@@ -453,7 +532,7 @@
         }
         setTimeout(typeWriter, 500);
 
-        // --- 5. SCROLL REVEAL ANIMATION ---
+        // --- 4. SCROLL REVEAL ANIMATION (EFFICIENT) ---
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -466,7 +545,7 @@
         }, { threshold: 0.1 });
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // --- 6. AUDIO LOGIC ---
+        // --- 5. AUDIO LOGIC ---
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         const musicIcon = document.getElementById('musicIcon');
@@ -487,7 +566,7 @@
             isPlaying = !isPlaying;
         });
 
-        // Mobile Menu
+        // Mobile Menu Setup
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
