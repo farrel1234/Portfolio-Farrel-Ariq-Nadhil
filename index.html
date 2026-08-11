@@ -42,7 +42,7 @@
             background-color: #05070F;
         }
 
-        /* Smooth & Staggered Reveal Animations ala Cindy's Porto */
+        /* Smooth & Staggered Reveal Animations */
         .reveal { 
             opacity: 0; 
             transform: translateY(40px); 
@@ -53,7 +53,7 @@
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
 
-        /* Floating Animation for Skills (Gravity Theme) */
+        /* Floating Animation */
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -128,8 +128,11 @@
                 <a href="https://www.google.com/maps/place/Batam,+Batam+City,+Riau+Islands" target="_blank" class="flex items-center gap-2 hover:bg-white/10 transition-all bg-white/5 px-5 py-2.5 rounded-full border border-white/10"><i class="fas fa-map-marker-alt text-purple-400"></i> Batam, Indonesia</a>
             </div>
 
-            <div class="flex justify-center items-center gap-6">
-                <a href="#experience" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:-translate-y-1">Explore Architecture</a>
+            <!-- HERO BUTTONS: Added Download CV -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#experience" class="w-full sm:w-auto bg-purple-600 hover:bg-purple-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:-translate-y-1 text-center">Explore Architecture</a>
+                <!-- Ganti href="cv-farrel.pdf" dengan nama file PDF mu nanti -->
+                <a href="cv-farrel.pdf" target="_blank" download class="w-full sm:w-auto bg-transparent border border-purple-500 hover:bg-purple-500/10 text-purple-400 font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center gap-2"><i class="fas fa-download"></i> Download CV</a>
             </div>
         </div>
     </section>
@@ -148,7 +151,6 @@
                 </p>
             </div>
             
-            <!-- Floating Skills Grid -->
             <div class="grid grid-cols-2 gap-6 relative">
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none"></div>
                 
@@ -238,7 +240,7 @@
         </div>
     </section>
 
-    <!-- INSIGHTS SECTION -->
+    <!-- INSIGHTS SECTION (DUMMY LINKS HANDLED) -->
     <section id="insights" class="py-24 max-w-6xl mx-auto px-4 border-t border-gray-800/50">
         <div class="mb-16 reveal">
             <h2 class="text-sm font-bold tracking-widest text-orange-400 uppercase mb-3">Articles & Thoughts</h2>
@@ -246,26 +248,37 @@
         </div>
         
         <div class="grid md:grid-cols-3 gap-8">
-            <a href="#" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal">
+            <a href="javascript:void(0)" onclick="alert('Full article is still being drafted. Stay tuned!'); return false;" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal">
                 <div class="text-orange-400 text-xs font-bold mb-4 tracking-wider">ANDROID ARCHITECTURE</div>
                 <h3 class="text-xl font-bold text-white mb-4 leading-snug group-hover:text-orange-400 transition-colors">Modern Routing: Isolating Navigation</h3>
                 <p class="text-sm text-gray-400 mb-6 leading-relaxed">In Jetpack Compose, state hoisting can get messy. Here is my approach to decoupling the bottom navigation bar into a dedicated file.</p>
-                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">5 min read</span>
+                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest border border-gray-700 px-3 py-1 rounded-full"><i class="fas fa-clock mr-1"></i> Coming Soon</span>
             </a>
             
-            <a href="#" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal delay-100">
+            <a href="javascript:void(0)" onclick="alert('Full article is still being drafted. Stay tuned!'); return false;" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal delay-100">
                 <div class="text-purple-400 text-xs font-bold mb-4 tracking-wider">DATA & UX</div>
                 <h3 class="text-xl font-bold text-white mb-4 leading-snug group-hover:text-purple-400 transition-colors">Statistical Analysis for UX Inference</h3>
                 <p class="text-sm text-gray-400 mb-6 leading-relaxed">Designing software isn't just writing code. By applying rigorous statistical analysis to survey data, our team pivoted the layout.</p>
-                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">7 min read</span>
+                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest border border-gray-700 px-3 py-1 rounded-full"><i class="fas fa-clock mr-1"></i> Coming Soon</span>
             </a>
 
-            <a href="#" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal delay-200">
+            <a href="javascript:void(0)" onclick="alert('Full article is still being drafted. Stay tuned!'); return false;" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal delay-200">
                 <div class="text-blue-400 text-xs font-bold mb-4 tracking-wider">TEAM DYNAMICS</div>
                 <h3 class="text-xl font-bold text-white mb-4 leading-snug group-hover:text-blue-400 transition-colors">Blueprint of a 1st Place PBL Product</h3>
                 <p class="text-sm text-gray-400 mb-6 leading-relaxed">Winning the PBL Expo required agile collaboration, strict REST API contracts, and an obsession with scalable deliverables.</p>
-                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">6 min read</span>
+                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest border border-gray-700 px-3 py-1 rounded-full"><i class="fas fa-clock mr-1"></i> Coming Soon</span>
             </a>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION (CTA) PRE-FOOTER -->
+    <section class="py-24 max-w-4xl mx-auto px-4 text-center reveal border-t border-gray-800/50">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">Interested in collaborating?</h2>
+        <p class="text-gray-400 mb-10 text-base leading-relaxed">I'm always open to discussing product design work, backend architecture, or potential partnership opportunities.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="mailto:farrelariq3@gmail.com" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold px-8 py-4 rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:-translate-y-1 flex items-center gap-2"><i class="fas fa-paper-plane"></i> Say Hello</a>
+            <a href="https://linkedin.com" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold px-6 py-4 rounded-xl transition-all hover:-translate-y-1 flex items-center gap-2"><i class="fab fa-linkedin text-blue-400 text-xl"></i></a>
+            <a href="https://github.com" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold px-6 py-4 rounded-xl transition-all hover:-translate-y-1 flex items-center gap-2"><i class="fab fa-github text-xl"></i></a>
         </div>
     </section>
 
@@ -279,7 +292,6 @@
     <!-- MODALS SECTION (NOVEL / BOOK SHOWCASE STYLE)              -->
     <!-- ========================================================= -->
 
-    <!-- Modal Backdrop -->
     <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[60] modal-hidden transition-all duration-500" onclick="closeAllModals()"></div>
 
     <!-- Modal 1: CLARITY -->
@@ -307,7 +319,11 @@
                     <p><strong class="text-gray-200">The Victory:</strong> Through agile collaboration and rigorous statistical analysis, the product was universally praised and successfully secured <strong class="text-green-400">1st Place at the PBL Expo 2024</strong>.</p>
                 </div>
 
-                <a href="https://www.youtube.com/watch?v=z_HbitSwZqs" target="_blank" class="inline-flex items-center justify-center w-full bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-lg"><i class="fab fa-youtube mr-3 text-red-600"></i> Watch The Trailer</a>
+                <!-- ADDED GITHUB LINK -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://www.youtube.com/watch?v=z_HbitSwZqs" target="_blank" class="flex-1 inline-flex items-center justify-center bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-base"><i class="fab fa-youtube mr-2 text-red-600"></i> Watch Trailer</a>
+                    <a href="https://github.com/Prodi-TRPL/2B-Pagi-2024-Interactive-Visualization-International-Office" target="_blank" class="flex-1 inline-flex items-center justify-center bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 px-6 py-4 rounded-xl font-bold transition-colors text-base"><i class="fab fa-github mr-2"></i> Source Code</a>
+                </div>
             </div>
         </div>
     </div>
@@ -336,7 +352,11 @@
                     <p><strong class="text-gray-200">The Execution:</strong> Implemented robust network calls using Retrofit. By partnering closely with backend developers to strictly define REST API contracts, we achieved seamless data synchronization and zero-latency UI performance.</p>
                 </div>
 
-                <a href="https://www.youtube.com/watch?v=dm3yY5fFbBo" target="_blank" class="inline-flex items-center justify-center w-full bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-lg"><i class="fab fa-youtube mr-3 text-red-600"></i> Watch The Trailer</a>
+                <!-- ADDED PRIVATE REPO BADGE FOR CONSISTENCY -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://www.youtube.com/watch?v=dm3yY5fFbBo" target="_blank" class="flex-1 inline-flex items-center justify-center bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-base"><i class="fab fa-youtube mr-2 text-red-600"></i> Watch Trailer</a>
+                    <span class="flex-1 inline-flex items-center justify-center bg-gray-800/50 text-gray-500 border border-gray-700 px-6 py-4 rounded-xl font-bold text-base cursor-not-allowed"><i class="fas fa-lock mr-2"></i> Private Repo</span>
+                </div>
             </div>
         </div>
     </div>
@@ -366,7 +386,11 @@
                     <p><strong class="text-gray-200">The Resolution:</strong> We successfully built a crowdsourced mobile system. By integrating YOLO-based image detection directly into the Android interface, we enabled highly accurate, real-time road damage identification via device cameras.</p>
                 </div>
 
-                <a href="https://www.youtube.com/watch?v=sBUe6fRDZ5w" target="_blank" class="inline-flex items-center justify-center w-full bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-lg"><i class="fab fa-youtube mr-3 text-red-600"></i> Watch The Trailer</a>
+                <!-- ADDED GITHUB LINK -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://www.youtube.com/watch?v=sBUe6fRDZ5w" target="_blank" class="flex-1 inline-flex items-center justify-center bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-base"><i class="fab fa-youtube mr-2 text-red-600"></i> Watch Trailer</a>
+                    <a href="https://github.com/dyrexya/Lumina" target="_blank" class="flex-1 inline-flex items-center justify-center bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 px-6 py-4 rounded-xl font-bold transition-colors text-base"><i class="fab fa-github mr-2"></i> Source Code</a>
+                </div>
             </div>
         </div>
     </div>
@@ -396,9 +420,11 @@
                     <p><strong class="text-gray-200">The Climax:</strong> The integration of an OCR-based payment verification pipeline and automated PDF letter generation successfully accelerated administrative validation by 40%.</p>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="https://besthomi.online/" target="_blank" class="flex-1 text-center bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-base"><i class="fas fa-external-link-alt mr-2"></i> Live Demo</a>
-                    <a href="https://www.youtube.com/watch?v=Pw9TlcWuV5A" target="_blank" class="flex-1 text-center bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 px-6 py-4 rounded-xl font-bold transition-colors text-base"><i class="fab fa-youtube mr-2 text-red-500"></i> Trailer</a>
+                <!-- ADDED GITHUB LINK -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <a href="https://besthomi.online/" target="_blank" class="flex items-center justify-center bg-white hover:bg-gray-200 text-black px-4 py-4 rounded-xl font-bold transition-colors text-sm"><i class="fas fa-external-link-alt mr-2"></i> Live Demo</a>
+                    <a href="https://www.youtube.com/watch?v=Pw9TlcWuV5A" target="_blank" class="flex items-center justify-center bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 px-4 py-4 rounded-xl font-bold transition-colors text-sm"><i class="fab fa-youtube mr-2 text-red-500"></i> Trailer</a>
+                    <a href="https://github.com/farrel1234/homi-project" target="_blank" class="flex items-center justify-center bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 px-4 py-4 rounded-xl font-bold transition-colors text-sm"><i class="fab fa-github mr-2"></i> Repo</a>
                 </div>
             </div>
         </div>
