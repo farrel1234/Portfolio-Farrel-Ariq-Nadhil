@@ -12,7 +12,7 @@
             theme: {
                 extend: {
                     colors: {
-                        galaxy: { dark: '#0B0F19', card: '#161F30', purple: '#7C3AED', blue: '#2563EB' }
+                        galaxy: { dark: '#05070F', card: '#111827', purple: '#7C3AED', blue: '#2563EB' }
                     }
                 }
             }
@@ -20,18 +20,20 @@
     </script>
     <style>
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0B0F19; }
+        ::-webkit-scrollbar-track { background: #05070F; }
         ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #374151; }
         
         .spin-slow { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+        
         .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
         
         .modal-active { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
         .modal-hidden { opacity: 0; pointer-events: none; transform: scale(0.95) translateY(20px); }
 
+        /* Background Canvas */
         #vanilla-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -39,199 +41,238 @@
             z-index: -2;
             background-color: #05070F;
         }
+
+        /* Smooth & Staggered Reveal Animations ala Cindy's Porto */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(40px); 
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); 
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Floating Animation for Skills (Gravity Theme) */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .floating { animation: float 5s ease-in-out infinite; }
+        .float-delay-1 { animation-delay: 1s; }
+        .float-delay-2 { animation-delay: 2s; }
     </style>
 </head>
-<body class="text-gray-200 font-sans relative antialiased overflow-x-hidden">
+<body class="text-gray-200 font-sans relative antialiased overflow-x-hidden bg-galaxy-dark">
 
-    <!-- LIGHTWEIGHT CANVAS BACKGROUND (SUNSET AESTHETIC) -->
+    <!-- LIGHTWEIGHT CANVAS BACKGROUND -->
     <canvas id="vanilla-canvas"></canvas>
 
     <!-- AUDIO BACKGROUND -->
     <audio id="bgMusic" loop preload="auto"><source src="bg-music.mp3" type="audio/mpeg"></audio>
 
-    <button id="musicToggle" class="fixed bottom-6 right-6 z-40 bg-galaxy-card/80 backdrop-blur-md border border-gray-600 p-3 rounded-full shadow-[0_0_15px_rgba(124,58,237,0.4)] hover:bg-gray-800 hover:border-purple-400 hover:scale-110 transition-all duration-300 focus:outline-none flex items-center justify-center w-14 h-14 group">
+    <button id="musicToggle" class="fixed bottom-6 right-6 z-40 bg-gray-900/80 backdrop-blur-md border border-gray-700 p-3 rounded-full shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:bg-gray-800 hover:border-purple-400 hover:scale-110 transition-all duration-300 focus:outline-none flex items-center justify-center w-14 h-14 group">
         <i id="musicIcon" class="fas fa-volume-mute text-gray-400 group-hover:text-white transition-colors text-xl"></i>
     </button>
 
     <!-- NAVBAR -->
-    <nav class="sticky top-0 z-40 bg-galaxy-dark/80 backdrop-blur-lg border-b border-gray-800">
+    <nav class="fixed top-0 w-full z-40 bg-galaxy-dark/80 backdrop-blur-lg border-b border-gray-800/50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0 cursor-pointer hover:opacity-80 transition" onclick="window.scrollTo(0,0)">
                     <span class="text-xl font-bold font-mono tracking-tight">
                         <span class="text-white">Portfolio </span><span class="bg-gradient-to-r from-orange-400 to-purple-500 bg-clip-text text-transparent">Farrel</span>
                     </span>
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-6 font-medium text-sm">
-                        <a href="#home" class="hover:text-purple-400 transition">Home</a>
-                        <a href="#about" class="hover:text-purple-400 transition">About</a>
-                        <a href="#skills" class="hover:text-purple-400 transition">Skills</a>
-                        <a href="#experience" class="hover:text-purple-400 transition">Experience</a>
-                        <a href="#insights" class="hover:text-purple-400 transition">Insights</a>
+                    <div class="ml-10 flex items-baseline space-x-8 font-medium text-sm">
+                        <a href="#home" class="hover:text-purple-400 transition-colors">Home</a>
+                        <a href="#about" class="hover:text-purple-400 transition-colors">About</a>
+                        <a href="#experience" class="hover:text-purple-400 transition-colors">Experience</a>
+                        <a href="#insights" class="hover:text-purple-400 transition-colors">Insights</a>
                     </div>
                 </div>
                 <div class="md:hidden">
-                    <button id="menuBtn" class="text-gray-400 hover:text-white focus:outline-none"><i class="fas fa-bars text-xl"></i></button>
+                    <button id="menuBtn" class="text-gray-400 hover:text-white focus:outline-none"><i class="fas fa-bars text-2xl"></i></button>
                 </div>
             </div>
         </div>
-        <div id="mobileMenu" class="hidden md:hidden bg-galaxy-dark/95 border-b border-gray-800 px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
-            <a href="#about" class="block py-2 hover:text-purple-400 pl-4">About</a>
-            <a href="#experience" class="block py-2 hover:text-purple-400 pl-4">Experience</a>
-            <a href="#insights" class="block py-2 hover:text-purple-400 pl-4">Insights</a>
+        <div id="mobileMenu" class="hidden md:hidden bg-galaxy-dark/95 border-b border-gray-800 px-4 pt-2 pb-6 space-y-4 text-sm font-medium shadow-2xl">
+            <a href="#about" class="block hover:text-purple-400 pl-4 transition-colors">About</a>
+            <a href="#experience" class="block hover:text-purple-400 pl-4 transition-colors">Experience</a>
+            <a href="#insights" class="block hover:text-purple-400 pl-4 transition-colors">Insights</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
-    <section id="home" class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 relative">
-        <div class="max-w-4xl mx-auto text-center z-10 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-            <div class="inline-block bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
+    <section id="home" class="min-h-screen flex items-center justify-center px-4 relative pt-20">
+        <!-- Glowing Orb behind text -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div class="max-w-4xl mx-auto text-center z-10 reveal">
+            <div class="inline-block bg-white/5 border border-white/10 text-purple-300 text-xs font-semibold px-5 py-2 rounded-full mb-8 backdrop-blur-sm tracking-wider uppercase">
                 Software Engineer • UI/UX Enthusiast
             </div>
-            <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight mb-4">
-                Hi, I'm <span class="bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">Farrel Ariq Nadhil</span>
+            <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                Hi, I'm <br class="sm:hidden">
+                <span class="bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">Farrel Ariq Nadhil</span>
             </h1>
-            <p class="text-xl sm:text-2xl font-medium text-gray-400 mb-6 h-8"><span id="typing-text" class="typing-cursor"></span></p>
-            <p class="text-gray-400 max-w-2xl mx-auto mb-8 text-sm sm:text-base leading-relaxed">
+            <p class="text-xl sm:text-2xl font-medium text-gray-300 mb-8 h-8"><span id="typing-text" class="typing-cursor"></span></p>
+            <p class="text-gray-400 max-w-2xl mx-auto mb-12 text-base leading-relaxed">
                 Bridging the gap between aesthetic design and robust system architectures. From Padang to Batam, I engineer scalable mobile applications and full-stack platforms that solve complex real-world problems.
             </p>
             
-            <div class="flex flex-wrap justify-center gap-4 text-sm mb-8">
-                <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=farrelariq3@gmail.com" target="_blank" class="flex items-center gap-2 hover:text-purple-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-purple-400"><i class="fas fa-envelope text-purple-400"></i> farrelariq3@gmail.com</a>
-                <a href="tel:+6289520667843" class="flex items-center gap-2 hover:text-purple-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-purple-400"><i class="fas fa-phone text-purple-400"></i> +6289520667843</a>
-                <a href="https://www.google.com/maps/place/Batam,+Batam+City,+Riau+Islands" target="_blank" class="flex items-center gap-2 hover:text-purple-400 transition bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:border-purple-400"><i class="fas fa-map-marker-alt text-purple-400"></i> Batam, Indonesia</a>
+            <div class="flex flex-wrap justify-center gap-4 text-sm mb-12">
+                <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=farrelariq3@gmail.com" target="_blank" class="flex items-center gap-2 hover:bg-white/10 transition-all bg-white/5 px-5 py-2.5 rounded-full border border-white/10"><i class="fas fa-envelope text-purple-400"></i> farrelariq3@gmail.com</a>
+                <a href="tel:+6289520667843" class="flex items-center gap-2 hover:bg-white/10 transition-all bg-white/5 px-5 py-2.5 rounded-full border border-white/10"><i class="fas fa-phone text-purple-400"></i> +6289520667843</a>
+                <a href="https://www.google.com/maps/place/Batam,+Batam+City,+Riau+Islands" target="_blank" class="flex items-center gap-2 hover:bg-white/10 transition-all bg-white/5 px-5 py-2.5 rounded-full border border-white/10"><i class="fas fa-map-marker-alt text-purple-400"></i> Batam, Indonesia</a>
             </div>
 
-            <div class="flex justify-center gap-4">
-                <a href="#experience" class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg shadow-[0_0_15px_rgba(124,58,237,0.4)] transition-all hover:scale-105">Explore Architecture</a>
+            <div class="flex justify-center items-center gap-6">
+                <a href="#experience" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:-translate-y-1">Explore Architecture</a>
             </div>
         </div>
     </section>
 
     <!-- ABOUT & SKILLS SECTION -->
-    <section id="about" class="py-20 max-w-6xl mx-auto px-4">
-        <!-- About Content -->
-        <div class="bg-galaxy-card/60 backdrop-blur-xl border border-gray-800 p-8 rounded-3xl hover:border-gray-600 transition-colors duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)] reveal opacity-0 translate-y-10 mb-12">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6 text-white">Systemic Thinker, <br><span class="text-purple-400">Creative Problem Solver.</span></h2>
-                    <p class="text-gray-300 leading-relaxed mb-4 text-sm sm:text-base">
-                        With a robust academic foundation in Software Engineering Technology at Batam State Polytechnic, I view coding not just as typing syntax, but as architecting solutions. My journey has involved leading frontend integrations, implementing OCR automation, and securing <strong class="text-white">1st Place at the PBL Expo 2024</strong>.
-                    </p>
-                    <p class="text-gray-400 leading-relaxed text-sm sm:text-base mb-6">
-                        Beyond the screen, I recharge by exploring immersive gaming worlds and drawing creative UI inspiration from evening sunsets. Continuously seeking growth, my long-term aspiration involves pursuing a second bachelor's degree in the southwestern hemisphere.
-                    </p>
+    <section id="about" class="py-24 max-w-6xl mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <h2 class="text-sm font-bold tracking-widest text-purple-400 uppercase mb-3">About Me</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold mb-6 text-white leading-tight">Systemic Thinker, <br>Creative Problem Solver.</h3>
+                <p class="text-gray-400 leading-relaxed text-base mb-5">
+                    With a robust academic foundation in Software Engineering Technology at Batam State Polytechnic, I view coding not just as typing syntax, but as architecting solutions. My journey has involved leading frontend integrations, implementing OCR automation, and securing <strong class="text-white">1st Place at the PBL Expo 2024</strong>.
+                </p>
+                <p class="text-gray-400 leading-relaxed text-base">
+                    Beyond the screen, I recharge by exploring immersive gaming worlds and drawing creative UI inspiration from evening sunsets. Continuously seeking growth, my long-term aspiration involves pursuing a second bachelor's degree in the southwestern hemisphere.
+                </p>
+            </div>
+            
+            <!-- Floating Skills Grid -->
+            <div class="grid grid-cols-2 gap-6 relative">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+                
+                <div class="bg-galaxy-card/80 backdrop-blur-md p-6 rounded-2xl border border-gray-800/50 shadow-xl reveal floating">
+                    <i class="fas fa-mobile-alt text-3xl text-blue-400 mb-4 block"></i>
+                    <h4 class="font-bold text-white text-base">Mobile Native</h4>
+                    <p class="text-xs text-gray-500 mt-2">Kotlin & Jetpack Compose</p>
                 </div>
-                <!-- Skills Cards -->
-                <div id="skills" class="grid grid-cols-2 gap-4">
-                    <div class="bg-galaxy-dark/50 p-6 rounded-2xl border border-gray-800 text-center hover:-translate-y-2 hover:border-blue-500/50 transition-all">
-                        <i class="fas fa-mobile-alt text-3xl text-blue-400 mb-3"></i>
-                        <h4 class="font-bold text-white text-sm">Mobile Native</h4>
-                        <p class="text-xs text-gray-500 mt-1">Kotlin & Jetpack Compose</p>
-                    </div>
-                    <div class="bg-galaxy-dark/50 p-6 rounded-2xl border border-gray-800 text-center hover:-translate-y-2 hover:border-purple-500/50 transition-all">
-                        <i class="fas fa-server text-3xl text-purple-400 mb-3"></i>
-                        <h4 class="font-bold text-white text-sm">Backend Scalability</h4>
-                        <p class="text-xs text-gray-500 mt-1">Laravel & REST APIs</p>
-                    </div>
-                    <div class="bg-galaxy-dark/50 p-6 rounded-2xl border border-gray-800 text-center hover:-translate-y-2 hover:border-cyan-400/50 transition-all">
-                        <i class="fas fa-database text-3xl text-cyan-400 mb-3"></i>
-                        <h4 class="font-bold text-white text-sm">Data Architecture</h4>
-                        <p class="text-xs text-gray-500 mt-1">MySQL & Data Inference</p>
-                    </div>
-                    <div class="bg-galaxy-dark/50 p-6 rounded-2xl border border-gray-800 text-center hover:-translate-y-2 hover:border-indigo-400/50 transition-all">
-                        <i class="fas fa-brain text-3xl text-indigo-400 mb-3"></i>
-                        <h4 class="font-bold text-white text-sm">AI Integration</h4>
-                        <p class="text-xs text-gray-500 mt-1">YOLO Object Detection</p>
-                    </div>
+                <div class="bg-galaxy-card/80 backdrop-blur-md p-6 rounded-2xl border border-gray-800/50 shadow-xl reveal delay-100 floating float-delay-1 mt-8">
+                    <i class="fas fa-server text-3xl text-purple-400 mb-4 block"></i>
+                    <h4 class="font-bold text-white text-base">Backend Logic</h4>
+                    <p class="text-xs text-gray-500 mt-2">Laravel & REST APIs</p>
+                </div>
+                <div class="bg-galaxy-card/80 backdrop-blur-md p-6 rounded-2xl border border-gray-800/50 shadow-xl reveal delay-200 floating float-delay-2 -mt-8">
+                    <i class="fas fa-database text-3xl text-cyan-400 mb-4 block"></i>
+                    <h4 class="font-bold text-white text-base">Data Arch</h4>
+                    <p class="text-xs text-gray-500 mt-2">MySQL & Data Inference</p>
+                </div>
+                <div class="bg-galaxy-card/80 backdrop-blur-md p-6 rounded-2xl border border-gray-800/50 shadow-xl reveal delay-300 floating float-delay-1">
+                    <i class="fas fa-brain text-3xl text-orange-400 mb-4 block"></i>
+                    <h4 class="font-bold text-white text-base">AI Integration</h4>
+                    <p class="text-xs text-gray-500 mt-2">YOLO Object Detection</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- EXPERIENCE SECTION (REORDERED) -->
-    <section id="experience" class="py-20 max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-bold mb-16 text-center reveal opacity-0 translate-y-10 transition-all duration-700 ease-out"><i class="fas fa-book-open text-purple-400 mr-3"></i>Project Chronicles</h2>
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="py-24 max-w-6xl mx-auto px-4 border-t border-gray-800/50">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-sm font-bold tracking-widest text-purple-400 uppercase mb-3">Portfolio</h2>
+            <h3 class="text-3xl sm:text-4xl font-bold text-white">Project Chronicles</h3>
+        </div>
         
         <div class="grid md:grid-cols-2 gap-8">
             <!-- Card 1: CLARITY -->
-            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-green-500/50 hover:shadow-[0_0_30px_rgba(34,197,94,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-clarity')">
-                <span class="text-green-400 text-xs font-bold tracking-widest mb-2 block">PROJECT I • FEB 2024</span>
+            <div class="reveal bg-galaxy-card/40 backdrop-blur-md border border-gray-800/60 rounded-3xl p-8 sm:p-10 hover:bg-gray-800/40 hover:border-green-500/50 transition-all duration-300 flex flex-col h-full group cursor-pointer" onclick="openModal('modal-clarity')">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="text-green-400 text-xs font-bold tracking-widest uppercase">Project I • Feb 2024</span>
+                    <div class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 group-hover:scale-110 transition-transform"><i class="fas fa-chart-pie"></i></div>
+                </div>
                 <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-green-400 transition-colors">Clarity Analytics</h3>
-                <p class="text-sm text-gray-400 flex-grow mb-6">Transformed complex activity logs into interactive D3.js reporting dashboards. 1st Place at the PBL Expo 2024.</p>
-                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
-                    <span class="text-xs text-gray-500 uppercase tracking-widest">Read Chapter <i class="fas fa-arrow-right ml-1"></i></span>
+                <p class="text-base text-gray-400 flex-grow mb-8 leading-relaxed">Transformed complex activity logs into interactive D3.js reporting dashboards. 1st Place at the PBL Expo 2024.</p>
+                <div class="flex items-center justify-between mt-auto">
+                    <span class="text-sm font-semibold text-white group-hover:text-green-400 transition-colors">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
                 </div>
             </div>
 
             <!-- Card 2: AGRIFUTURE -->
-            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-indigo-500/50 hover:shadow-[0_0_30px_rgba(99,102,241,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-agri')">
-                <span class="text-indigo-400 text-xs font-bold tracking-widest mb-2 block">PROJECT II • SEP 2024</span>
+            <div class="reveal delay-100 bg-galaxy-card/40 backdrop-blur-md border border-gray-800/60 rounded-3xl p-8 sm:p-10 hover:bg-gray-800/40 hover:border-indigo-500/50 transition-all duration-300 flex flex-col h-full group cursor-pointer" onclick="openModal('modal-agri')">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="text-indigo-400 text-xs font-bold tracking-widest uppercase">Project II • Sep 2024</span>
+                    <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform"><i class="fas fa-seedling"></i></div>
+                </div>
                 <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">Agrifuture Platform</h3>
-                <p class="text-sm text-gray-400 flex-grow mb-6">Android-based agricultural learning platform utilizing Jetpack Compose and Retrofit for highly responsive UI performance.</p>
-                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
-                    <span class="text-xs text-gray-500 uppercase tracking-widest">Read Chapter <i class="fas fa-arrow-right ml-1"></i></span>
+                <p class="text-base text-gray-400 flex-grow mb-8 leading-relaxed">Android-based agricultural learning platform utilizing Jetpack Compose and Retrofit for highly responsive UI performance.</p>
+                <div class="flex items-center justify-between mt-auto">
+                    <span class="text-sm font-semibold text-white group-hover:text-indigo-400 transition-colors">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
                 </div>
             </div>
 
             <!-- Card 3: LUMINA -->
-            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(37,99,235,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-lumina')">
-                <span class="text-blue-400 text-xs font-bold tracking-widest mb-2 block">PROJECT III • FEB 2024</span>
+            <div class="reveal bg-galaxy-card/40 backdrop-blur-md border border-gray-800/60 rounded-3xl p-8 sm:p-10 hover:bg-gray-800/40 hover:border-blue-500/50 transition-all duration-300 flex flex-col h-full group cursor-pointer" onclick="openModal('modal-lumina')">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="text-blue-400 text-xs font-bold tracking-widest uppercase">Project III • Feb 2024</span>
+                    <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fas fa-road"></i></div>
+                </div>
                 <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">Lumina AI Pothole Detection</h3>
-                <p class="text-sm text-gray-400 flex-grow mb-6">A mobile-based crowdsourced road damage tracking system integrating YOLO-based image detection directly into Android.</p>
-                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
-                    <span class="text-xs text-gray-500 uppercase tracking-widest">Read Chapter <i class="fas fa-arrow-right ml-1"></i></span>
+                <p class="text-base text-gray-400 flex-grow mb-8 leading-relaxed">A mobile-based crowdsourced road damage tracking system integrating YOLO-based image detection directly into Android.</p>
+                <div class="flex items-center justify-between mt-auto">
+                    <span class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
                 </div>
             </div>
             
             <!-- Card 4: HOMI -->
-            <div class="reveal opacity-0 translate-y-10 transition-all duration-700 ease-out bg-galaxy-card/40 backdrop-blur-md border border-gray-800 rounded-2xl p-8 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(124,58,237,0.1)] transition-all flex flex-col h-full group cursor-pointer" onclick="openModal('modal-homi')">
-                <span class="text-purple-400 text-xs font-bold tracking-widest mb-2 block">PROJECT IV • AUG 2025</span>
+            <div class="reveal delay-100 bg-galaxy-card/40 backdrop-blur-md border border-gray-800/60 rounded-3xl p-8 sm:p-10 hover:bg-gray-800/40 hover:border-purple-500/50 transition-all duration-300 flex flex-col h-full group cursor-pointer" onclick="openModal('modal-homi')">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="text-purple-400 text-xs font-bold tracking-widest uppercase">Project IV • Aug 2025</span>
+                    <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform"><i class="fas fa-city"></i></div>
+                </div>
                 <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">Homi Management System</h3>
-                <p class="text-sm text-gray-400 flex-grow mb-6">A comprehensive Laravel housing platform featuring automated document generation and OCR-based verification.</p>
-                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
-                    <span class="text-xs text-gray-500 uppercase tracking-widest">Read Chapter <i class="fas fa-arrow-right ml-1"></i></span>
+                <p class="text-base text-gray-400 flex-grow mb-8 leading-relaxed">A comprehensive Laravel housing platform featuring automated document generation and OCR-based verification.</p>
+                <div class="flex items-center justify-between mt-auto">
+                    <span class="text-sm font-semibold text-white group-hover:text-purple-400 transition-colors">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW SECTION: ENGINEERING INSIGHTS -->
-    <section id="insights" class="py-20 max-w-6xl mx-auto px-4 border-t border-gray-800/50">
-        <div class="mb-12 reveal opacity-0 translate-y-10 transition-all duration-700">
-            <h2 class="text-3xl font-bold text-white"><i class="fas fa-pen-nib text-orange-400 mr-3"></i>Engineering Insights</h2>
-            <p class="text-gray-400 mt-2 text-sm">Notes on architecture, UI/UX methodology, and technical challenges.</p>
+    <!-- INSIGHTS SECTION -->
+    <section id="insights" class="py-24 max-w-6xl mx-auto px-4 border-t border-gray-800/50">
+        <div class="mb-16 reveal">
+            <h2 class="text-sm font-bold tracking-widest text-orange-400 uppercase mb-3">Articles & Thoughts</h2>
+            <h3 class="text-3xl sm:text-4xl font-bold text-white">Engineering Insights</h3>
         </div>
         
-        <div class="grid md:grid-cols-3 gap-6">
-            <a href="#" class="block bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:bg-galaxy-card/80 transition-all duration-300 reveal opacity-0 translate-y-10">
-                <div class="text-orange-400 text-xs font-bold mb-2">ANDROID ARCHITECTURE</div>
-                <h3 class="text-lg font-bold text-white mb-3 leading-snug">Modern Routing: Isolating Navigation</h3>
-                <p class="text-sm text-gray-400 mb-4 line-clamp-3">In Jetpack Compose, state hoisting can get messy. Here is my approach to decoupling the bottom navigation bar into a dedicated file to maintain a clean UI hierarchy.</p>
-                <span class="text-xs text-gray-500 border-t border-gray-800 block pt-3">5 min read</span>
+        <div class="grid md:grid-cols-3 gap-8">
+            <a href="#" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal">
+                <div class="text-orange-400 text-xs font-bold mb-4 tracking-wider">ANDROID ARCHITECTURE</div>
+                <h3 class="text-xl font-bold text-white mb-4 leading-snug group-hover:text-orange-400 transition-colors">Modern Routing: Isolating Navigation</h3>
+                <p class="text-sm text-gray-400 mb-6 leading-relaxed">In Jetpack Compose, state hoisting can get messy. Here is my approach to decoupling the bottom navigation bar into a dedicated file.</p>
+                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">5 min read</span>
             </a>
             
-            <a href="#" class="block bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:bg-galaxy-card/80 transition-all duration-300 reveal opacity-0 translate-y-10 delay-100">
-                <div class="text-purple-400 text-xs font-bold mb-2">DATA & UX</div>
-                <h3 class="text-lg font-bold text-white mb-3 leading-snug">Statistical Analysis for UX Inference</h3>
-                <p class="text-sm text-gray-400 mb-4 line-clamp-3">Designing software isn't just about writing code; it's about solving user problems. By applying rigorous statistical analysis to survey data, our team successfully pivoted the dashboard layout.</p>
-                <span class="text-xs text-gray-500 border-t border-gray-800 block pt-3">7 min read</span>
+            <a href="#" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal delay-100">
+                <div class="text-purple-400 text-xs font-bold mb-4 tracking-wider">DATA & UX</div>
+                <h3 class="text-xl font-bold text-white mb-4 leading-snug group-hover:text-purple-400 transition-colors">Statistical Analysis for UX Inference</h3>
+                <p class="text-sm text-gray-400 mb-6 leading-relaxed">Designing software isn't just writing code. By applying rigorous statistical analysis to survey data, our team pivoted the layout.</p>
+                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">7 min read</span>
             </a>
 
-            <a href="#" class="block bg-galaxy-card/30 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:bg-galaxy-card/80 transition-all duration-300 reveal opacity-0 translate-y-10 delay-200">
-                <div class="text-yellow-400 text-xs font-bold mb-2">TEAM DYNAMICS</div>
-                <h3 class="text-lg font-bold text-white mb-3 leading-snug">The Blueprint of a 1st Place PBL Product</h3>
-                <p class="text-sm text-gray-400 mb-4 line-clamp-3">Winning the PBL Expo wasn't just about the tech stack. It required agile collaboration, strict REST API contracts, and an obsession with scalable deliverables.</p>
-                <span class="text-xs text-gray-500 border-t border-gray-800 block pt-3">6 min read</span>
+            <a href="#" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal delay-200">
+                <div class="text-blue-400 text-xs font-bold mb-4 tracking-wider">TEAM DYNAMICS</div>
+                <h3 class="text-xl font-bold text-white mb-4 leading-snug group-hover:text-blue-400 transition-colors">Blueprint of a 1st Place PBL Product</h3>
+                <p class="text-sm text-gray-400 mb-6 leading-relaxed">Winning the PBL Expo required agile collaboration, strict REST API contracts, and an obsession with scalable deliverables.</p>
+                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">6 min read</span>
             </a>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-galaxy-dark/90 py-10 border-t border-gray-800 text-center relative z-10">
-        <p class="text-sm font-bold text-gray-300 mb-2">FARREL ARIQ NADHIL</p>
-        <p class="text-xs text-gray-500">© 2026 Engineered with Lightweight HTML5 Canvas & Tailwind CSS. Hosted on Vercel.</p>
+    <footer class="py-12 border-t border-gray-800/50 text-center relative z-10">
+        <p class="text-base font-bold text-white mb-2">FARREL ARIQ NADHIL</p>
+        <p class="text-sm text-gray-500">© 2026 Engineered with Lightweight Canvas & Tailwind CSS. Hosted on Vercel.</p>
     </footer>
 
     <!-- ========================================================= -->
@@ -242,157 +283,139 @@
     <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[60] modal-hidden transition-all duration-500" onclick="closeAllModals()"></div>
 
     <!-- Modal 1: CLARITY -->
-    <div id="modal-clarity" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(34,197,94,0.3)] custom-scrollbar">
-        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
+    <div id="modal-clarity" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-gray-900 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(34,197,94,0.15)] custom-scrollbar">
+        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10 bg-black/50 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm"><i class="fas fa-times"></i></button>
         <div class="flex flex-col md:flex-row h-full">
-            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-green-900 via-emerald-900 to-black relative overflow-hidden">
-                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <i class="fas fa-chart-pie text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
-                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Clarity<br>Analytics</h2>
-                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">PROJECT I</span>
+            <div class="w-full md:w-2/5 p-10 flex flex-col items-center justify-center bg-gradient-to-br from-green-900 via-emerald-900 to-black relative overflow-hidden">
+                <i class="fas fa-chart-pie text-7xl text-white/40 mb-6"></i>
+                <h2 class="text-3xl font-black text-white tracking-widest text-center uppercase">Clarity<br>Analytics</h2>
+                <span class="absolute bottom-6 text-white/40 text-xs font-mono tracking-widest">PROJECT I</span>
             </div>
-            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
-                <span class="text-green-400 text-xs font-bold tracking-widest mb-2 block uppercase">Data Visualization Legend</span>
-                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Interactive Analytics <br>Dashboard</h3>
+            <div class="w-full md:w-3/5 p-8 sm:p-12">
+                <span class="text-green-400 text-xs font-bold tracking-widest mb-3 block uppercase">Data Visualization Legend</span>
+                <h3 class="text-4xl font-bold text-white mb-6 leading-tight">Interactive Analytics Dashboard</h3>
                 
-                <div class="flex gap-2 mb-8">
-                    <span class="text-xs bg-green-500/20 text-green-300 border border-green-500/30 px-3 py-1 rounded-full">D3.js</span>
-                    <span class="text-xs bg-green-500/20 text-green-300 border border-green-500/30 px-3 py-1 rounded-full">Bootstrap</span>
-                    <span class="text-xs bg-green-500/20 text-green-300 border border-green-500/30 px-3 py-1 rounded-full">Laravel</span>
+                <div class="flex gap-3 mb-8">
+                    <span class="text-xs font-medium bg-gray-800 text-green-400 px-4 py-1.5 rounded-full border border-gray-700">D3.js</span>
+                    <span class="text-xs font-medium bg-gray-800 text-green-400 px-4 py-1.5 rounded-full border border-gray-700">Bootstrap</span>
+                    <span class="text-xs font-medium bg-gray-800 text-green-400 px-4 py-1.5 rounded-full border border-gray-700">Laravel</span>
                 </div>
 
-                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
-                    <p><strong class="text-white">The Conflict:</strong> International Office activity logs were complex, high-volume, and nearly impossible to interpret manually.</p>
-                    <p><strong class="text-white">The Resolution:</strong> Our 6-member engineering team built a robust core infrastructure using Laravel and MySQL. I focused on integrating D3.js and customized Bootstrap to render dynamic, interactive data charts that made the data digestible.</p>
-                    <p><strong class="text-white">The Victory:</strong> Through agile collaboration and rigorous statistical analysis, the product was universally praised and successfully secured <strong class="text-white">1st Place at the PBL Expo 2024</strong>.</p>
+                <div class="space-y-5 text-gray-400 text-base leading-relaxed mb-10">
+                    <p><strong class="text-gray-200">The Conflict:</strong> International Office activity logs were complex, high-volume, and nearly impossible to interpret manually.</p>
+                    <p><strong class="text-gray-200">The Resolution:</strong> Our 6-member engineering team built a robust core infrastructure using Laravel and MySQL. I focused on integrating D3.js and customized Bootstrap to render dynamic, interactive data charts that made the data digestible.</p>
+                    <p><strong class="text-gray-200">The Victory:</strong> Through agile collaboration and rigorous statistical analysis, the product was universally praised and successfully secured <strong class="text-green-400">1st Place at the PBL Expo 2024</strong>.</p>
                 </div>
 
-                <div class="flex gap-4">
-                    <a href="https://www.youtube.com/watch?v=z_HbitSwZqs" target="_blank" class="w-full text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Watch The Trailer</a>
-                </div>
+                <a href="https://www.youtube.com/watch?v=z_HbitSwZqs" target="_blank" class="inline-flex items-center justify-center w-full bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-lg"><i class="fab fa-youtube mr-3 text-red-600"></i> Watch The Trailer</a>
             </div>
         </div>
     </div>
 
     <!-- Modal 2: AGRIFUTURE -->
-    <div id="modal-agri" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(99,102,241,0.3)] custom-scrollbar">
-        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
+    <div id="modal-agri" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-gray-900 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(99,102,241,0.15)] custom-scrollbar">
+        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10 bg-black/50 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm"><i class="fas fa-times"></i></button>
         <div class="flex flex-col md:flex-row h-full">
-            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900 via-violet-900 to-black relative overflow-hidden">
-                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <i class="fas fa-seedling text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
-                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Agri<br>Future</h2>
-                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">PROJECT II</span>
+            <div class="w-full md:w-2/5 p-10 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900 via-violet-900 to-black relative overflow-hidden">
+                <i class="fas fa-seedling text-7xl text-white/40 mb-6"></i>
+                <h2 class="text-3xl font-black text-white tracking-widest text-center uppercase">Agri<br>Future</h2>
+                <span class="absolute bottom-6 text-white/40 text-xs font-mono tracking-widest">PROJECT II</span>
             </div>
-            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
-                <span class="text-indigo-400 text-xs font-bold tracking-widest mb-2 block uppercase">Mobile Ecosystem Epic</span>
-                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Learning Platform <br>For Farmers</h3>
+            <div class="w-full md:w-3/5 p-8 sm:p-12">
+                <span class="text-indigo-400 text-xs font-bold tracking-widest mb-3 block uppercase">Mobile Ecosystem Epic</span>
+                <h3 class="text-4xl font-bold text-white mb-6 leading-tight">Learning Platform For Farmers</h3>
                 
-                <div class="flex gap-2 mb-8">
-                    <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full">Jetpack Compose</span>
-                    <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full">Retrofit</span>
+                <div class="flex gap-3 mb-8">
+                    <span class="text-xs font-medium bg-gray-800 text-indigo-400 px-4 py-1.5 rounded-full border border-gray-700">Jetpack Compose</span>
+                    <span class="text-xs font-medium bg-gray-800 text-indigo-400 px-4 py-1.5 rounded-full border border-gray-700">Retrofit</span>
                 </div>
 
-                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
-                    <p><strong class="text-white">The Vision:</strong> To create an educational hub providing localized training materials and live mentoring modules specifically tailored for youth and beginner farmers.</p>
-                    <p><strong class="text-white">The Journey:</strong> I focused heavily on modern Android native development utilizing Kotlin and Jetpack Compose to ensure a highly reactive and declarative UI architecture.</p>
-                    <p><strong class="text-white">The Execution:</strong> Implemented robust network calls using Retrofit. By partnering closely with backend developers to strictly define REST API contracts, we achieved seamless data synchronization and zero-latency UI performance.</p>
+                <div class="space-y-5 text-gray-400 text-base leading-relaxed mb-10">
+                    <p><strong class="text-gray-200">The Vision:</strong> To create an educational hub providing localized training materials and live mentoring modules specifically tailored for youth and beginner farmers.</p>
+                    <p><strong class="text-gray-200">The Journey:</strong> I focused heavily on modern Android native development utilizing Kotlin and Jetpack Compose to ensure a highly reactive and declarative UI architecture.</p>
+                    <p><strong class="text-gray-200">The Execution:</strong> Implemented robust network calls using Retrofit. By partnering closely with backend developers to strictly define REST API contracts, we achieved seamless data synchronization and zero-latency UI performance.</p>
                 </div>
 
-                <div class="flex gap-4">
-                    <a href="https://www.youtube.com/watch?v=dm3yY5fFbBo" target="_blank" class="w-full text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Watch The Trailer</a>
-                </div>
+                <a href="https://www.youtube.com/watch?v=dm3yY5fFbBo" target="_blank" class="inline-flex items-center justify-center w-full bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-lg"><i class="fab fa-youtube mr-3 text-red-600"></i> Watch The Trailer</a>
             </div>
         </div>
     </div>
 
     <!-- Modal 3: LUMINA -->
-    <div id="modal-lumina" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(37,99,235,0.3)] custom-scrollbar">
-        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
+    <div id="modal-lumina" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-gray-900 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(37,99,235,0.15)] custom-scrollbar">
+        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10 bg-black/50 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm"><i class="fas fa-times"></i></button>
         <div class="flex flex-col md:flex-row h-full">
-            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-sky-900 to-black relative overflow-hidden">
-                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <i class="fas fa-road text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
-                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Lumina<br>A.I.</h2>
-                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">PROJECT III</span>
+            <div class="w-full md:w-2/5 p-10 flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-sky-900 to-black relative overflow-hidden">
+                <i class="fas fa-road text-7xl text-white/40 mb-6"></i>
+                <h2 class="text-3xl font-black text-white tracking-widest text-center uppercase">Lumina<br>A.I.</h2>
+                <span class="absolute bottom-6 text-white/40 text-xs font-mono tracking-widest">PROJECT III</span>
             </div>
-            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
-                <span class="text-blue-400 text-xs font-bold tracking-widest mb-2 block uppercase">Artificial Intelligence Saga</span>
-                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Pothole Detection <br>System</h3>
+            <div class="w-full md:w-3/5 p-8 sm:p-12">
+                <span class="text-blue-400 text-xs font-bold tracking-widest mb-3 block uppercase">Artificial Intelligence Saga</span>
+                <h3 class="text-4xl font-bold text-white mb-6 leading-tight">Pothole Detection System</h3>
                 
-                <div class="flex gap-2 mb-8">
-                    <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">Kotlin</span>
-                    <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">YOLO AI</span>
-                    <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">Laravel</span>
+                <div class="flex gap-3 mb-8">
+                    <span class="text-xs font-medium bg-gray-800 text-blue-400 px-4 py-1.5 rounded-full border border-gray-700">Kotlin</span>
+                    <span class="text-xs font-medium bg-gray-800 text-blue-400 px-4 py-1.5 rounded-full border border-gray-700">YOLO AI</span>
+                    <span class="text-xs font-medium bg-gray-800 text-blue-400 px-4 py-1.5 rounded-full border border-gray-700">Laravel</span>
                 </div>
 
-                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
-                    <p><strong class="text-white">The Conflict:</strong> Road damages were causing accidents, but reporting them was tedious and tracking was non-existent.</p>
-                    <p><strong class="text-white">My Role:</strong> Serving as the AI & Frontend Developer, I bridged the gap between machine learning engineers and end-users. I was responsible for mapping intuitive user workflows and integrating the complex AI models.</p>
-                    <p><strong class="text-white">The Resolution:</strong> We successfully built a crowdsourced mobile system. By integrating YOLO-based image detection directly into the Android interface, we enabled highly accurate, real-time road damage identification via device cameras.</p>
+                <div class="space-y-5 text-gray-400 text-base leading-relaxed mb-10">
+                    <p><strong class="text-gray-200">The Conflict:</strong> Road damages were causing accidents, but reporting them was tedious and tracking was non-existent.</p>
+                    <p><strong class="text-gray-200">My Role:</strong> Serving as the AI & Frontend Developer, I bridged the gap between machine learning engineers and end-users. I was responsible for mapping intuitive user workflows and integrating the complex AI models.</p>
+                    <p><strong class="text-gray-200">The Resolution:</strong> We successfully built a crowdsourced mobile system. By integrating YOLO-based image detection directly into the Android interface, we enabled highly accurate, real-time road damage identification via device cameras.</p>
                 </div>
 
-                <div class="flex gap-4">
-                    <a href="https://www.youtube.com/watch?v=sBUe6fRDZ5w" target="_blank" class="w-full text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Watch The Trailer</a>
-                </div>
+                <a href="https://www.youtube.com/watch?v=sBUe6fRDZ5w" target="_blank" class="inline-flex items-center justify-center w-full bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-lg"><i class="fab fa-youtube mr-3 text-red-600"></i> Watch The Trailer</a>
             </div>
         </div>
     </div>
 
     <!-- Modal 4: HOMI -->
-    <div id="modal-homi" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-galaxy-card/90 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(124,58,237,0.3)] custom-scrollbar">
-        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10"><i class="fas fa-times"></i></button>
+    <div id="modal-homi" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto bg-gray-900 border border-gray-700 rounded-3xl z-[70] modal-hidden transition-all duration-500 shadow-[0_0_50px_rgba(124,58,237,0.15)] custom-scrollbar">
+        <button onclick="closeAllModals()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl z-10 bg-black/50 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm"><i class="fas fa-times"></i></button>
         <div class="flex flex-col md:flex-row h-full">
-            <div class="w-full md:w-2/5 p-6 sm:p-10 flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-black relative overflow-hidden">
-                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <i class="fas fa-city text-7xl text-white/50 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"></i>
-                <h2 class="text-2xl font-black text-white tracking-widest text-center uppercase drop-shadow-lg">Homi<br>System</h2>
-                <span class="absolute bottom-6 text-white/30 text-xs font-mono tracking-widest">PROJECT IV</span>
+            <div class="w-full md:w-2/5 p-10 flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-black relative overflow-hidden">
+                <i class="fas fa-city text-7xl text-white/40 mb-6"></i>
+                <h2 class="text-3xl font-black text-white tracking-widest text-center uppercase">Homi<br>System</h2>
+                <span class="absolute bottom-6 text-white/40 text-xs font-mono tracking-widest">PROJECT IV</span>
             </div>
-            <div class="w-full md:w-3/5 p-8 sm:p-12 bg-galaxy-dark">
-                <span class="text-purple-400 text-xs font-bold tracking-widest mb-2 block uppercase">Digital Transformation Tale</span>
-                <h3 class="text-4xl font-black text-white mb-4 leading-tight">Housing Management <br>System</h3>
+            <div class="w-full md:w-3/5 p-8 sm:p-12">
+                <span class="text-purple-400 text-xs font-bold tracking-widest mb-3 block uppercase">Digital Transformation Tale</span>
+                <h3 class="text-4xl font-bold text-white mb-6 leading-tight">Housing Management System</h3>
                 
-                <div class="flex gap-2 mb-8">
-                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full">Laravel</span>
-                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full">MySQL</span>
-                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full">OCR Tech</span>
+                <div class="flex gap-3 mb-8">
+                    <span class="text-xs font-medium bg-gray-800 text-purple-400 px-4 py-1.5 rounded-full border border-gray-700">Laravel</span>
+                    <span class="text-xs font-medium bg-gray-800 text-purple-400 px-4 py-1.5 rounded-full border border-gray-700">MySQL</span>
+                    <span class="text-xs font-medium bg-gray-800 text-purple-400 px-4 py-1.5 rounded-full border border-gray-700">OCR Tech</span>
                 </div>
 
-                <div class="space-y-4 text-gray-400 text-sm leading-relaxed mb-8">
-                    <p><strong class="text-white">The Conflict:</strong> Housing administrations heavily relied on manual paperwork for resident services and payment verifications, causing significant delays and data discrepancies in Batam Center.</p>
-                    <p><strong class="text-white">The Resolution:</strong> We engineered a comprehensive digital platform. I specifically focused on the backend architecture, ensuring highly secure authentication and structuring robust API endpoints tested rigorously via Postman.</p>
-                    <p><strong class="text-white">The Climax:</strong> The integration of an OCR-based (Optical Character Recognition) payment verification pipeline and automated PDF letter generation successfully accelerated administrative validation by 40%.</p>
+                <div class="space-y-5 text-gray-400 text-base leading-relaxed mb-10">
+                    <p><strong class="text-gray-200">The Conflict:</strong> Housing administrations heavily relied on manual paperwork for resident services and payment verifications, causing significant delays and data discrepancies in Batam Center.</p>
+                    <p><strong class="text-gray-200">The Resolution:</strong> We engineered a comprehensive digital platform. I specifically focused on the backend architecture, ensuring highly secure authentication and structuring robust API endpoints tested rigorously via Postman.</p>
+                    <p><strong class="text-gray-200">The Climax:</strong> The integration of an OCR-based payment verification pipeline and automated PDF letter generation successfully accelerated administrative validation by 40%.</p>
                 </div>
 
-                <div class="flex gap-4">
-                    <a href="https://besthomi.online/" target="_blank" class="flex-1 text-center bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-xl font-bold transition-colors"><i class="fas fa-external-link-alt mr-2"></i> Live Demo</a>
-                    <a href="https://www.youtube.com/watch?v=Pw9TlcWuV5A" target="_blank" class="flex-1 text-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]"><i class="fab fa-youtube mr-2"></i> Trailer</a>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://besthomi.online/" target="_blank" class="flex-1 text-center bg-white hover:bg-gray-200 text-black px-6 py-4 rounded-xl font-bold transition-colors text-base"><i class="fas fa-external-link-alt mr-2"></i> Live Demo</a>
+                    <a href="https://www.youtube.com/watch?v=Pw9TlcWuV5A" target="_blank" class="flex-1 text-center bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 px-6 py-4 rounded-xl font-bold transition-colors text-base"><i class="fab fa-youtube mr-2 text-red-500"></i> Trailer</a>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- ========================================== -->
-    <!-- JAVASCRIPT LOGIC (VANILLA - SUPER LIGHT)   -->
-    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- 1. LIGHTWEIGHT VANILLA CANVAS BACKGROUND ---
+        // 1. LIGHTWEIGHT CANVAS BACKGROUND
         const canvas = document.getElementById('vanilla-canvas');
         const ctx = canvas.getContext('2d');
         
         let width, height;
         let particles = [];
         
-        // Cek apakah perangkat adalah mobile (berdasarkan ukuran layar)
         const isMobile = window.innerWidth < 768;
-        // Kurangi jumlah partikel drastis di HP agar super lancar
         const particleCount = isMobile ? 30 : 80;
-
-        // Palet warna senja (Sunset Aesthetic)
         const colors = ['#fb923c', '#f472b6', '#c084fc', '#818cf8'];
-        
         let mouse = { x: null, y: null, radius: 100 };
 
         function resize() {
@@ -403,7 +426,6 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // Hanya aktifkan pelacakan mouse di Desktop
         if (!isMobile) {
             window.addEventListener('mousemove', (e) => {
                 mouse.x = e.x;
@@ -450,7 +472,6 @@
                 particles[i].update();
                 particles[i].draw();
                 
-                // Gambar garis konstelasi jika partikel dekat dengan partikel lain (dan mouse di desktop)
                 for (let j = i; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
@@ -458,7 +479,7 @@
                     
                     if (distance < 80) {
                         ctx.beginPath();
-                        ctx.strokeStyle = particles[i].color + '40'; // 40 is hex for 25% opacity
+                        ctx.strokeStyle = particles[i].color + '40'; 
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -466,7 +487,6 @@
                     }
                 }
 
-                // Interaksi kursor mouse (Hanya desktop)
                 if (!isMobile && mouse.x != null) {
                     const dxMouse = particles[i].x - mouse.x;
                     const dyMouse = particles[i].y - mouse.y;
@@ -474,7 +494,7 @@
                     
                     if (distMouse < mouse.radius) {
                         ctx.beginPath();
-                        ctx.strokeStyle = particles[i].color + '80'; // 80 is hex for 50% opacity
+                        ctx.strokeStyle = particles[i].color + '80'; 
                         ctx.lineWidth = 1;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(mouse.x, mouse.y);
@@ -486,7 +506,7 @@
         }
         animateCanvas();
 
-        // --- 2. MODAL LOGIC ---
+        // 2. MODAL LOGIC
         const backdrop = document.getElementById('modal-backdrop');
         
         function openModal(modalId) {
@@ -513,7 +533,7 @@
             document.body.style.overflow = 'auto';
         }
 
-        // --- 3. TYPING EFFECT ---
+        // 3. TYPING EFFECT
         const textToType = "Architecting the Web & Mobile Future";
         const typingElement = document.getElementById('typing-text');
         let typeIndex = 0;
@@ -528,20 +548,19 @@
         }
         setTimeout(typeWriter, 500);
 
-        // --- 4. SCROLL REVEAL ANIMATION (EFFICIENT) ---
+        // 4. SCROLL REVEAL ANIMATION 
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
-                    entry.target.classList.remove('opacity-0', 'translate-y-10');
-                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.add('active');
                     revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // --- 5. AUDIO LOGIC ---
+        // 5. AUDIO LOGIC
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         const musicIcon = document.getElementById('musicIcon');
@@ -552,17 +571,15 @@
                 bgMusic.pause();
                 musicIcon.classList.remove('fa-compact-disc', 'text-purple-400', 'spin-slow');
                 musicIcon.classList.add('fa-volume-mute', 'text-gray-400');
-                musicToggle.classList.remove('border-purple-500');
             } else {
                 bgMusic.play();
                 musicIcon.classList.remove('fa-volume-mute', 'text-gray-400');
                 musicIcon.classList.add('fa-compact-disc', 'text-purple-400', 'spin-slow');
-                musicToggle.classList.add('border-purple-500');
             }
             isPlaying = !isPlaying;
         });
 
-        // Mobile Menu Setup
+        // 6. MOBILE MENU
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
