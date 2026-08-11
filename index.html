@@ -128,7 +128,7 @@
                 <a href="https://www.google.com/maps/place/Batam,+Batam+City,+Riau+Islands" target="_blank" class="flex items-center gap-2 hover:bg-white/10 transition-all bg-white/5 px-5 py-2.5 rounded-full border border-white/10"><i class="fas fa-map-marker-alt text-purple-400"></i> Batam, Indonesia</a>
             </div>
 
-            <!-- HERO BUTTONS -->
+            <!-- HERO BUTTONS (CV & Transkrip) -->
             <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
                 <a href="#experience" class="w-full sm:w-auto bg-purple-600 hover:bg-purple-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:-translate-y-1 text-center">Explore Architecture</a>
                 <a href="folder magang/CV Farrel Ariq Nadhil.pdf" target="_blank" download class="w-full sm:w-auto bg-transparent border border-purple-500 hover:bg-purple-500/10 text-purple-400 font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center gap-2"><i class="fas fa-download"></i> Download CV</a>
@@ -138,8 +138,11 @@
     </section>
 
     <!-- ABOUT & SKILLS SECTION -->
-    <section id="about" class="py-24 max-w-6xl mx-auto px-4">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
+    <section id="about" class="py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Menggunakan gap yang jauh lebih besar (lg:gap-24) agar teks dan kartu tidak berdempetan -->
+        <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            
+            <!-- Teks About -->
             <div class="reveal">
                 <h2 class="text-sm font-bold tracking-widest text-purple-400 uppercase mb-3">About Me</h2>
                 <h3 class="text-3xl sm:text-4xl font-bold mb-6 text-white leading-tight">Systemic Thinker, <br>Creative Problem Solver.</h3>
@@ -151,30 +154,33 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 relative">
+            <!-- Skills Cards Layout yang Diperbaiki (Aman dari overlapping) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 relative pb-12 sm:pb-0">
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none"></div>
                 
-                <div class="bg-galaxy-card/80 backdrop-blur-md p-8 rounded-2xl border border-gray-800/50 shadow-xl reveal floating">
+                <div class="bg-galaxy-card/80 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-gray-800/50 shadow-xl reveal floating">
                     <i class="fas fa-mobile-alt text-4xl text-blue-400 mb-5 block"></i>
                     <h4 class="font-bold text-white text-lg">Mobile Native</h4>
                     <p class="text-sm text-gray-500 mt-2">Kotlin & Jetpack Compose</p>
                 </div>
-                <div class="bg-galaxy-card/80 backdrop-blur-md p-8 rounded-2xl border border-gray-800/50 shadow-xl reveal delay-100 floating float-delay-1 sm:mt-12">
+                <!-- Penggunaan sm:translate-y-12 membuat kartu kanan agak turun dengan rapi -->
+                <div class="bg-galaxy-card/80 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-gray-800/50 shadow-xl reveal delay-100 floating float-delay-1 sm:translate-y-12">
                     <i class="fas fa-server text-4xl text-purple-400 mb-5 block"></i>
                     <h4 class="font-bold text-white text-lg">Backend Logic</h4>
                     <p class="text-sm text-gray-500 mt-2">Laravel & REST APIs</p>
                 </div>
-                <div class="bg-galaxy-card/80 backdrop-blur-md p-8 rounded-2xl border border-gray-800/50 shadow-xl reveal delay-200 floating float-delay-2 sm:-mt-12">
+                <div class="bg-galaxy-card/80 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-gray-800/50 shadow-xl reveal delay-200 floating float-delay-2">
                     <i class="fas fa-database text-4xl text-cyan-400 mb-5 block"></i>
                     <h4 class="font-bold text-white text-lg">Data Arch</h4>
                     <p class="text-sm text-gray-500 mt-2">MySQL & Data Inference</p>
                 </div>
-                <div class="bg-galaxy-card/80 backdrop-blur-md p-8 rounded-2xl border border-gray-800/50 shadow-xl reveal delay-300 floating float-delay-1">
+                <div class="bg-galaxy-card/80 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-gray-800/50 shadow-xl reveal delay-300 floating float-delay-1 sm:translate-y-12">
                     <i class="fas fa-brain text-4xl text-orange-400 mb-5 block"></i>
                     <h4 class="font-bold text-white text-lg">AI Integration</h4>
                     <p class="text-sm text-gray-500 mt-2">YOLO Object Detection</p>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -275,8 +281,10 @@
     <section class="py-24 max-w-4xl mx-auto px-4 text-center reveal border-t border-gray-800/50">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">Interested in collaborating?</h2>
         <p class="text-gray-400 mb-10 text-base leading-relaxed">I'm always open to discussing product design work, backend architecture, or potential partnership opportunities.</p>
+        
+        <!-- IKON EMAIL & SOSMED YANG SERAGAM -->
         <div class="flex flex-wrap justify-center items-center gap-6">
-            <a href="mailto:farrelariq3@gmail.com" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold px-10 py-4 rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:-translate-y-1 flex items-center gap-2 text-lg"><i class="fas fa-paper-plane"></i> farrelariq3@gmail.com</a>
+            <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=farrelariq3@gmail.com" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold px-6 py-4 rounded-xl transition-all hover:-translate-y-1 flex items-center gap-2"><i class="fas fa-envelope text-purple-400 text-2xl"></i></a>
             <a href="https://www.linkedin.com/in/farrel-nadhil/" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold px-6 py-4 rounded-xl transition-all hover:-translate-y-1 flex items-center gap-2"><i class="fab fa-linkedin text-blue-400 text-2xl"></i></a>
             <a href="https://github.com/farrel1234" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold px-6 py-4 rounded-xl transition-all hover:-translate-y-1 flex items-center gap-2"><i class="fab fa-github text-2xl"></i></a>
         </div>
