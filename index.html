@@ -52,8 +52,6 @@
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
-
-        /* Catatan: Animasi floating telah dihapus sepenuhnya dari sini agar tidak bentrok dengan layout */
     </style>
 </head>
 <body class="text-gray-200 font-sans relative antialiased overflow-x-hidden bg-galaxy-dark">
@@ -82,7 +80,8 @@
                         <a href="#home" class="hover:text-purple-400 transition-colors">Home</a>
                         <a href="#about" class="hover:text-purple-400 transition-colors">About</a>
                         <a href="#experience" class="hover:text-purple-400 transition-colors">Experience</a>
-                        <a href="#insights" class="hover:text-purple-400 transition-colors">Insights</a>
+                        <!-- TOMBOL MENU KE HALAMAN INSIGHTS -->
+                        <a href="insights.html" class="hover:text-orange-400 transition-colors font-bold"><i class="fas fa-book-open mr-1"></i> Insights & Stories</a>
                     </div>
                 </div>
                 <div class="md:hidden">
@@ -93,7 +92,7 @@
         <div id="mobileMenu" class="hidden md:hidden bg-galaxy-dark/95 border-b border-gray-800 px-4 pt-2 pb-6 space-y-4 text-sm font-medium shadow-2xl">
             <a href="#about" class="block hover:text-purple-400 pl-4 transition-colors">About</a>
             <a href="#experience" class="block hover:text-purple-400 pl-4 transition-colors">Experience</a>
-            <a href="#insights" class="block hover:text-purple-400 pl-4 transition-colors">Insights</a>
+            <a href="insights.html" class="block hover:text-orange-400 pl-4 transition-colors font-bold"><i class="fas fa-book-open mr-1"></i> Insights & Stories</a>
         </div>
     </nav>
 
@@ -115,13 +114,7 @@
                 Bridging the gap between aesthetic design and robust system architectures. From Padang to Batam, I engineer scalable mobile applications and full-stack platforms that solve complex real-world problems.
             </p>
             
-            <div class="flex flex-wrap justify-center gap-4 text-sm mb-12">
-                <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=farrelariq3@gmail.com" target="_blank" class="flex items-center gap-2 hover:bg-white/10 transition-all bg-white/5 px-5 py-2.5 rounded-full border border-white/10"><i class="fas fa-envelope text-purple-400"></i> farrelariq3@gmail.com</a>
-                <a href="tel:+6289520667843" class="flex items-center gap-2 hover:bg-white/10 transition-all bg-white/5 px-5 py-2.5 rounded-full border border-white/10"><i class="fas fa-phone text-purple-400"></i> +6289520667843</a>
-                <a href="https://www.google.com/maps/place/Batam,+Batam+City,+Riau+Islands" target="_blank" class="flex items-center gap-2 hover:bg-white/10 transition-all bg-white/5 px-5 py-2.5 rounded-full border border-white/10"><i class="fas fa-map-marker-alt text-purple-400"></i> Batam, Indonesia</a>
-            </div>
-
-            <!-- HERO BUTTONS -->
+            <!-- HERO BUTTONS (CV & Transkrip) -->
             <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
                 <a href="#experience" class="w-full sm:w-auto bg-purple-600 hover:bg-purple-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:-translate-y-1 text-center">Explore Architecture</a>
                 <a href="folder magang/CV Farrel Ariq Nadhil.pdf" target="_blank" download class="w-full sm:w-auto bg-transparent border border-purple-500 hover:bg-purple-500/10 text-purple-400 font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center gap-2"><i class="fas fa-download"></i> Download CV</a>
@@ -146,12 +139,10 @@
                 </p>
             </div>
             
-            <!-- Skills Cards Layout - Menggunakan Flexbox Kolom untuk mencegah tabrakan secara absolut -->
+            <!-- Skills Cards Layout (Flexbox Anti-Tabrak) -->
             <div class="flex flex-col sm:flex-row gap-6 relative pb-12 sm:pb-0">
-                <!-- Cahaya Latar -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none"></div>
                 
-                <!-- Kolom Kiri -->
                 <div class="flex-1 flex flex-col gap-6">
                     <div class="bg-galaxy-card/80 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-gray-800/50 shadow-xl reveal">
                         <i class="fas fa-mobile-alt text-4xl text-blue-400 mb-5 block"></i>
@@ -165,7 +156,6 @@
                     </div>
                 </div>
 
-                <!-- Kolom Kanan (Dengan Margin Atas untuk Offset Staggered) -->
                 <div class="flex-1 flex flex-col gap-6 sm:mt-16">
                     <div class="bg-galaxy-card/80 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-gray-800/50 shadow-xl reveal delay-100">
                         <i class="fas fa-server text-4xl text-purple-400 mb-5 block"></i>
@@ -245,35 +235,18 @@
         </div>
     </section>
 
-    <!-- INSIGHTS SECTION -->
-    <section id="insights" class="py-24 max-w-6xl mx-auto px-4 border-t border-gray-800/50">
-        <div class="mb-16 reveal">
-            <h2 class="text-sm font-bold tracking-widest text-orange-400 uppercase mb-3">Articles & Thoughts</h2>
-            <h3 class="text-3xl sm:text-4xl font-bold text-white">Engineering Insights</h3>
-        </div>
+    <!-- NEW SECTION: PORTAL KE HALAMAN INSIGHTS (PENGGANTI KARTU DUMMY LAMA) -->
+    <section id="insights" class="py-32 max-w-5xl mx-auto px-4 text-center border-t border-gray-800/50 reveal">
+        <h2 class="text-sm font-bold tracking-widest text-orange-400 uppercase mb-3">Beyond The Code</h2>
+        <h3 class="text-4xl sm:text-5xl font-bold text-white mb-6">Engineering Insights & Stories</h3>
+        <p class="text-gray-400 mb-10 text-lg leading-relaxed max-w-2xl mx-auto">
+            Coding is my profession, but storytelling is my passion. Dive into my dedicated space for architectural post-mortems, UI/UX research, and creative writing projects.
+        </p>
         
-        <div class="grid md:grid-cols-3 gap-8">
-            <a href="javascript:void(0)" onclick="alert('Full article is still being drafted. Stay tuned!'); return false;" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal">
-                <div class="text-orange-400 text-xs font-bold mb-4 tracking-wider">ANDROID ARCHITECTURE</div>
-                <h3 class="text-xl font-bold text-white mb-4 leading-snug group-hover:text-orange-400 transition-colors">Modern Routing: Isolating Navigation</h3>
-                <p class="text-sm text-gray-400 mb-6 leading-relaxed">In Jetpack Compose, state hoisting can get messy. Here is my approach to decoupling the bottom navigation bar into a dedicated file.</p>
-                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest border border-gray-700 px-3 py-1 rounded-full"><i class="fas fa-clock mr-1"></i> Coming Soon</span>
-            </a>
-            
-            <a href="javascript:void(0)" onclick="alert('Full article is still being drafted. Stay tuned!'); return false;" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal delay-100">
-                <div class="text-purple-400 text-xs font-bold mb-4 tracking-wider">DATA & UX</div>
-                <h3 class="text-xl font-bold text-white mb-4 leading-snug group-hover:text-purple-400 transition-colors">Statistical Analysis for UX Inference</h3>
-                <p class="text-sm text-gray-400 mb-6 leading-relaxed">Designing software isn't just writing code. By applying rigorous statistical analysis to survey data, our team pivoted the layout.</p>
-                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest border border-gray-700 px-3 py-1 rounded-full"><i class="fas fa-clock mr-1"></i> Coming Soon</span>
-            </a>
-
-            <a href="javascript:void(0)" onclick="alert('Full article is still being drafted. Stay tuned!'); return false;" class="group block bg-galaxy-card/40 backdrop-blur-sm border border-gray-800/60 p-8 rounded-3xl hover:bg-gray-800/40 transition-all duration-300 reveal delay-200">
-                <div class="text-blue-400 text-xs font-bold mb-4 tracking-wider">TEAM DYNAMICS</div>
-                <h3 class="text-xl font-bold text-white mb-4 leading-snug group-hover:text-blue-400 transition-colors">Blueprint of a 1st Place PBL Product</h3>
-                <p class="text-sm text-gray-400 mb-6 leading-relaxed">Winning the PBL Expo required agile collaboration, strict REST API contracts, and an obsession with scalable deliverables.</p>
-                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest border border-gray-700 px-3 py-1 rounded-full"><i class="fas fa-clock mr-1"></i> Coming Soon</span>
-            </a>
-        </div>
+        <!-- TOMBOL PINDAH HALAMAN -->
+        <a href="insights.html" class="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-400 hover:to-purple-500 text-white font-bold px-10 py-4 rounded-xl shadow-[0_0_30px_rgba(249,115,22,0.3)] transition-all hover:-translate-y-1 text-lg">
+            <i class="fas fa-rocket"></i> Explore Insights Page
+        </a>
     </section>
 
     <!-- CALL TO ACTION (CTA) PRE-FOOTER -->
@@ -281,7 +254,7 @@
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">Interested in collaborating?</h2>
         <p class="text-gray-400 mb-10 text-base leading-relaxed">I'm always open to discussing product design work, backend architecture, or potential partnership opportunities.</p>
         
-        <!-- IKON EMAIL & SOSMED YANG SERAGAM -->
+        <!-- IKON EMAIL & SOSMED -->
         <div class="flex flex-wrap justify-center items-center gap-6">
             <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=farrelariq3@gmail.com" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold w-16 h-16 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center shadow-lg"><i class="fas fa-envelope text-purple-400 text-2xl"></i></a>
             <a href="https://www.linkedin.com/in/farrel-nadhil/" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold w-16 h-16 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center shadow-lg"><i class="fab fa-linkedin text-blue-400 text-2xl"></i></a>
