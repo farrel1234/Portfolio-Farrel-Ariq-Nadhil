@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insights & Stories | Farrel Ariq Nadhil</title>
+    <title>The Creative Lounge | Farrel Ariq Nadhil</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -59,7 +59,23 @@
                         <span class="text-white">Portfolio </span><span class="bg-gradient-to-r from-orange-400 to-purple-500 bg-clip-text text-transparent">Farrel</span>
                     </a>
                 </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8 font-medium text-sm">
+                        <a href="index.html#home" class="hover:text-purple-400 transition-colors">Home</a>
+                        <a href="index.html#about" class="hover:text-purple-400 transition-colors">About</a>
+                        <a href="index.html#experience" class="hover:text-purple-400 transition-colors">Experience</a>
+                        <a href="#" class="text-orange-400 font-bold border-b-2 border-orange-400 pb-1"><i class="fas fa-feather-alt mr-1"></i> Fiction & Stories</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="menuBtn" class="text-gray-400 hover:text-white focus:outline-none"><i class="fas fa-bars text-2xl"></i></button>
+                </div>
             </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-galaxy-dark/95 border-b border-gray-800 px-4 pt-2 pb-6 space-y-4 text-sm font-medium shadow-2xl">
+            <a href="index.html#about" class="block hover:text-purple-400 pl-4 transition-colors">About</a>
+            <a href="index.html#experience" class="block hover:text-purple-400 pl-4 transition-colors">Experience</a>
+            <a href="#" class="block text-orange-400 pl-4 font-bold"><i class="fas fa-feather-alt mr-1"></i> Fiction & Stories</a>
         </div>
     </nav>
 
@@ -68,94 +84,112 @@
         
         <!-- HEADER -->
         <div class="text-center mb-20 reveal">
+            <h2 class="text-sm font-bold tracking-widest text-orange-400 uppercase mb-3"><i class="fas fa-mug-hot mr-2"></i>The Creative Lounge</h2>
             <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 text-white">
-                Beyond The <span class="bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">Code</span>
+                Coffee, Fiction & <span class="bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">Thoughts</span>
             </h1>
             <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-                Welcome to my digital garden. A collection of engineering notes, architectural post-mortems, and creative storytelling experiments.
+                Step away from the syntax and take a breather. Welcome to my cozy corner filled with light fiction, imaginative tales, and casual reflections outside the world of coding.
             </p>
         </div>
 
         <!-- TABS (Visual Only) -->
-        <div class="flex justify-center gap-4 mb-12 reveal delay-100">
-            <button class="px-6 py-2 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-full font-semibold text-sm transition-colors hover:bg-purple-600/30">All Writings</button>
-            <button class="px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-colors hover:text-white hover:border-gray-500">Engineering</button>
-            <button class="px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-colors hover:text-white hover:border-gray-500">Stories</button>
+        <div class="flex justify-center gap-3 sm:gap-4 mb-12 reveal delay-100 flex-wrap">
+            <button class="px-6 py-2 bg-orange-600/20 text-orange-400 border border-orange-500/30 rounded-full font-semibold text-sm transition-colors hover:bg-orange-600/30">All Stories</button>
+            <button class="px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-colors hover:text-white hover:border-gray-500">Sci-Fi</button>
+            <button class="px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-colors hover:text-white hover:border-gray-500">Slice of Life</button>
+            <button class="px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-colors hover:text-white hover:border-gray-500">Fantasy</button>
         </div>
 
         <!-- BLOG GRID -->
         <div class="grid md:grid-cols-2 gap-8">
             
-            <!-- Article 1: Architecture -->
-            <article class="bg-galaxy-card/60 backdrop-blur-md border border-gray-800/60 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="alert('Full article is still being drafted. Stay tuned!');">
+            <!-- Article 1: Sci-Fi -->
+            <article class="bg-galaxy-card/60 backdrop-blur-md border border-gray-800/60 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="alert('Bab pertama sedang dalam proses penulisan. Ditunggu ya!');">
                 <div class="h-48 bg-gradient-to-br from-orange-900/40 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
                     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                    <i class="fas fa-sitemap text-5xl text-orange-500/40 group-hover:scale-110 transition-transform duration-500"></i>
+                    <i class="fas fa-space-shuttle text-6xl text-orange-500/40 group-hover:scale-110 transition-transform duration-500"></i>
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-orange-400 text-xs font-bold tracking-wider uppercase">Android Architecture</span>
-                        <span class="text-gray-500 text-xs"><i class="far fa-calendar-alt mr-1"></i> Aug 12, 2026</span>
+                        <span class="text-orange-400 text-xs font-bold tracking-wider uppercase">Sci-Fi • Short Story</span>
+                        <span class="text-gray-500 text-xs"><i class="far fa-clock mr-1"></i> 4 min read</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-orange-400 transition-colors">Modern Routing: Isolating Navigation in Compose</h3>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">In Jetpack Compose, state hoisting can quickly turn your main activity into a tangled mess of spaghetti code. Here is my practical approach to decoupling the bottom navigation bar into a dedicated routing file to maintain a clean UI hierarchy.</p>
-                    <span class="text-sm font-semibold text-white group-hover:text-orange-400 transition-colors mt-auto">Read Full Article <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
+                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-orange-400 transition-colors">The Last Server on Earth</h3>
+                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">A short tale about an artificial intelligence named 'Echo' left alone to maintain the world's last running server long after humanity has departed for the stars. What happens when it starts generating its own dreams?</p>
+                    <span class="text-sm font-semibold text-white group-hover:text-orange-400 transition-colors mt-auto">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
                 </div>
             </article>
 
-            <!-- Article 2: UX -->
-            <article class="bg-galaxy-card/60 backdrop-blur-md border border-gray-800/60 rounded-3xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="alert('Full article is still being drafted. Stay tuned!');">
-                <div class="h-48 bg-gradient-to-br from-purple-900/40 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
+            <!-- Article 2: Slice of Life -->
+            <article class="bg-galaxy-card/60 backdrop-blur-md border border-gray-800/60 rounded-3xl overflow-hidden hover:border-pink-500/50 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="alert('Cerita santai ini akan segera rilis!');">
+                <div class="h-48 bg-gradient-to-br from-pink-900/40 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
                     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                    <i class="fas fa-chart-line text-5xl text-purple-500/40 group-hover:scale-110 transition-transform duration-500"></i>
+                    <i class="fas fa-coffee text-6xl text-pink-500/40 group-hover:scale-110 transition-transform duration-500"></i>
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-purple-400 text-xs font-bold tracking-wider uppercase">Data & UX</span>
-                        <span class="text-gray-500 text-xs"><i class="far fa-calendar-alt mr-1"></i> Jul 28, 2026</span>
+                        <span class="text-pink-400 text-xs font-bold tracking-wider uppercase">Slice of Life • Musings</span>
+                        <span class="text-gray-500 text-xs"><i class="far fa-clock mr-1"></i> 3 min read</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-purple-400 transition-colors">Statistical Analysis for UX Inference</h3>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">Designing software isn't just about writing code; it's about solving user problems. By applying rigorous statistical analysis to survey data, our engineering team successfully pivoted the dashboard layout of the Clarity project to drastically reduce cognitive load.</p>
-                    <span class="text-sm font-semibold text-white group-hover:text-purple-400 transition-colors mt-auto">Read Full Article <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
+                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-pink-400 transition-colors">Midnight Coffee in Batam</h3>
+                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">Sometimes the hardest bugs to fix are the ones in our own minds. A casual reflection on finding inspiration, managing burnout, and discovering peace through a warm cup of coffee and a quiet Batam sunset.</p>
+                    <span class="text-sm font-semibold text-white group-hover:text-pink-400 transition-colors mt-auto">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
                 </div>
             </article>
 
-            <!-- Article 3: Team Dynamics -->
-            <article class="bg-galaxy-card/60 backdrop-blur-md border border-gray-800/60 rounded-3xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="alert('Full article is still being drafted. Stay tuned!');">
+            <!-- Article 3: Fantasy -->
+            <article class="bg-galaxy-card/60 backdrop-blur-md border border-gray-800/60 rounded-3xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="alert('Novel fiksi ini sedang digarap. Pantau terus ya!');">
                 <div class="h-48 bg-gradient-to-br from-blue-900/40 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
                     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                    <i class="fas fa-users-cog text-5xl text-blue-500/40 group-hover:scale-110 transition-transform duration-500"></i>
+                    <i class="fas fa-hat-wizard text-6xl text-blue-500/40 group-hover:scale-110 transition-transform duration-500"></i>
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-blue-400 text-xs font-bold tracking-wider uppercase">Team Dynamics</span>
-                        <span class="text-gray-500 text-xs"><i class="far fa-calendar-alt mr-1"></i> Jun 15, 2026</span>
+                        <span class="text-blue-400 text-xs font-bold tracking-wider uppercase">Fantasy • Flash Fiction</span>
+                        <span class="text-gray-500 text-xs"><i class="far fa-clock mr-1"></i> 6 min read</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">The Blueprint of a 1st Place PBL Product</h3>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">Winning the PBL Expo 2024 wasn't just about having the best tech stack. It required agile collaboration, strict REST API contract agreements between frontend and backend, and an absolute obsession with delivering scalable software within a tight deadline.</p>
-                    <span class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors mt-auto">Read Full Article <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
+                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">The Syntax Sorcerer</h3>
+                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">In a realm where magic is spoken through logic, a young apprentice discovers an ancient spellbook written in an incomprehensible dialect called "Kotlin". Can he compile the spell before the kingdom falls?</p>
+                    <span class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors mt-auto">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
                 </div>
             </article>
 
-            <!-- Article 4: Novel / Storytelling (Coming Soon Placeholder) -->
+            <!-- Article 4: Coming Soon Placeholder -->
             <article class="bg-gray-900/40 backdrop-blur-md border border-gray-800/40 rounded-3xl overflow-hidden transition-all duration-300 group reveal delay-200 flex flex-col justify-center items-center text-center p-12 relative border-dashed">
                 <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
-                <i class="fas fa-feather-alt text-4xl text-gray-600 mb-6 relative z-10"></i>
-                <h3 class="text-xl font-bold text-gray-500 mb-2 relative z-10">More Stories Brewing...</h3>
-                <p class="text-sm text-gray-600 relative z-10">Currently writing my next technical post-mortem and drafting a sci-fi short story.</p>
+                <i class="fas fa-feather-alt text-5xl text-gray-600 mb-6 relative z-10"></i>
+                <h3 class="text-2xl font-bold text-gray-500 mb-3 relative z-10">More Stories Brewing...</h3>
+                <p class="text-sm text-gray-600 relative z-10 max-w-xs">Currently brewing more coffee and drafting new worlds. Check back later for upcoming chapters and casual thoughts!</p>
             </article>
 
         </div>
     </main>
 
+    <!-- CALL TO ACTION (CTA) -->
+    <section class="py-24 w-full text-center border-t border-gray-800/50 bg-galaxy-dark">
+        <div class="max-w-4xl mx-auto px-4 reveal">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">Interested in collaborating?</h2>
+            <p class="text-gray-400 mb-10 text-base leading-relaxed">Whether it's discussing product design, backend architecture, or talking about sci-fi novels, my inbox is always open.</p>
+            
+            <!-- IKON EMAIL & SOSMED YANG SERAGAM -->
+            <div class="flex flex-wrap justify-center items-center gap-6">
+                <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=farrelariq3@gmail.com" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold w-16 h-16 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center shadow-lg"><i class="fas fa-envelope text-purple-400 text-2xl"></i></a>
+                <a href="https://www.linkedin.com/in/farrel-nadhil/" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold w-16 h-16 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center shadow-lg"><i class="fab fa-linkedin text-blue-400 text-2xl"></i></a>
+                <a href="https://github.com/farrel1234" target="_blank" class="bg-galaxy-card hover:bg-gray-800 text-white border border-gray-700 font-semibold w-16 h-16 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center shadow-lg"><i class="fab fa-github text-2xl"></i></a>
+            </div>
+        </div>
+    </section>
+
     <!-- FOOTER -->
-    <footer class="py-8 border-t border-gray-800/50 text-center relative z-10 mt-auto">
-        <p class="text-xs text-gray-500">© 2026 Farrel Ariq Nadhil. Hosted on Vercel.</p>
+    <footer class="py-12 border-t border-gray-800/50 text-center relative z-10 w-full bg-galaxy-dark">
+        <p class="text-base font-bold text-white mb-2">FARREL ARIQ NADHIL</p>
+        <p class="text-sm text-gray-500">© 2026 Engineered with Lightweight Canvas & Tailwind CSS. Hosted on Vercel.</p>
     </footer>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // 1. LIGHTWEIGHT CANVAS BACKGROUND (Same aesthetic as index.html)
+        // 1. LIGHTWEIGHT CANVAS BACKGROUND
         const canvas = document.getElementById('vanilla-canvas');
         const ctx = canvas.getContext('2d');
         
@@ -163,7 +197,7 @@
         let particles = [];
         
         const isMobile = window.innerWidth < 768;
-        const particleCount = isMobile ? 25 : 60; // Slightly less particles for reading page
+        const particleCount = isMobile ? 25 : 60; // Sedikit lebih sepi agar fokus membaca
         const colors = ['#fb923c', '#f472b6', '#c084fc', '#818cf8'];
         let mouse = { x: null, y: null, radius: 100 };
 
@@ -256,6 +290,14 @@
             });
         }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
         revealElements.forEach(el => revealObserver.observe(el));
+
+        // 3. MOBILE MENU
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
     </script>
 </body>
 </html>
