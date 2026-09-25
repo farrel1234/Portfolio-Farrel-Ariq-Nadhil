@@ -42,13 +42,49 @@
             background-color: #05070F;
         }
 
-        /* Smooth Reveal Animations */
+        /* Floating Up-Down Animation (Naik-Turun) */
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes floatUpDownSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        @keyframes scrollMouse {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(8px); opacity: 0.2; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes chevronPulse {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(6px); opacity: 1; }
+        }
+
+        .animate-float {
+            animation: floatUpDown 3.6s ease-in-out infinite;
+        }
+        .animate-float-slow {
+            animation: floatUpDownSlow 5s ease-in-out infinite;
+        }
+        .animate-mouse-wheel {
+            animation: scrollMouse 1.8s ease-in-out infinite;
+        }
+        .animate-chevron-down {
+            animation: chevronPulse 1.8s ease-in-out infinite;
+        }
+
+        /* Smooth Reveal Animations (Muncul Naik saat Scroll) */
         .reveal { 
             opacity: 0; 
-            transform: translateY(35px); 
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); 
+            transform: translateY(40px); 
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+            will-change: transform, opacity;
         }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
@@ -100,9 +136,21 @@
     <!-- AUDIO BACKGROUND -->
     <audio id="bgMusic" loop preload="auto"><source src="bg-music.mp3" type="audio/mpeg"></audio>
 
+    <!-- FLOATING SCROLL CONTROLLER (NAIK TURUN) -->
+    <div id="scrollController" class="fixed bottom-24 right-6 z-40 flex flex-col gap-2.5 transition-all duration-300">
+        <button onclick="scrollToTop()" title="Scroll ke Atas (Naik)" 
+                class="w-12 h-12 rounded-full bg-gray-900/90 backdrop-blur-md border border-gray-700/80 text-gray-400 hover:text-orange-400 hover:border-orange-500/60 hover:-translate-y-1 transition-all duration-200 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.5)] active:scale-95 group">
+            <i class="fas fa-chevron-up text-sm group-hover:-translate-y-0.5 transition-transform"></i>
+        </button>
+        <button onclick="scrollToBottom()" title="Scroll ke Bawah (Turun)" 
+                class="w-12 h-12 rounded-full bg-gray-900/90 backdrop-blur-md border border-gray-700/80 text-gray-400 hover:text-orange-400 hover:border-orange-500/60 hover:translate-y-1 transition-all duration-200 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.5)] active:scale-95 group">
+            <i class="fas fa-chevron-down text-sm group-hover:translate-y-0.5 transition-transform"></i>
+        </button>
+    </div>
+
     <!-- FLOATING MUSIC TOGGLE -->
-    <button id="musicToggle" title="Toggle Cozy Lounge Ambience" class="fixed bottom-6 right-6 z-40 bg-gray-900/90 backdrop-blur-md border border-gray-700/80 p-3 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.25)] hover:bg-gray-800 hover:border-orange-400 hover:scale-110 transition-all duration-300 focus:outline-none flex items-center justify-center w-14 h-14 group">
-        <i id="musicIcon" class="fas fa-volume-mute text-gray-400 group-hover:text-orange-400 transition-colors text-xl"></i>
+    <button id="musicToggle" title="Toggle Cozy Lounge Ambience" class="fixed bottom-6 right-6 z-40 bg-gray-900/90 backdrop-blur-md border border-gray-700/80 p-3 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.25)] hover:bg-gray-800 hover:border-orange-400 hover:scale-110 transition-all duration-300 focus:outline-none flex items-center justify-center w-12 h-12 group">
+        <i id="musicIcon" class="fas fa-volume-mute text-gray-400 group-hover:text-orange-400 transition-colors text-lg"></i>
     </button>
 
     <!-- NAVBAR -->
@@ -139,16 +187,26 @@
     <main class="flex-grow pt-32 pb-24 max-w-6xl mx-auto px-4 sm:px-6 w-full">
         
         <!-- HEADER -->
-        <div class="text-center mb-14 reveal">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold tracking-widest uppercase mb-4">
+        <div class="text-center mb-10 reveal">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold tracking-widest uppercase mb-4 animate-float">
                 <i class="fas fa-mug-hot"></i> The Creative Lounge
             </div>
             <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 text-white">
                 Coffee, Fiction & <span class="bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">Thoughts</span>
             </h1>
-            <p class="text-gray-400 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
+            <p class="text-gray-400 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed mb-6">
                 Step away from the syntax and take a breather. Welcome to my cozy corner filled with 25 imaginative tales, speculative sci-fi, and casual reflections outside the world of coding.
             </p>
+
+            <!-- BOUNCING SCROLL DOWN INDICATOR (NAIK-TURUN) -->
+            <div class="flex flex-col items-center justify-center cursor-pointer group mt-6" onclick="scrollToStories()" title="Klik untuk scroll ke cerita">
+                <span class="text-xs uppercase tracking-widest text-gray-500 group-hover:text-orange-400 transition-colors mb-2 font-mono flex items-center gap-1.5">
+                    Scroll down <i class="fas fa-chevron-down text-[10px] animate-chevron-down text-orange-400"></i>
+                </span>
+                <div class="w-6 h-10 rounded-full border-2 border-gray-700/80 group-hover:border-orange-500/80 p-1 flex justify-center transition-colors">
+                    <div class="w-1.5 h-2.5 bg-orange-400 rounded-full animate-mouse-wheel"></div>
+                </div>
+            </div>
         </div>
 
         <!-- SEARCH & INTERACTIVE FILTER BAR -->
@@ -183,7 +241,7 @@
         <!-- BLOG / STORY GRID (25 STORIES) -->
         <div id="storiesGrid" class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
             <!-- Story 1: The Last Server on Earth -->
-            <article data-id="last-server" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('last-server')">
+            <article data-id="last-server" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('last-server')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/last-server.jpg" alt="The Last Server on Earth" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -219,7 +277,7 @@
             </article>
 
             <!-- Story 2: The Ghost in the Git Commit -->
-            <article data-id="ghost-commit" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-purple-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('ghost-commit')">
+            <article data-id="ghost-commit" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-purple-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('ghost-commit')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/ghost-commit.jpg" alt="The Ghost in the Git Commit" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -255,7 +313,7 @@
             </article>
 
             <!-- Story 3: Neon Rain over Nagoya -->
-            <article data-id="neon-rain" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-cyan-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('neon-rain')">
+            <article data-id="neon-rain" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-cyan-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('neon-rain')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/neon-rain.jpg" alt="Neon Rain over Nagoya" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -291,7 +349,7 @@
             </article>
 
             <!-- Story 4: Chronicles of the Parallel Core -->
-            <article data-id="parallel-core" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('parallel-core')">
+            <article data-id="parallel-core" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('parallel-core')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/parallel-core.jpg" alt="Chronicles of the Parallel Core" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -327,7 +385,7 @@
             </article>
 
             <!-- Story 5: The Memory Harvester of Mars -->
-            <article data-id="memory-harvester" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-red-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('memory-harvester')">
+            <article data-id="memory-harvester" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-red-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('memory-harvester')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/memory-harvester.jpg" alt="The Memory Harvester of Mars" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -363,7 +421,7 @@
             </article>
 
             <!-- Story 6: Orbit 404: The Lost Spaceport -->
-            <article data-id="orbit-404" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('orbit-404')">
+            <article data-id="orbit-404" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('orbit-404')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/orbit-404.jpg" alt="Orbit 404: The Lost Spaceport" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -399,7 +457,7 @@
             </article>
 
             <!-- Story 7: The Clockwork Automaton's Dilemma -->
-            <article data-id="clockwork-automaton" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-amber-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('clockwork-automaton')">
+            <article data-id="clockwork-automaton" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-amber-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('clockwork-automaton')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/clockwork-automaton.jpg" alt="The Clockwork Automaton's Dilemma" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -435,7 +493,7 @@
             </article>
 
             <!-- Story 8: Signal in the Void -->
-            <article data-id="signal-void" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-indigo-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('signal-void')">
+            <article data-id="signal-void" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-indigo-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('signal-void')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/signal-void.jpg" alt="Signal in the Void" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -471,7 +529,7 @@
             </article>
 
             <!-- Story 9: The Silicon Bonsai -->
-            <article data-id="silicon-bonsai" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-teal-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('silicon-bonsai')">
+            <article data-id="silicon-bonsai" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-teal-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('silicon-bonsai')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/silicon-bonsai.jpg" alt="The Silicon Bonsai" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -507,7 +565,7 @@
             </article>
 
             <!-- Story 10: Midnight Coffee in Batam -->
-            <article data-id="midnight-coffee" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-pink-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('midnight-coffee')">
+            <article data-id="midnight-coffee" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-pink-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('midnight-coffee')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/midnight-coffee.jpg" alt="Midnight Coffee in Batam" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -543,7 +601,7 @@
             </article>
 
             <!-- Story 11: The Barelang Sunset -->
-            <article data-id="barelang-sunset" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-amber-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('barelang-sunset')">
+            <article data-id="barelang-sunset" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-amber-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('barelang-sunset')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/barelang-sunset.jpg" alt="The Barelang Sunset" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -579,7 +637,7 @@
             </article>
 
             <!-- Story 12: Rainy Afternoon in Nagoya Hill -->
-            <article data-id="rainy-nagoya" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('rainy-nagoya')">
+            <article data-id="rainy-nagoya" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('rainy-nagoya')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/rainy-nagoya.jpg" alt="Rainy Afternoon in Nagoya Hill" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -615,7 +673,7 @@
             </article>
 
             <!-- Story 13: The 3:00 AM Ferry to HarbourFront -->
-            <article data-id="ferry-harbourfront" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-slate-400/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('ferry-harbourfront')">
+            <article data-id="ferry-harbourfront" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-slate-400/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('ferry-harbourfront')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/ferry-harbourfront.jpg" alt="The 3:00 AM Ferry to HarbourFront" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -651,7 +709,7 @@
             </article>
 
             <!-- Story 14: Old Bookshop in Tanjung Pinang -->
-            <article data-id="old-bookshop" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-yellow-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('old-bookshop')">
+            <article data-id="old-bookshop" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-yellow-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('old-bookshop')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/old-bookshop.jpg" alt="Old Bookshop in Tanjung Pinang" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -687,7 +745,7 @@
             </article>
 
             <!-- Story 15: The Sound of Morning Toast -->
-            <article data-id="morning-toast" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('morning-toast')">
+            <article data-id="morning-toast" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('morning-toast')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/morning-toast.jpg" alt="The Sound of Morning Toast" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -723,7 +781,7 @@
             </article>
 
             <!-- Story 16: Whispering Waves of Nongsa -->
-            <article data-id="waves-nongsa" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-purple-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('waves-nongsa')">
+            <article data-id="waves-nongsa" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-purple-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('waves-nongsa')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/waves-nongsa.jpg" alt="Whispering Waves of Nongsa" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -759,7 +817,7 @@
             </article>
 
             <!-- Story 17: The Rooftop Stargazer -->
-            <article data-id="rooftop-stargazer" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-cyan-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('rooftop-stargazer')">
+            <article data-id="rooftop-stargazer" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-cyan-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('rooftop-stargazer')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/rooftop-stargazer.jpg" alt="The Rooftop Stargazer" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -795,7 +853,7 @@
             </article>
 
             <!-- Story 18: The Syntax Sorcerer -->
-            <article data-id="syntax-sorcerer" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('syntax-sorcerer')">
+            <article data-id="syntax-sorcerer" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('syntax-sorcerer')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/syntax-sorcerer.jpg" alt="The Syntax Sorcerer" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -831,7 +889,7 @@
             </article>
 
             <!-- Story 19: The Alchemist of Garbage Collection -->
-            <article data-id="alchemist-gc" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('alchemist-gc')">
+            <article data-id="alchemist-gc" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-emerald-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('alchemist-gc')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/alchemist-gc.jpg" alt="The Alchemist of Garbage Collection" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -867,7 +925,7 @@
             </article>
 
             <!-- Story 20: The Citadel of the Immutable Tree -->
-            <article data-id="immutable-tree" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-teal-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('immutable-tree')">
+            <article data-id="immutable-tree" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-teal-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('immutable-tree')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/immutable-tree.jpg" alt="The Citadel of the Immutable Tree" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -903,7 +961,7 @@
             </article>
 
             <!-- Story 21: The Loom of the Thread Weaver -->
-            <article data-id="loom-threadweaver" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-violet-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('loom-threadweaver')">
+            <article data-id="loom-threadweaver" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-violet-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('loom-threadweaver')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/loom-threadweaver.jpg" alt="The Loom of the Thread Weaver" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -939,7 +997,7 @@
             </article>
 
             <!-- Story 22: The Dragon of the Infinite Loop -->
-            <article data-id="dragon-loop" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-amber-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('dragon-loop')">
+            <article data-id="dragon-loop" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-amber-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('dragon-loop')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/dragon-loop.jpg" alt="The Dragon of the Infinite Loop" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -975,7 +1033,7 @@
             </article>
 
             <!-- Story 23: The Runesmith of Turing -->
-            <article data-id="runesmith-turing" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-red-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('runesmith-turing')">
+            <article data-id="runesmith-turing" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-red-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('runesmith-turing')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/runesmith-turing.jpg" alt="The Runesmith of Turing" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -1011,7 +1069,7 @@
             </article>
 
             <!-- Story 24: The Whispering Crystal of Cache -->
-            <article data-id="crystal-cache" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-cyan-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('crystal-cache')">
+            <article data-id="crystal-cache" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-cyan-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-300 flex flex-col cursor-pointer" onclick="openStoryReader('crystal-cache')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/crystal-cache.jpg" alt="The Whispering Crystal of Cache" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -1047,7 +1105,7 @@
             </article>
 
             <!-- Story 25: The Mapmaker of Null Island -->
-            <article data-id="mapmaker-null" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-indigo-500/60 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('mapmaker-null')">
+            <article data-id="mapmaker-null" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-indigo-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('mapmaker-null')">
                 <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
                     <img src="images/stories/mapmaker-null.jpg" alt="The Mapmaker of Null Island" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
@@ -1097,7 +1155,7 @@
         <div class="mt-16 bg-gradient-to-r from-orange-950/20 via-galaxy-card/80 to-purple-950/20 border border-gray-800/80 rounded-3xl p-8 sm:p-10 backdrop-blur-md reveal">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-start gap-5 text-left">
-                    <div class="w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center flex-shrink-0 text-orange-400 text-2xl">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center flex-shrink-0 text-orange-400 text-2xl animate-float">
                         <i class="fas fa-pen-nib"></i>
                     </div>
                     <div>
@@ -1304,6 +1362,22 @@
         const storyKeys = Object.keys(storiesData);
         let currentStoryId = null;
 
+        // SCROLL HELPER FUNCTIONS (NAIK TURUN)
+        function scrollToStories() {
+            const target = document.getElementById('filterTabs');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
         // 1. LIGHTWEIGHT CANVAS BACKGROUND
         const canvas = document.getElementById('vanilla-canvas');
         const ctx = canvas.getContext('2d');
@@ -1386,16 +1460,15 @@
         }
         animateCanvas();
 
-        // 2. SCROLL REVEAL ANIMATION 
+        // 2. SCROLL REVEAL ANIMATION (MUNCUL NAIK SAAT SCROLL)
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.08, rootMargin: "0px 0px -30px 0px" });
+        }, { threshold: 0.06, rootMargin: "0px 0px -20px 0px" });
         revealElements.forEach(el => revealObserver.observe(el));
 
         // 3. MOBILE MENU
