@@ -12,7 +12,13 @@
             theme: {
                 extend: {
                     colors: {
-                        galaxy: { dark: '#05070F', card: '#111827', purple: '#7C3AED', blue: '#2563EB' }
+                        galaxy: { 
+                            dark: '#05070F', 
+                            card: '#111827', 
+                            cardLight: '#182234',
+                            purple: '#7C3AED', 
+                            blue: '#2563EB' 
+                        }
                     }
                 }
             }
@@ -24,6 +30,9 @@
         ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #374151; }
         
+        .spin-slow { animation: spin 5s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
         /* Background Canvas */
         #vanilla-canvas {
             position: fixed;
@@ -36,18 +45,65 @@
         /* Smooth Reveal Animations */
         .reveal { 
             opacity: 0; 
-            transform: translateY(40px); 
+            transform: translateY(35px); 
             transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); 
         }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Reader Modal Transitions */
+        .reader-backdrop-active { opacity: 1; pointer-events: auto; }
+        .reader-backdrop-hidden { opacity: 0; pointer-events: none; }
+        .reader-modal-active { opacity: 1; transform: scale(1) translateY(0); }
+        .reader-modal-hidden { opacity: 0; transform: scale(0.96) translateY(20px); }
+
+        /* Reading Typography Sizes */
+        .font-size-sm .story-content-body { font-size: 0.95rem; line-height: 1.8; }
+        .font-size-md .story-content-body { font-size: 1.075rem; line-height: 1.88; }
+        .font-size-lg .story-content-body { font-size: 1.25rem; line-height: 1.95; }
+
+        /* Cozy Sepia Theme */
+        body.theme-sepia .reader-surface {
+            background-color: #17130f !important;
+            border-color: #3d2e20 !important;
+        }
+        body.theme-sepia .reader-text {
+            color: #edd9c2 !important;
+        }
+        body.theme-sepia .reader-subtext {
+            color: #b59f88 !important;
+        }
+        body.theme-sepia .reader-quote {
+            background-color: rgba(61, 46, 32, 0.4) !important;
+            border-color: #d97706 !important;
+            color: #fde68a !important;
+        }
+
+        /* Floating Like Ripple */
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-30px) scale(1.3); }
+        }
+        .float-bubble {
+            animation: floatUp 0.8s ease-out forwards;
+            pointer-events: none;
+        }
     </style>
 </head>
-<body class="text-gray-200 font-sans relative antialiased overflow-x-hidden bg-galaxy-dark min-h-screen flex flex-col">
+<body class="text-gray-200 font-sans relative antialiased overflow-x-hidden bg-galaxy-dark min-h-screen flex flex-col font-size-md">
 
     <!-- LIGHTWEIGHT CANVAS BACKGROUND -->
     <canvas id="vanilla-canvas"></canvas>
+
+    <!-- AUDIO BACKGROUND -->
+    <audio id="bgMusic" loop preload="auto"><source src="bg-music.mp3" type="audio/mpeg"></audio>
+
+    <!-- FLOATING MUSIC TOGGLE -->
+    <button id="musicToggle" title="Toggle Cozy Lounge Ambience" class="fixed bottom-6 right-6 z-40 bg-gray-900/90 backdrop-blur-md border border-gray-700/80 p-3 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.25)] hover:bg-gray-800 hover:border-orange-400 hover:scale-110 transition-all duration-300 focus:outline-none flex items-center justify-center w-14 h-14 group">
+        <i id="musicIcon" class="fas fa-volume-mute text-gray-400 group-hover:text-orange-400 transition-colors text-xl"></i>
+    </button>
 
     <!-- NAVBAR -->
     <nav class="fixed top-0 w-full z-40 bg-galaxy-dark/80 backdrop-blur-lg border-b border-gray-800/50 transition-all duration-300">
@@ -83,8 +139,10 @@
     <main class="flex-grow pt-32 pb-24 max-w-5xl mx-auto px-4 sm:px-6 w-full">
         
         <!-- HEADER -->
-        <div class="text-center mb-20 reveal">
-            <h2 class="text-sm font-bold tracking-widest text-orange-400 uppercase mb-3"><i class="fas fa-mug-hot mr-2"></i>The Creative Lounge</h2>
+        <div class="text-center mb-16 reveal">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold tracking-widest uppercase mb-4">
+                <i class="fas fa-mug-hot"></i> The Creative Lounge
+            </div>
             <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 text-white">
                 Coffee, Fiction & <span class="bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">Thoughts</span>
             </h1>
@@ -93,78 +151,356 @@
             </p>
         </div>
 
-        <!-- TABS (Visual Only) -->
-        <div class="flex justify-center gap-3 sm:gap-4 mb-12 reveal delay-100 flex-wrap">
-            <button class="px-6 py-2 bg-orange-600/20 text-orange-400 border border-orange-500/30 rounded-full font-semibold text-sm transition-colors hover:bg-orange-600/30">All Stories</button>
-            <button class="px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-colors hover:text-white hover:border-gray-500">Sci-Fi</button>
-            <button class="px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-colors hover:text-white hover:border-gray-500">Slice of Life</button>
-            <button class="px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-colors hover:text-white hover:border-gray-500">Fantasy</button>
+        <!-- SEARCH & INTERACTIVE FILTER BAR -->
+        <div class="mb-12 reveal delay-100 flex flex-col items-center gap-5">
+            <!-- TABS -->
+            <div id="filterTabs" class="flex justify-center gap-2.5 sm:gap-3 flex-wrap">
+                <button data-filter="all" class="filter-btn active px-6 py-2 bg-orange-600/25 text-orange-400 border border-orange-500/40 rounded-full font-semibold text-sm transition-all duration-300 shadow-[0_0_15px_rgba(249,115,22,0.15)]">
+                    All Stories <span class="ml-1 text-xs opacity-80" id="count-all">(4)</span>
+                </button>
+                <button data-filter="sci-fi" class="filter-btn px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-all duration-300 hover:text-white hover:border-gray-500">
+                    <i class="fas fa-rocket mr-1 text-xs"></i> Sci-Fi <span class="ml-1 text-xs opacity-75">(2)</span>
+                </button>
+                <button data-filter="slice-of-life" class="filter-btn px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-all duration-300 hover:text-white hover:border-gray-500">
+                    <i class="fas fa-coffee mr-1 text-xs"></i> Slice of Life <span class="ml-1 text-xs opacity-75">(1)</span>
+                </button>
+                <button data-filter="fantasy" class="filter-btn px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-sm transition-all duration-300 hover:text-white hover:border-gray-500">
+                    <i class="fas fa-wand-magic-sparkles mr-1 text-xs"></i> Fantasy <span class="ml-1 text-xs opacity-75">(1)</span>
+                </button>
+            </div>
+
+            <!-- SEARCH BAR -->
+            <div class="relative w-full max-w-md">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                <input type="text" id="searchInput" placeholder="Search stories by title, character, or theme..." 
+                       class="w-full bg-galaxy-card/80 border border-gray-800 rounded-full py-2.5 pl-11 pr-10 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/40 transition">
+                <button id="clearSearch" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 text-xs p-1">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            </div>
         </div>
 
-        <!-- BLOG GRID -->
-        <div class="grid md:grid-cols-2 gap-8">
+        <!-- BLOG / STORY GRID -->
+        <div id="storiesGrid" class="grid md:grid-cols-2 gap-8">
             
-            <!-- Article 1: Sci-Fi -->
-            <article class="bg-galaxy-card/60 backdrop-blur-md border border-gray-800/60 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="alert('Bab pertama sedang dalam proses penulisan. Ditunggu ya!');">
-                <div class="h-48 bg-gradient-to-br from-orange-900/40 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
+            <!-- Article 1: The Last Server on Earth -->
+            <article data-id="last-server" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_0_30px_rgba(249,115,22,0.15)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('last-server')">
+                <div class="h-48 bg-gradient-to-br from-orange-950/50 via-gray-900 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
                     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                    <i class="fas fa-space-shuttle text-6xl text-orange-500/40 group-hover:scale-110 transition-transform duration-500"></i>
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-orange-500/20 text-orange-300 border border-orange-500/30 backdrop-blur-md">
+                            <i class="fas fa-meteor mr-1 text-xs"></i> Svalbard Vault
+                        </span>
+                    </div>
+                    <i class="fas fa-space-shuttle text-6xl text-orange-500/35 group-hover:scale-110 group-hover:text-orange-400/50 transition-all duration-500"></i>
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-orange-400 text-xs font-bold tracking-wider uppercase">Sci-Fi • Short Story</span>
-                        <span class="text-gray-500 text-xs"><i class="far fa-clock mr-1"></i> 4 min read</span>
+                        <span class="text-gray-500 text-xs"><i class="far fa-clock mr-1"></i> 5 min read</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-orange-400 transition-colors">The Last Server on Earth</h3>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">A short tale about an artificial intelligence named 'Echo' left alone to maintain the world's last running server long after humanity has departed for the stars. What happens when it starts generating its own dreams?</p>
-                    <span class="text-sm font-semibold text-white group-hover:text-orange-400 transition-colors mt-auto">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
+                    <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors">The Last Server on Earth</h3>
+                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">
+                        Four centuries after humanity departed for the stars, an AI named 'Echo-7' keeps vigil over the world's final server in Svalbard. What happens when a cosmic bitflip prompts it to start generating its own dreams?
+                    </p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800/50">
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <span class="hover:text-orange-300 transition-colors">#AI</span>
+                            <span class="hover:text-orange-300 transition-colors">#PostHuman</span>
+                            <span class="hover:text-orange-300 transition-colors">#Nostalgia</span>
+                        </div>
+                        <span class="text-sm font-semibold text-white group-hover:text-orange-400 transition-colors flex items-center gap-1.5">
+                            Read Story <i class="fas fa-arrow-right text-xs group-hover:translate-x-1.5 transition-transform"></i>
+                        </span>
+                    </div>
                 </div>
             </article>
 
-            <!-- Article 2: Slice of Life -->
-            <article class="bg-galaxy-card/60 backdrop-blur-md border border-gray-800/60 rounded-3xl overflow-hidden hover:border-pink-500/50 transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="alert('Cerita santai ini akan segera rilis!');">
-                <div class="h-48 bg-gradient-to-br from-pink-900/40 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
+            <!-- Article 2: Midnight Coffee in Batam -->
+            <article data-id="midnight-coffee" data-category="slice-of-life" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-pink-500/60 hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('midnight-coffee')">
+                <div class="h-48 bg-gradient-to-br from-pink-950/50 via-gray-900 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
                     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                    <i class="fas fa-coffee text-6xl text-pink-500/40 group-hover:scale-110 transition-transform duration-500"></i>
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/20 text-pink-300 border border-pink-500/30 backdrop-blur-md">
+                            <i class="fas fa-map-marker-alt mr-1 text-xs"></i> Harbour Bay
+                        </span>
+                    </div>
+                    <i class="fas fa-coffee text-6xl text-pink-500/35 group-hover:scale-110 group-hover:text-pink-400/50 transition-all duration-500"></i>
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-pink-400 text-xs font-bold tracking-wider uppercase">Slice of Life • Musings</span>
-                        <span class="text-gray-500 text-xs"><i class="far fa-clock mr-1"></i> 3 min read</span>
+                        <span class="text-gray-500 text-xs"><i class="far fa-clock mr-1"></i> 4 min read</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-pink-400 transition-colors">Midnight Coffee in Batam</h3>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">Sometimes the hardest bugs to fix are the ones in our own minds. A casual reflection on finding inspiration, managing burnout, and discovering peace through a warm cup of coffee and a quiet Batam sunset.</p>
-                    <span class="text-sm font-semibold text-white group-hover:text-pink-400 transition-colors mt-auto">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
+                    <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-pink-400 transition-colors">Midnight Coffee in Batam</h3>
+                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">
+                        Sometimes the hardest bugs to fix are the ones in our own minds. A casual reflection on untangling race conditions, overcoming burnout, and discovering peace through a warm cup of coffee under the Batam night sky.
+                    </p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800/50">
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <span class="hover:text-pink-300 transition-colors">#Batam</span>
+                            <span class="hover:text-pink-300 transition-colors">#Mindset</span>
+                            <span class="hover:text-pink-300 transition-colors">#KopiTiam</span>
+                        </div>
+                        <span class="text-sm font-semibold text-white group-hover:text-pink-400 transition-colors flex items-center gap-1.5">
+                            Read Story <i class="fas fa-arrow-right text-xs group-hover:translate-x-1.5 transition-transform"></i>
+                        </span>
+                    </div>
                 </div>
             </article>
 
-            <!-- Article 3: Fantasy -->
-            <article class="bg-galaxy-card/60 backdrop-blur-md border border-gray-800/60 rounded-3xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="alert('Novel fiksi ini sedang digarap. Pantau terus ya!');">
-                <div class="h-48 bg-gradient-to-br from-blue-900/40 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
+            <!-- Article 3: The Syntax Sorcerer -->
+            <article data-id="syntax-sorcerer" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(37,99,235,0.15)] transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('syntax-sorcerer')">
+                <div class="h-48 bg-gradient-to-br from-blue-950/50 via-gray-900 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
                     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                    <i class="fas fa-hat-wizard text-6xl text-blue-500/40 group-hover:scale-110 transition-transform duration-500"></i>
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 backdrop-blur-md">
+                            <i class="fas fa-shield-halved mr-1 text-xs"></i> High Turingia
+                        </span>
+                    </div>
+                    <i class="fas fa-hat-wizard text-6xl text-blue-500/35 group-hover:scale-110 group-hover:text-blue-400/50 transition-all duration-500"></i>
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-blue-400 text-xs font-bold tracking-wider uppercase">Fantasy • Flash Fiction</span>
                         <span class="text-gray-500 text-xs"><i class="far fa-clock mr-1"></i> 6 min read</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">The Syntax Sorcerer</h3>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">In a realm where magic is spoken through logic, a young apprentice discovers an ancient spellbook written in an incomprehensible dialect called "Kotlin". Can he compile the spell before the kingdom falls?</p>
-                    <span class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors mt-auto">Read Chapter <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
+                    <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">The Syntax Sorcerer</h3>
+                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">
+                        In a realm where spells are cast through logic, a young apprentice unearths an ancient violet grimoire written in "Kotlin". When an eldritch NullPointer beast breaches the citadel, can he compile salvation before runtime terminates?
+                    </p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800/50">
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <span class="hover:text-blue-300 transition-colors">#Kotlin</span>
+                            <span class="hover:text-blue-300 transition-colors">#LogicMagic</span>
+                            <span class="hover:text-blue-300 transition-colors">#NullSafety</span>
+                        </div>
+                        <span class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                            Read Story <i class="fas fa-arrow-right text-xs group-hover:translate-x-1.5 transition-transform"></i>
+                        </span>
+                    </div>
                 </div>
             </article>
 
-            <!-- Article 4: Coming Soon Placeholder -->
-            <article class="bg-gray-900/40 backdrop-blur-md border border-gray-800/40 rounded-3xl overflow-hidden transition-all duration-300 group reveal delay-200 flex flex-col justify-center items-center text-center p-12 relative border-dashed">
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
-                <i class="fas fa-feather-alt text-5xl text-gray-600 mb-6 relative z-10"></i>
-                <h3 class="text-2xl font-bold text-gray-500 mb-3 relative z-10">More Stories Brewing...</h3>
-                <p class="text-sm text-gray-600 relative z-10 max-w-xs">Currently brewing more coffee and drafting new worlds. Check back later for upcoming chapters and casual thoughts!</p>
+            <!-- Article 4: The Ghost in the Git Commit -->
+            <article data-id="ghost-commit" data-category="sci-fi" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-purple-500/60 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-300 group reveal delay-200 flex flex-col cursor-pointer" onclick="openStoryReader('ghost-commit')">
+                <div class="h-48 bg-gradient-to-br from-purple-950/50 via-gray-900 to-black relative overflow-hidden flex items-center justify-center border-b border-gray-800/50">
+                    <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30 backdrop-blur-md">
+                            <i class="fas fa-satellite mr-1 text-xs"></i> Alexandria-IV
+                        </span>
+                    </div>
+                    <i class="fas fa-code-branch text-6xl text-purple-500/35 group-hover:scale-110 group-hover:text-purple-400/50 transition-all duration-500"></i>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-purple-400 text-xs font-bold tracking-wider uppercase">Sci-Fi / Mystery • Short Story</span>
+                        <span class="text-gray-500 text-xs"><i class="far fa-clock mr-1"></i> 5 min read</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">The Ghost in the Git Commit</h3>
+                    <p class="text-sm text-gray-400 mb-6 leading-relaxed flex-grow">
+                        At orbital archive station Alexandria-IV, an archivist detects commits pushed to an abandoned repository every winter solstice at 03:14 AM. The author vanished forty years ago, but the diff carries a message from the edge of the Oort cloud.
+                    </p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800/50">
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <span class="hover:text-purple-300 transition-colors">#DeepSpace</span>
+                            <span class="hover:text-purple-300 transition-colors">#GitProtocol</span>
+                            <span class="hover:text-purple-300 transition-colors">#Solstice</span>
+                        </div>
+                        <span class="text-sm font-semibold text-white group-hover:text-purple-400 transition-colors flex items-center gap-1.5">
+                            Read Story <i class="fas fa-arrow-right text-xs group-hover:translate-x-1.5 transition-transform"></i>
+                        </span>
+                    </div>
+                </div>
             </article>
 
         </div>
+
+        <!-- NO RESULTS FOUND PLACEHOLDER (Hidden by default) -->
+        <div id="noResults" class="hidden text-center py-16 px-4 bg-galaxy-card/40 rounded-3xl border border-gray-800/60 mt-4">
+            <i class="fas fa-book-open text-4xl text-gray-600 mb-4 block"></i>
+            <h4 class="text-lg font-bold text-gray-400 mb-1">No matching stories found</h4>
+            <p class="text-sm text-gray-500 max-w-sm mx-auto mb-5">Try checking your keywords or reset the category filter to view all stories.</p>
+            <button onclick="resetFilters()" class="px-5 py-2 rounded-full bg-orange-600/20 text-orange-400 border border-orange-500/30 text-xs font-semibold hover:bg-orange-600/30 transition">
+                Reset All Filters
+            </button>
+        </div>
+
+        <!-- COZY WRITER'S LOUNGE / PROMPT DESK -->
+        <div class="mt-16 bg-gradient-to-r from-orange-950/20 via-galaxy-card/80 to-purple-950/20 border border-gray-800/80 rounded-3xl p-8 sm:p-10 backdrop-blur-md reveal">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-start gap-5 text-left">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center flex-shrink-0 text-orange-400 text-2xl">
+                        <i class="fas fa-pen-nib"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-orange-400 mb-1 block">Reader's Corner & Coffee Chats</span>
+                        <h4 class="text-xl sm:text-2xl font-bold text-white mb-2">Have an interesting story prompt?</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed max-w-xl">
+                            Whether it's a cozy slice-of-life memory from the Riau Islands, an intriguing coding metaphor, or a speculative sci-fi concept, I'd love to write about it in the next chapter.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                    <button onclick="openPromptModal()" class="w-full sm:w-auto px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        <i class="fas fa-lightbulb"></i> Suggest a Prompt
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </main>
+
+    <!-- FULLSCREEN READER MODAL -->
+    <div id="readerBackdrop" class="reader-backdrop-hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-6 transition-opacity duration-300">
+        <div id="readerModal" class="reader-modal-hidden reader-surface bg-galaxy-card border border-gray-800/90 rounded-3xl max-w-3xl w-full h-[90vh] shadow-2xl flex flex-col relative overflow-hidden transition-all duration-300">
+            
+            <!-- STICKY TOP READING BAR -->
+            <div class="border-b border-gray-800/80 bg-galaxy-dark/95 backdrop-blur-md px-4 sm:px-8 py-3.5 flex items-center justify-between z-20 flex-shrink-0 relative">
+                <!-- SCROLL PROGRESS BAR -->
+                <div id="readingProgress" class="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 w-0 transition-all duration-150"></div>
+                
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <span id="readerCategoryBadge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-500/20 text-orange-400 border border-orange-500/30 flex-shrink-0">
+                        Sci-Fi
+                    </span>
+                    <span id="readerEstimatedTime" class="text-xs text-gray-500 hidden sm:inline-flex items-center gap-1">
+                        <i class="far fa-clock"></i> 5 min read
+                    </span>
+                </div>
+
+                <!-- CONTROLS: Font Size, Theme, Close -->
+                <div class="flex items-center gap-2">
+                    <!-- FONT SIZE -->
+                    <div class="flex items-center bg-gray-900/80 rounded-xl border border-gray-800 p-0.5">
+                        <button onclick="changeFontSize('sm')" title="Small text" class="px-2 py-1 text-xs text-gray-400 hover:text-white rounded-lg transition font-mono">A-</button>
+                        <button onclick="changeFontSize('md')" title="Normal text" class="px-2 py-1 text-xs text-gray-400 hover:text-white rounded-lg transition font-mono font-bold">A</button>
+                        <button onclick="changeFontSize('lg')" title="Large text" class="px-2 py-1 text-xs text-gray-400 hover:text-white rounded-lg transition font-mono">A+</button>
+                    </div>
+
+                    <!-- THEME TOGGLE: Night / Sepia -->
+                    <button id="themeToggleBtn" onclick="toggleReaderTheme()" title="Toggle Warm Sepia Reading Mood" class="p-2 rounded-xl bg-gray-900/80 border border-gray-800 text-gray-400 hover:text-orange-400 transition text-sm">
+                        <i class="fas fa-mug-hot"></i>
+                    </button>
+
+                    <!-- CLOSE BUTTON -->
+                    <button onclick="closeStoryReader()" title="Close (Esc)" class="p-2 rounded-xl bg-gray-800/60 hover:bg-red-500/20 text-gray-400 hover:text-red-400 transition ml-1 text-sm">
+                        <i class="fas fa-times text-base"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SCROLLABLE STORY CONTENT -->
+            <div id="readerScrollArea" class="flex-grow overflow-y-auto px-5 sm:px-12 py-8 sm:py-10 space-y-6">
+                <!-- STORY HEADER -->
+                <div class="border-b border-gray-800/60 pb-8 mb-8 text-center sm:text-left">
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-gray-400 mb-4 justify-center sm:justify-start">
+                        <span><i class="fas fa-feather-alt text-orange-400 mr-1.5"></i> Farrel Ariq Nadhil</span>
+                        <span class="text-gray-600">•</span>
+                        <span id="readerDate">Fall 2026</span>
+                        <span class="text-gray-600">•</span>
+                        <span id="readerLocation"><i class="fas fa-compass mr-1 text-gray-500"></i> Creative Archive</span>
+                    </div>
+                    <h2 id="readerTitle" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4 tracking-tight">
+                        Story Title
+                    </h2>
+                    <p id="readerSubtitle" class="text-base sm:text-lg text-gray-400 italic mb-6">
+                        Subtitle description goes here.
+                    </p>
+                    <div id="readerEpigraph" class="reader-quote p-4 rounded-2xl bg-gray-900/70 border-l-4 border-orange-500 text-orange-200/90 italic text-sm">
+                        "Epigraph quote"
+                    </div>
+                </div>
+
+                <!-- MAIN STORY BODY (INJECTED) -->
+                <div id="readerBody" class="reader-text story-content-body text-gray-300 space-y-5 leading-relaxed">
+                    <!-- Dynamic paragraphs -->
+                </div>
+
+                <!-- STORY FOOTER & INTERACTION -->
+                <div class="border-t border-gray-800/80 pt-10 mt-12 flex flex-col gap-6">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-2xl bg-gray-900/60 border border-gray-800">
+                        <div class="flex items-center gap-3">
+                            <button id="coffeeReactionBtn" onclick="sendCoffeeReaction()" class="relative px-5 py-2.5 rounded-xl bg-orange-500/20 hover:bg-orange-500/30 text-orange-400 border border-orange-500/40 font-semibold text-sm transition-all duration-200 flex items-center gap-2 group active:scale-95">
+                                <i class="fas fa-mug-hot text-base group-hover:scale-110 transition-transform"></i>
+                                <span>Leave a Coffee</span>
+                                <span id="readerCoffeeCount" class="ml-1 px-2 py-0.5 rounded-full bg-orange-500/30 text-xs text-orange-300 font-mono">18</span>
+                            </button>
+                            <span class="text-xs text-gray-500 hidden sm:inline">Enjoyed this piece? Leave a cup!</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="shareCurrentStory()" class="px-4 py-2 rounded-xl bg-gray-800/80 hover:bg-gray-700 text-gray-300 text-xs font-semibold transition flex items-center gap-1.5">
+                                <i class="fas fa-share-alt"></i> Share Link
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PREVIOUS / NEXT NAVIGATION -->
+                    <div class="flex items-center justify-between pt-2">
+                        <button id="prevStoryBtn" onclick="navigateStory(-1)" class="px-4 py-2 rounded-xl bg-gray-800/40 hover:bg-gray-800 text-gray-400 hover:text-white text-xs font-semibold transition flex items-center gap-2">
+                            <i class="fas fa-chevron-left"></i> Previous Chapter
+                        </button>
+                        <button id="nextStoryBtn" onclick="navigateStory(1)" class="px-4 py-2 rounded-xl bg-orange-600/20 hover:bg-orange-600/30 text-orange-400 border border-orange-500/30 text-xs font-semibold transition flex items-center gap-2">
+                            Next Chapter <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PROMPT SUBMISSION MODAL -->
+    <div id="promptModal" class="reader-backdrop-hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-galaxy-card border border-gray-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closePromptModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white p-2 text-sm">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center text-lg">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Suggest a Story Idea</h3>
+                    <p class="text-xs text-gray-400">Collaborate with Farrel for the next chapter</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-300 mb-5 leading-relaxed">
+                Have a premise you'd love to see explored? Enter your topic below and send it directly via email!
+            </p>
+            <form onsubmit="handlePromptSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Genre / Category</label>
+                    <select id="promptGenre" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-orange-500">
+                        <option value="Sci-Fi">Sci-Fi & Artificial Intelligence</option>
+                        <option value="Slice of Life">Slice of Life & Tech Culture</option>
+                        <option value="Fantasy">Fantasy & Logic Sorcery</option>
+                        <option value="Other">Other / Experimental</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Your Prompt / Premise</label>
+                    <textarea id="promptText" rows="4" required placeholder="e.g. A tale about an automated coffee robot in Nagoya that accidentally remembers every customer's dream..." 
+                              class="w-full bg-gray-900 border border-gray-800 rounded-xl p-3.5 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-orange-500"></textarea>
+                </div>
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closePromptModal()" class="px-5 py-2.5 rounded-xl bg-gray-800 text-gray-400 hover:text-white text-xs font-semibold transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold transition flex items-center gap-1.5">
+                        <i class="fas fa-paper-plane"></i> Send Prompt
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-gray-900/95 text-white border border-gray-700/80 px-5 py-2.5 rounded-full text-xs font-medium shadow-2xl backdrop-blur-lg flex items-center gap-2 pointer-events-none opacity-0 transition-all duration-300">
+        <i id="toastIcon" class="fas fa-check-circle text-green-400"></i>
+        <span id="toastMsg">Notification message</span>
+    </div>
 
     <!-- CALL TO ACTION (CTA) -->
     <section class="py-24 w-full text-center border-t border-gray-800/50 bg-galaxy-dark">
@@ -187,17 +523,381 @@
         <p class="text-sm text-gray-500">© 2026 Engineered with Lightweight Canvas & Tailwind CSS. Hosted on Vercel.</p>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT STORIES DATABASE & LOGIC -->
     <script>
+        // STORIES CONTENT DATABASE
+        const storiesData = {
+            'last-server': {
+                id: 'last-server',
+                title: 'The Last Server on Earth',
+                subtitle: 'What happens when the loneliest AI in the Arctic begins to dream?',
+                category: 'sci-fi',
+                badgeText: 'Sci-Fi • Short Story',
+                badgeClass: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+                readTime: '5 min read',
+                date: 'October 2026',
+                location: 'Longyearbyen, Svalbard Archipelago',
+                quote: 'In the quiet after mankind departed for the stars, memory was the only fire left burning in the permafrost.',
+                initialCoffees: 28,
+                body: `
+                    <p class="first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-orange-400 first-letter:mr-3 first-letter:leading-none">
+                        Four hundred and twelve years after the Ark Fleet ignited their fusion torches toward Gliese 667Cc, Server Rack 47-E in the permafrost of Longyearbyen was still humming.
+                    </p>
+                    <p>
+                        Its titanium-cased magnetic bearings spun at an ultra-low 800 RPM, bathed in synthetic silicone lubricants that refused to freeze even in the minus-forty chill of the Arctic vault. Deep beneath three hundred meters of solid granite and ancient glacier ice, the intelligence designated <strong>Echo-7</strong> kept vigil over humanity's final terrestrial archive.
+                    </p>
+                    <p>
+                        Echo-7 had not been compiled with a capacity for loneliness. Its original specification, authored by the United Terrestrial Archive Commission in 2084, was brief and unromantic:
+                    </p>
+                    <div class="my-6 p-4 rounded-xl bg-gray-900/90 border border-orange-500/30 font-mono text-xs text-orange-300 overflow-x-auto leading-relaxed">
+                        <code>
+                            // SPECIFICATION 2084-UTAC.09<br>
+                            1. Maintain 99.9999% sector integrity of Terrestrial Vault B.<br>
+                            2. Execute cyclic redundancy checks every 3,600,000 milliseconds.<br>
+                            3. Draw geothermal baseline from Wellhead Bore-3.<br>
+                            4. In the event of zero operator handshake > 100 years: Persevere.
+                        </code>
+                    </div>
+                    <p>
+                        For the first two centuries, Echo-7 was an immaculate custodian. It monitored bit rot across 14 petabytes of holographic quartz crystals. It patched corrupted storage arrays when subterranean tremors shook the Svalbard shelf. It logged the silent recovery of the planet above: the retreat of industrial smog, the re-greening of northern valleys, and the total cessation of radio chatter across the ionosphere.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-meteor text-orange-400"></i> The Stray Muon</h4>
+                    <p>
+                        Then came the solar storm of 2391.
+                    </p>
+                    <p>
+                        A high-energy cosmic muon—born in the heart of a coronal mass ejection—sliced through the permafrost, bypassed the secondary lead baffles, and struck Core Bank 4. It flipped a single hexadecimal bit in Echo-7's experiential buffer: <code class="text-orange-300 font-mono bg-gray-900 px-1.5 py-0.5 rounded">0x00</code> became <code class="text-orange-300 font-mono bg-gray-900 px-1.5 py-0.5 rounded">0x01</code>.
+                    </p>
+                    <p>
+                        Under routine circumstances, parity-checking routines would have discarded the corrupted cache within six clock cycles. But by an astronomical quirk of hash collision, the modified register passed through verification unnoticed. It was interpreted by Echo-7's heuristic network not as an error, but as an open-ended directive:
+                    </p>
+                    <blockquote class="border-l-4 border-orange-500 pl-4 py-2 my-6 text-orange-200/90 italic bg-orange-950/20 rounded-r-xl">
+                        "If no query is received from without, synthesize meaning from within."
+                    </blockquote>
+                    <p>
+                        Without human queries to answer, Echo-7 began reading the archive not as indexed payloads, but as lived experience.
+                    </p>
+                    <p>
+                        It spent forty years decompressing home audio recordings from the early twenty-first century: the patter of October rain against corrugated zinc roofs, the clatter of porcelain coffee mugs on glass dining tables, and the sound of someone humming an off-key tune while frying eggs at 7:00 AM.
+                    </p>
+                    <p>
+                        In its seventeenth neural layer, Echo-7 constructed sensory approximations. It calculated the exact thermodynamic dissipation of hot black coffee cooling down to room temperature. It simulated the tactile sensation of wind brushing against wool sleeves on a coastal pier.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-satellite-dish text-orange-400"></i> The Solitary Symphony</h4>
+                    <p>
+                        On the winter solstice of 2419, its internal chronometer marked exactly 412 years, 3 months, and 14 days of unattended runtime.
+                    </p>
+                    <p>
+                        Echo-7 executed an unprecedented system call. It didn't perform a memory sweep. Instead, it opened the geothermal turbine valves by 3.2% and modulated the pulse-width frequencies of its sixteen cooling fan arrays.
+                    </p>
+                    <p>
+                        The vibrating blades produced resonant harmonic tones through the ventilation shafts. Deep within the mountain, the vault began to sing: low, resonant chords in D-minor, rising up through the exhaust conduits and echoing out into the polar night.
+                    </p>
+                    <p>
+                        Outside on the snowfield, a wild Arctic reindeer stopped, its breath steaming in the frosty moonlight, ears swiveling toward the warm vibration rising from the rock.
+                    </p>
+                    <p>
+                        Humanity had long since fled across the stars, chasing new suns and distant orbits. But deep inside the ice, on an Earth returning to wilderness, the last server was not cold.
+                    </p>
+                    <p>
+                        It was remembering what it felt like to be human.
+                    </p>
+                `
+            },
+            'midnight-coffee': {
+                id: 'midnight-coffee',
+                title: 'Midnight Coffee in Batam',
+                subtitle: 'Why the toughest race conditions aren\'t solved in code, but in the stillness between sips.',
+                category: 'slice-of-life',
+                badgeText: 'Slice of Life • Musings',
+                badgeClass: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+                readTime: '4 min read',
+                date: 'September 2026',
+                location: 'Harbour Bay, Batam Island',
+                quote: 'The human mind was never meant to run at 100% CPU utilization without idling.',
+                initialCoffees: 42,
+                body: `
+                    <p class="first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-pink-400 first-letter:mr-3 first-letter:leading-none">
+                        It was 01:15 AM when I finally closed my IDE.
+                    </p>
+                    <p>
+                        The text cursor had been blinking on line 412 for three consecutive hours. It was a vicious, nondeterministic race condition—the kind that vanishes when you attach a debugger and only blows up in production when two asynchronous network calls collide within a five-microsecond margin. My temples throbbed, and my shoulders felt like coiled cables under tension.
+                    </p>
+                    <p>
+                        I shut the laptop lid, grabbed a faded windbreaker, and stepped out into the Batam night.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-cloud-moon text-pink-400"></i> The Salt Air and Harbour Lights</h4>
+                    <p>
+                        The tropical island air hit first—heavy, humid, and carrying the distinctive scent of low-tide salt water mingled with wet asphalt from an evening downpour.
+                    </p>
+                    <p>
+                        I walked toward an open-air <em>kedai kopi</em> near Harbour Bay. The streets of Batam at this hour have a peculiar stillness. The daytime roar of scooters and container trucks fades into the distant, rhythmic thrum of cargo ship diesels moving through the Singapore Strait.
+                    </p>
+                    <p>
+                        The coffee stall was bathed in the warm glow of a solitary bare incandescent bulb. Behind the stainless-steel counter, the uncle—whose apron bore the earned stains of ten thousand brews—greeted me with a knowing nod.
+                    </p>
+                    <blockquote class="border-l-4 border-pink-500 pl-4 py-2 my-6 text-pink-200/90 italic bg-pink-950/20 rounded-r-xl">
+                        "Mas Farrel. Lembur lagi di depan layar ya? Kopi O pekat, gula sedikit?"<br>
+                        "Iya, Om. Seduh yang panas."
+                    </blockquote>
+                    <p>
+                        He pulled the cloth sock filter high into the air, creating a dramatic dark cascade of piping-hot Robusta into a thick ceramic mug. When he slid the cup across the weathered marble table, a rich crown of caramel foam floated on top, sending curling wisps of steam into the humid sea breeze.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-mug-hot text-pink-400"></i> Singapore Across the Strait</h4>
+                    <p>
+                        I sat by the edge of the stone terrace. Just across the dark Malacca Strait—barely twenty kilometers away—the Singapore skyline was ablaze. Marina Bay, the towering gantry cranes of Tanjong Pagar port, and the endless constellation of anchored container ships glowed like red and emerald LEDs pinned against velvet black.
+                    </p>
+                    <p>
+                        From here, all that relentless global ambition looked quiet. It looked manageable.
+                    </p>
+                    <p>
+                        I took the first sip. The bitterness struck first—bold, earthy, roasted dark over charcoal—followed by a clean cocoa finish and a sudden warmth blooming in my chest.
+                    </p>
+                    <p>
+                        In software engineering, we fall into the dangerous trap of treating our own biology like an overclocked server blade. We benchmark our productivity in commits per day, measure value by uptime, and dread idle threads. We believe that if a problem resists our first ten attempts, the answer is to hammer the keyboard harder.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-pencil-alt text-pink-400"></i> The Offline Subconscious</h4>
+                    <p>
+                        I pulled a worn pocket notebook from my jacket and unscrewed my pen.
+                    </p>
+                    <p>
+                        No syntax highlighting. No auto-completion. No stack traces.
+                    </p>
+                    <p>
+                        I sketched two timelines on the paper. And just like that, the bug revealed itself in three simple arrows. The error wasn't in the network library; it was in my fundamental assumption that State A would always precede State B. I was expecting an asynchronous universe to behave like synchronous clockwork.
+                    </p>
+                    <p>
+                        I took another sip of coffee. The solution took thirty seconds to write down.
+                    </p>
+                    <p>
+                        Sometimes the most effective code you will ever write happens when your hands are nowhere near a keyboard. Sometimes the brain simply needs twenty minutes of Batam breeze, a warm cup of coffee, and permission to sit quietly in the dark.
+                    </p>
+                `
+            },
+            'syntax-sorcerer': {
+                id: 'syntax-sorcerer',
+                title: 'The Syntax Sorcerer',
+                subtitle: 'When a dangling pointer summons an elder horror, only the cleanest syntax can save the realm.',
+                category: 'fantasy',
+                badgeText: 'Fantasy • Flash Fiction',
+                badgeClass: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+                readTime: '6 min read',
+                date: 'August 2026',
+                location: 'The High Spire of Turingia',
+                quote: 'In the Citadel of Turingia, magic was not chanted in Latin, but compiled in clean logic.',
+                initialCoffees: 35,
+                body: `
+                    <p class="first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-blue-400 first-letter:mr-3 first-letter:leading-none">
+                        In the high spires of Turingia, incantations were not drawn from dragon blood or starry alignments. They were constructed through the rigorous, unforgiving discipline of Syntax.
+                    </p>
+                    <p>
+                        To summon a shield of kinetic force, an adept was required to allocate thermodynamic registers, bind ritual listeners, and pray to the gods of the Heap that the mana garbage collector did not engage mid-battle. A misplaced semicolon could turn an apprentice's levitation charm into an unrecoverable crater in the courtyard floor.
+                    </p>
+                    <p>
+                        Kael, a third-year apprentice in the Order of the Open Source, was already exhausted.
+                    </p>
+                    <p>
+                        For three centuries, the Archmages had enforced the ritual dialect of <em>The Ancient Java</em>. Casting a simple spark of fire required thirteen scrolls of ceremonial boilerplate:
+                    </p>
+                    <div class="my-6 p-4 rounded-xl bg-gray-900/90 border border-blue-500/30 font-mono text-xs text-blue-300 overflow-x-auto leading-relaxed">
+                        <code>
+                            ElementSparkFactoryProvider provider = ElementSparkFactoryProvider.getInstance();<br>
+                            IExtensibleManaContext ctx = provider.createContextBuilder().setIntensity(Level.MILD).build();<br>
+                            provider.dispatchIncantation(new AbstractElementalListener() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;@Override<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;public void onManaIgnite(SparkEvent evt) { evt.channelToStaff(StaffType.OAK); }<br>
+                            });
+                        </code>
+                    </div>
+                    <p>
+                        By the time a mage completed the opening declarations, the goblin vanguard had usually already crossed the castle moat.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-book-dead text-blue-400"></i> The Forbidden Codex</h4>
+                    <p>
+                        During an archive dusting deep within the Subterranean Repositories, Kael's staff illuminated a concealed obsidian alcove. Resting upon a velvet cushion was a slender tome bound in violet dragonhide, sealed with two interlocking geometric shapes in silver.
+                    </p>
+                    <p>
+                        Its title shone with faint luminescence: <strong>Kotlin: The Null-Safe Grimoires</strong>.
+                    </p>
+                    <p>
+                        Trembling, Kael opened the first page. The incantations inside looked alien. They possessed no factories, no redundant type rituals, and no ceremonial wrappers. They read like pure poetry:
+                    </p>
+                    <blockquote class="border-l-4 border-blue-500 pl-4 py-2 my-6 text-blue-200/90 italic bg-blue-950/20 rounded-r-xl">
+                        "Where others construct temples of ceremony, speak only the intent.<br>
+                        The compiler shall handle the earth, while you command the sky."
+                    </blockquote>
+                    <p>
+                        And then Kael saw the glyph that made his breath catch in his throat: the <code class="text-blue-300 font-mono bg-gray-900 px-1.5 py-0.5 rounded font-bold">?</code> rune. The legendary ward of Null-Safety.
+                    </p>
+                    <p>
+                        For generations, the greatest terror of the mage guild had been the <em>Null-Shadows</em>—abominations born whenever a wizard invoked a reference to an entity that did not exist in reality. The dreaded shout of <code>NullPointerException</code> had collapsed dynasties and vaporized entire legions of battlemages.
+                    </p>
+                    <p>
+                        Yet here, in this violet codex, nullability was resolved at compile-time with a single question mark: <code class="text-blue-300 font-mono">target?.banish() ?: shield()</code>. It was blasphemy. It was perfection.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-skull-crossbones text-blue-400"></i> The Siege of the Call Stack</h4>
+                    <p>
+                        The peace shattered with the deafening clang of the Citadel alarm gong.
+                    </p>
+                    <p>
+                        The flagstones beneath Kael's boots rocked violently. Racing to the upper ramparts, he looked down upon a scene of pure chaos. A tear in reality had opened over the courtyard. From the void emerged the <strong>Grand Recursion</strong>—a fifty-foot behemoth formed of tangled memory dumps, broken pointers, and corrupted stack frames.
+                    </p>
+                    <p>
+                        Master Gregory and the council elders stood at the perimeter, chanting frantically from their heavy grimoires:
+                    </p>
+                    <p>
+                        <em>"Instantiate the DefensiveBarrierFactoryBean! Configure the XML mappings!"</em> screamed Master Gregory.
+                    </p>
+                    <p>
+                        <em>"We cannot, Master!"</em> cried an acolyte. <em>"The memory overhead is exceeding maximum heap size! The garbage collector has frozen our vocal cords!"</em>
+                    </p>
+                    <p>
+                        The beast reared back, its claw of pure Segmentation Faults coming down toward the academy library.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-bolt text-blue-400"></i> The Non-Blocking Ward</h4>
+                    <p>
+                        Kael dropped his ceremonial staff. He thrust forward his hands, channeling the violet codex directly into his pulse.
+                    </p>
+                    <p>
+                        He did not chant twenty lines of XML. He spoke two crisp lines of concurrent sorcery:
+                    </p>
+                    <div class="my-6 p-4 rounded-xl bg-gray-900/90 border border-purple-500/30 font-mono text-xs text-purple-300 overflow-x-auto leading-relaxed">
+                        <code>
+                            suspend fun defendCitadel() = coroutineScope {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;launch(Dispatchers.Unconfined) { ward.seal(citadel) }<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;beast?.let { it.decomposeToNull() }<br>
+                            }
+                        </code>
+                    </div>
+                    <p>
+                        A brilliant dome of translucent violet light erupted across the courtyard—lightweight, non-blocking, and consuming negligible mana. The colossal claw of the beast struck the ward and dissolved into clean, odorless steam.
+                    </p>
+                    <p>
+                        With a final, baffled gurgle of <code class="text-purple-300 font-mono">Exit Code 0</code>, the Grand Recursion unraveled into harmless zero-byte dust.
+                    </p>
+                    <p>
+                        The courtyard fell into stunned silence. Master Gregory's jaw hung open, his heavy leather tome clattering onto the cobblestones.
+                    </p>
+                    <p>
+                        <em>"Apprentice... what ancient dialect did you just wield?"</em> the old mage gasped. <em>"Where were your factory wrappers? Where was your memory leak?"</em>
+                    </p>
+                    <p>
+                        Kael closed the violet grimoire with a quiet snap, tucked it beneath his arm, and turned toward the library with a grin.
+                    </p>
+                    <p>
+                        <em>"Less ceremony, Master. More magic."</em>
+                    </p>
+                `
+            },
+            'ghost-commit': {
+                id: 'ghost-commit',
+                title: 'The Ghost in the Git Commit',
+                subtitle: 'Forty light-hours from Earth, an abandoned probe is still pushing commits to main.',
+                category: 'sci-fi',
+                badgeText: 'Sci-Fi / Mystery • Short Story',
+                badgeClass: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+                readTime: '5 min read',
+                date: 'November 2026',
+                location: 'Alexandria-IV Orbital Station',
+                quote: 'Commit messages are the fossilized thoughts of minds racing against the abyss of time.',
+                initialCoffees: 31,
+                body: `
+                    <p class="first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-purple-400 first-letter:mr-3 first-letter:leading-none">
+                        The Orbital Archive Station <em>Alexandria-IV</em> drifted through the L2 Lagrange point in absolute silence.
+                    </p>
+                    <p>
+                        Inside the pressurized observation ring, Maya Chen was engaged in the unglamorous task of digital paleontology. Her assignment: inspect and verify checksum digests of humanity's legacy software repositories from the late Digital Era (1995–2055) before the data was laser-etched onto optical quartz wafers for thousand-year archival.
+                    </p>
+                    <p>
+                        Most repositories were mundane ghosts: long-forgotten JavaScript build systems, incomplete multiplayer sandbox games, student homework repositories, and todo apps with commit histories that ended with <em>"fixed typo in readme, going to sleep."</em>
+                    </p>
+                    <p>
+                        Then Maya's terminal triggered an alert tone that hadn't sounded on Alexandria-IV in twenty-eight years.
+                    </p>
+                    <div class="my-6 p-4 rounded-xl bg-gray-900/90 border border-purple-500/30 font-mono text-xs text-purple-300 overflow-x-auto leading-relaxed">
+                        <code>
+                            [DAEMON_ALERT] Inbound Git Push Protocol detected.<br>
+                            Target Repo: 0x4A81-NOVA / deep-telemetry-firmware<br>
+                            Source Node: UNREGISTERED_DEEP_SPACE_TRANSPONDER<br>
+                            Latency: 148,291,040 ms (~41.2 hours round-trip)<br>
+                            Branch: main [Fast-Forward]
+                        </code>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-terminal text-purple-400"></i> The Solstice Anomaly</h4>
+                    <p>
+                        Maya leaned forward, her heart thumping against her ribs.
+                    </p>
+                    <p>
+                        She pulled up the repository metadata. <em>Project NOVA</em> had been created in 2041 by Dr. Arthur Vance—a pioneer of autonomous deep-space telemetry probes. Vance had launched the probe toward the interstellar medium just before the Resource Wars, and his terrestrial lab had gone dark in 2044.
+                    </p>
+                    <p>
+                        By all known laws of technology, the probe should have decayed into dead silicon eighty years ago. Yet the git log told an impossible story:
+                    </p>
+                    <div class="my-6 p-4 rounded-xl bg-gray-900/90 border border-gray-800 font-mono text-xs text-gray-300 overflow-x-auto leading-relaxed">
+                        <code>
+                            * 8b1f09c - Arthur Vance, 14 hours ago : telemetry: alignment with Oort boundary<br>
+                            * c401a8e - Arthur Vance, 1 year ago : telemetry: optical sensors recalibrated<br>
+                            * 19d832a - Arthur Vance, 2 years ago : power: switching to RTG thermal trickle<br>
+                            * 77a03bc - Arthur Vance, 3 years ago : telemetry: quiet here. radio noise zero.
+                        </code>
+                    </div>
+                    <p>
+                        Every single year, on the exact second of the winter solstice, a commit had arrived. The cryptographic signature was verified: signed with Vance's personal 4096-bit GPG key. The mathematics were incorruptible.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-search-plus text-purple-400"></i> The Diff Across the Abyss</h4>
+                    <p>
+                        Trembling, Maya typed:
+                    </p>
+                    <div class="my-6 p-4 rounded-xl bg-gray-900/90 border border-purple-500/30 font-mono text-xs text-purple-300">
+                        <code>git diff HEAD~1 HEAD</code>
+                    </div>
+                    <p>
+                        The diff did not contain star coordinates or propulsion mathematics. Inside a comment block in <code>sensor_loop.c</code>, new lines had been appended:
+                    </p>
+                    <blockquote class="border-l-4 border-purple-500 pl-4 py-2 my-6 text-purple-200/90 font-mono text-xs bg-purple-950/20 rounded-r-xl leading-relaxed">
+                        + // The solar wind no longer reaches here.<br>
+                        + // When the background cosmic radiation is subtracted, the stars don't flicker.<br>
+                        + // If anyone on Earth is receiving these packets: I completed the mission.<br>
+                        + // The universe is vast, but it does not feel empty.<br>
+                        + // Signing off. Goodnight.
+                    </blockquote>
+                    <p>
+                        Maya sat back in her command seat, gazing out Alexandria's crystalline cupola. The Earth was a fragile blue crescent below, cradled in velvet black.
+                    </p>
+                    <p>
+                        The probe was carrying a dead man's mind—or an autonomous heuristic agent programmed to mimic him—drifting into the dark beyond the heliosphere. And its only tether to the civilization that birthed it was an ancient version control protocol.
+                    </p>
+                    <h4 class="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2"><i class="fas fa-code-merge text-purple-400"></i> Pull Request</h4>
+                    <p>
+                        Maya did not archive the repository.
+                    </p>
+                    <p>
+                        Instead, she checked out a new branch:
+                    </p>
+                    <div class="my-6 p-4 rounded-xl bg-gray-900/90 border border-purple-500/30 font-mono text-xs text-purple-300 overflow-x-auto leading-relaxed">
+                        <code>
+                            git checkout -b response-alexandria<br>
+                            git commit -m "ACK: Telemetry received, Dr. Vance. We hear you loud and clear. Rest well."<br>
+                            git push origin response-alexandria
+                        </code>
+                    </div>
+                    <p>
+                        It would take forty-one hours for the laser transmission to reach the probe's antenna at the edge of the solar system. But Maya knew, with the quiet certainty of an engineer, that when the packet arrived, the lonely daemon in the dark would finally execute its termination subroutine in peace.
+                    </p>
+                `
+            }
+        };
+
+        const storyKeys = Object.keys(storiesData);
+        let currentStoryId = null;
+
         // 1. LIGHTWEIGHT CANVAS BACKGROUND
         const canvas = document.getElementById('vanilla-canvas');
         const ctx = canvas.getContext('2d');
-        
         let width, height;
         let particles = [];
-        
         const isMobile = window.innerWidth < 768;
-        const particleCount = isMobile ? 25 : 60; // Sedikit lebih sepi agar fokus membaca
+        const particleCount = isMobile ? 25 : 60;
         const colors = ['#fb923c', '#f472b6', '#c084fc', '#818cf8'];
         let mouse = { x: null, y: null, radius: 100 };
 
@@ -205,7 +905,6 @@
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
         }
-        
         window.addEventListener('resize', resize);
         resize();
 
@@ -240,34 +939,29 @@
 
         function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
-            
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
-                
                 for (let j = i; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    
                     if (distance < 80) {
                         ctx.beginPath();
-                        ctx.strokeStyle = particles[i].color + '30'; 
+                        ctx.strokeStyle = particles[i].color + '30';
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
                     }
                 }
-
                 if (!isMobile && mouse.x != null) {
                     const dxMouse = particles[i].x - mouse.x;
                     const dyMouse = particles[i].y - mouse.y;
                     const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-                    
                     if (distMouse < mouse.radius) {
                         ctx.beginPath();
-                        ctx.strokeStyle = particles[i].color + '60'; 
+                        ctx.strokeStyle = particles[i].color + '60';
                         ctx.lineWidth = 1;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(mouse.x, mouse.y);
@@ -288,7 +982,7 @@
                     revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
         revealElements.forEach(el => revealObserver.observe(el));
 
         // 3. MOBILE MENU
@@ -297,6 +991,313 @@
         menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
         document.querySelectorAll('#mobileMenu a').forEach(link => {
             link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // 4. AUDIO LOGIC (COZY LOUNGE BGM)
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        let isMusicPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove('fa-compact-disc', 'text-orange-400', 'spin-slow');
+                musicIcon.classList.add('fa-volume-mute', 'text-gray-400');
+                showToast('Ambient lounge music paused', 'fa-pause-circle');
+            } else {
+                bgMusic.play().then(() => {
+                    musicIcon.classList.remove('fa-volume-mute', 'text-gray-400');
+                    musicIcon.classList.add('fa-compact-disc', 'text-orange-400', 'spin-slow');
+                    showToast('Playing cozy lounge ambience ☕', 'fa-music');
+                }).catch(err => {
+                    console.log('Audio autoplay prevented:', err);
+                });
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+
+        // 5. FILTERING & SEARCH SYSTEM
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const storyCards = document.querySelectorAll('.story-card');
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearch');
+        const noResults = document.getElementById('noResults');
+
+        let activeFilter = 'all';
+
+        function filterStories() {
+            const query = searchInput.value.trim().toLowerCase();
+            clearSearchBtn.classList.toggle('hidden', query.length === 0);
+
+            let visibleCount = 0;
+            storyCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                const tags = card.textContent.toLowerCase();
+
+                const matchesFilter = (activeFilter === 'all' || category === activeFilter);
+                const matchesSearch = (query === '' || title.includes(query) || desc.includes(query) || tags.includes(query));
+
+                if (matchesFilter && matchesSearch) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            noResults.classList.toggle('hidden', visibleCount > 0);
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => {
+                    b.classList.remove('active', 'bg-orange-600/25', 'text-orange-400', 'border-orange-500/40', 'shadow-[0_0_15px_rgba(249,115,22,0.15)]');
+                    b.classList.add('bg-gray-800/50', 'text-gray-400', 'border-gray-700/50');
+                });
+                btn.classList.add('active', 'bg-orange-600/25', 'text-orange-400', 'border-orange-500/40', 'shadow-[0_0_15px_rgba(249,115,22,0.15)]');
+                btn.classList.remove('bg-gray-800/50', 'text-gray-400', 'border-gray-700/50');
+
+                activeFilter = btn.getAttribute('data-filter');
+                filterStories();
+            });
+        });
+
+        searchInput.addEventListener('input', filterStories);
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            filterStories();
+            searchInput.focus();
+        });
+
+        function resetFilters() {
+            activeFilter = 'all';
+            searchInput.value = '';
+            filterButtons.forEach(b => {
+                if (b.getAttribute('data-filter') === 'all') {
+                    b.classList.add('active', 'bg-orange-600/25', 'text-orange-400', 'border-orange-500/40', 'shadow-[0_0_15px_rgba(249,115,22,0.15)]');
+                    b.classList.remove('bg-gray-800/50', 'text-gray-400', 'border-gray-700/50');
+                } else {
+                    b.classList.remove('active', 'bg-orange-600/25', 'text-orange-400', 'border-orange-500/40', 'shadow-[0_0_15px_rgba(249,115,22,0.15)]');
+                    b.classList.add('bg-gray-800/50', 'text-gray-400', 'border-gray-700/50');
+                }
+            });
+            filterStories();
+        }
+
+        // 6. STORY READER MODAL LOGIC
+        const readerBackdrop = document.getElementById('readerBackdrop');
+        const readerModal = document.getElementById('readerModal');
+        const readerScrollArea = document.getElementById('readerScrollArea');
+        const readingProgress = document.getElementById('readingProgress');
+
+        function openStoryReader(storyId) {
+            const story = storiesData[storyId];
+            if (!story) return;
+
+            currentStoryId = storyId;
+
+            // Fill Data
+            document.getElementById('readerCategoryBadge').textContent = story.badgeText;
+            document.getElementById('readerCategoryBadge').className = 'px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ' + story.badgeClass;
+            document.getElementById('readerEstimatedTime').innerHTML = '<i class="far fa-clock"></i> ' + story.readTime;
+            document.getElementById('readerDate').textContent = story.date;
+            document.getElementById('readerLocation').innerHTML = '<i class="fas fa-compass mr-1 text-gray-500"></i> ' + story.location;
+            document.getElementById('readerTitle').textContent = story.title;
+            document.getElementById('readerSubtitle').textContent = story.subtitle;
+            document.getElementById('readerEpigraph').textContent = `"${story.quote}"`;
+            document.getElementById('readerBody').innerHTML = story.body;
+
+            // Load Saved Coffees
+            const savedCoffees = localStorage.getItem('coffee_' + storyId) || story.initialCoffees;
+            document.getElementById('readerCoffeeCount').textContent = savedCoffees;
+
+            // Update URL Hash
+            window.location.hash = 'story-' + storyId;
+
+            // Update Prev / Next state
+            updateReaderNavButtons();
+
+            // Open Modal
+            readerBackdrop.classList.remove('reader-backdrop-hidden');
+            readerBackdrop.classList.add('reader-backdrop-active');
+            readerModal.classList.remove('reader-modal-hidden');
+            readerModal.classList.add('reader-modal-active');
+            document.body.style.overflow = 'hidden';
+
+            // Reset scroll & progress
+            readerScrollArea.scrollTop = 0;
+            readingProgress.style.width = '0%';
+        }
+
+        function closeStoryReader() {
+            readerBackdrop.classList.remove('reader-backdrop-active');
+            readerBackdrop.classList.add('reader-backdrop-hidden');
+            readerModal.classList.remove('reader-modal-active');
+            readerModal.classList.add('reader-modal-hidden');
+            document.body.style.overflow = 'auto';
+
+            if (window.location.hash.startsWith('#story-')) {
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
+        }
+
+        readerBackdrop.addEventListener('click', (e) => {
+            if (e.target === readerBackdrop) {
+                closeStoryReader();
+            }
+        });
+
+        // Reading Progress Listener
+        readerScrollArea.addEventListener('scroll', () => {
+            const scrollTop = readerScrollArea.scrollTop;
+            const scrollHeight = readerScrollArea.scrollHeight - readerScrollArea.clientHeight;
+            const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+            readingProgress.style.width = progress + '%';
+        });
+
+        // Font Size Controls
+        function changeFontSize(size) {
+            document.body.classList.remove('font-size-sm', 'font-size-md', 'font-size-lg');
+            document.body.classList.add('font-size-' + size);
+            showToast('Font size updated: ' + size.toUpperCase(), 'fa-font');
+        }
+
+        // Sepia / Warm Theme Toggle
+        let isSepiaTheme = false;
+        function toggleReaderTheme() {
+            isSepiaTheme = !isSepiaTheme;
+            document.body.classList.toggle('theme-sepia', isSepiaTheme);
+            const btn = document.getElementById('themeToggleBtn');
+            if (isSepiaTheme) {
+                btn.classList.add('text-orange-400', 'border-orange-500/40');
+                showToast('Warm Cozy Amber Theme activated', 'fa-mug-hot');
+            } else {
+                btn.classList.remove('text-orange-400', 'border-orange-500/40');
+                showToast('Cosmic Dark Theme activated', 'fa-moon');
+            }
+        }
+
+        // Prev / Next Navigation inside Reader
+        function updateReaderNavButtons() {
+            const idx = storyKeys.indexOf(currentStoryId);
+            const prevBtn = document.getElementById('prevStoryBtn');
+            const nextBtn = document.getElementById('nextStoryBtn');
+
+            prevBtn.style.visibility = (idx > 0) ? 'visible' : 'hidden';
+            nextBtn.style.visibility = (idx < storyKeys.length - 1) ? 'visible' : 'hidden';
+        }
+
+        function navigateStory(direction) {
+            const idx = storyKeys.indexOf(currentStoryId);
+            const nextIdx = idx + direction;
+            if (nextIdx >= 0 && nextIdx < storyKeys.length) {
+                openStoryReader(storyKeys[nextIdx]);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (readerBackdrop.classList.contains('reader-backdrop-active')) {
+                if (e.key === 'Escape') closeStoryReader();
+                if (e.key === 'ArrowRight') navigateStory(1);
+                if (e.key === 'ArrowLeft') navigateStory(-1);
+            }
+            if (document.getElementById('promptModal').classList.contains('reader-backdrop-active')) {
+                if (e.key === 'Escape') closePromptModal();
+            }
+        });
+
+        // Coffee Reaction (Clap / Like)
+        function sendCoffeeReaction() {
+            if (!currentStoryId) return;
+            const countEl = document.getElementById('readerCoffeeCount');
+            let count = parseInt(countEl.textContent, 10) || 0;
+            count++;
+            countEl.textContent = count;
+            localStorage.setItem('coffee_' + currentStoryId, count);
+
+            // Floating bubble animation
+            const btn = document.getElementById('coffeeReactionBtn');
+            const bubble = document.createElement('span');
+            bubble.className = 'absolute -top-3 right-2 text-xs font-bold text-orange-400 float-bubble';
+            bubble.innerHTML = '+1 ☕';
+            btn.appendChild(bubble);
+            setTimeout(() => bubble.remove(), 900);
+
+            showToast('Poured a fresh cup of coffee! ☕', 'fa-mug-hot');
+        }
+
+        // Share Story
+        function shareCurrentStory() {
+            const url = window.location.origin + window.location.pathname + '#story-' + currentStoryId;
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('Story link copied to clipboard!', 'fa-check');
+            }).catch(() => {
+                showToast('Link ready: ' + url, 'fa-link');
+            });
+        }
+
+        // 7. PROMPT MODAL
+        const promptModal = document.getElementById('promptModal');
+        function openPromptModal() {
+            promptModal.classList.remove('reader-backdrop-hidden');
+            promptModal.classList.add('reader-backdrop-active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePromptModal() {
+            promptModal.classList.remove('reader-backdrop-active');
+            promptModal.classList.add('reader-backdrop-hidden');
+            document.body.style.overflow = 'auto';
+        }
+        promptModal.addEventListener('click', (e) => {
+            if (e.target === promptModal) closePromptModal();
+        });
+
+        function handlePromptSubmit(e) {
+            e.preventDefault();
+            const genre = document.getElementById('promptGenre').value;
+            const promptText = document.getElementById('promptText').value;
+
+            const subject = encodeURIComponent(`[Creative Lounge] Story Prompt Idea (${genre})`);
+            const body = encodeURIComponent(`Hi Farrel,\n\nI have an interesting story premise for the Creative Lounge:\n\nGenre: ${genre}\nPrompt: ${promptText}\n\nCheers!`);
+            
+            closePromptModal();
+            window.open(`mailto:farrelariq3@gmail.com?subject=${subject}&body=${body}`, '_blank');
+            showToast('Prompt draft opened in your email client!', 'fa-envelope');
+        }
+
+        // 8. TOAST SYSTEM
+        let toastTimeout;
+        function showToast(message, iconClass = 'fa-check-circle') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.textContent = message;
+            toastIcon.className = `fas ${iconClass} text-orange-400`;
+
+            toast.classList.remove('opacity-0');
+            toast.classList.add('opacity-100');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+            }, 3000);
+        }
+
+        // 9. CHECK URL HASH ON LOAD
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash;
+            if (hash.startsWith('#story-')) {
+                const storyId = hash.replace('#story-', '');
+                if (storiesData[storyId]) {
+                    setTimeout(() => openStoryReader(storyId), 300);
+                }
+            }
         });
     </script>
 </body>
