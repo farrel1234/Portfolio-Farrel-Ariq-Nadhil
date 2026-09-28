@@ -51,43 +51,63 @@
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-5px); }
         }
-        @keyframes scrollMouse {
-            0% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(8px); opacity: 0.2; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes chevronPulse {
-            0%, 100% { transform: translateY(0); opacity: 0.5; }
-            50% { transform: translateY(6px); opacity: 1; }
-        }
-
         .animate-float {
             animation: floatUpDown 3.6s ease-in-out infinite;
         }
         .animate-float-slow {
             animation: floatUpDownSlow 5s ease-in-out infinite;
         }
-        .animate-mouse-wheel {
-            animation: scrollMouse 1.8s ease-in-out infinite;
-        }
-        .animate-chevron-down {
-            animation: chevronPulse 1.8s ease-in-out infinite;
-        }
 
-        /* Smooth Reveal Animations (Muncul Naik saat Scroll) */
+        /* Modern "Front & Out" Scroll Dynamics */
         .reveal { 
             opacity: 0; 
-            transform: translateY(40px); 
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
-            will-change: transform, opacity;
+            transform: perspective(1000px) translateY(45px) scale(0.92); 
+            filter: blur(5px);
+            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+                        filter 0.75s cubic-bezier(0.16, 1, 0.3, 1); 
+            will-change: transform, opacity, filter;
         }
+        .reveal.reveal-in,
         .reveal.active { 
             opacity: 1; 
-            transform: translateY(0); 
+            transform: perspective(1000px) translateY(0) scale(1); 
+            filter: blur(0px);
         }
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
+        .reveal.reveal-out-top {
+            opacity: 0;
+            transform: perspective(1000px) translateY(-40px) scale(0.94);
+            filter: blur(4px);
+        }
+        .reveal.reveal-out-bottom {
+            opacity: 0;
+            transform: perspective(1000px) translateY(45px) scale(0.92);
+            filter: blur(5px);
+        }
+        .reveal.reveal-in.delay-100 { transition-delay: 100ms; }
+        .reveal.reveal-in.delay-200 { transition-delay: 200ms; }
+        .reveal.reveal-in.delay-300 { transition-delay: 300ms; }
+        .reveal.reveal-out-top,
+        .reveal.reveal-out-bottom {
+            transition-delay: 0ms !important;
+        }
+
+        /* Card and Interactive hover lift when active in front */
+        .story-card.reveal-in:hover {
+            transform: perspective(1000px) translateY(-10px) scale(1.02) !important;
+        }
+        .reveal.reveal-in.group[onclick]:hover {
+            transform: perspective(1000px) translateY(-8px) scale(1.02);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                transition: none !important;
+            }
+        }
 
         /* Reader Modal Transitions */
         .reader-backdrop-active { opacity: 1; pointer-events: auto; }
@@ -136,18 +156,6 @@
     <!-- AUDIO BACKGROUND -->
     <audio id="bgMusic" loop preload="auto"><source src="bg-music.mp3" type="audio/mpeg"></audio>
 
-    <!-- FLOATING SCROLL CONTROLLER (NAIK TURUN) -->
-    <div id="scrollController" class="fixed bottom-24 right-6 z-40 flex flex-col gap-2.5 transition-all duration-300">
-        <button onclick="scrollToTop()" title="Scroll ke Atas (Naik)" 
-                class="w-12 h-12 rounded-full bg-gray-900/90 backdrop-blur-md border border-gray-700/80 text-gray-400 hover:text-orange-400 hover:border-orange-500/60 hover:-translate-y-1 transition-all duration-200 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.5)] active:scale-95 group">
-            <i class="fas fa-chevron-up text-sm group-hover:-translate-y-0.5 transition-transform"></i>
-        </button>
-        <button onclick="scrollToBottom()" title="Scroll ke Bawah (Turun)" 
-                class="w-12 h-12 rounded-full bg-gray-900/90 backdrop-blur-md border border-gray-700/80 text-gray-400 hover:text-orange-400 hover:border-orange-500/60 hover:translate-y-1 transition-all duration-200 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.5)] active:scale-95 group">
-            <i class="fas fa-chevron-down text-sm group-hover:translate-y-0.5 transition-transform"></i>
-        </button>
-    </div>
-
     <!-- FLOATING MUSIC TOGGLE -->
     <button id="musicToggle" title="Toggle Cozy Lounge Ambience" class="fixed bottom-6 right-6 z-40 bg-gray-900/90 backdrop-blur-md border border-gray-700/80 p-3 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.25)] hover:bg-gray-800 hover:border-orange-400 hover:scale-110 transition-all duration-300 focus:outline-none flex items-center justify-center w-12 h-12 group">
         <i id="musicIcon" class="fas fa-volume-mute text-gray-400 group-hover:text-orange-400 transition-colors text-lg"></i>
@@ -187,7 +195,7 @@
     <main class="flex-grow pt-32 pb-24 max-w-6xl mx-auto px-4 sm:px-6 w-full">
         
         <!-- HEADER -->
-        <div class="text-center mb-10 reveal">
+        <div class="text-center mb-10 reveal reveal-in">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold tracking-widest uppercase mb-4 animate-float">
                 <i class="fas fa-mug-hot"></i> The Creative Lounge
             </div>
@@ -197,16 +205,6 @@
             <p class="text-gray-400 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed mb-6">
                 Step away from the syntax and take a breather. Welcome to my cozy corner filled with 25 imaginative tales, speculative sci-fi, and casual reflections outside the world of coding.
             </p>
-
-            <!-- BOUNCING SCROLL DOWN INDICATOR (NAIK-TURUN) -->
-            <div class="flex flex-col items-center justify-center cursor-pointer group mt-6" onclick="scrollToStories()" title="Klik untuk scroll ke cerita">
-                <span class="text-xs uppercase tracking-widest text-gray-500 group-hover:text-orange-400 transition-colors mb-2 font-mono flex items-center gap-1.5">
-                    Scroll down <i class="fas fa-chevron-down text-[10px] animate-chevron-down text-orange-400"></i>
-                </span>
-                <div class="w-6 h-10 rounded-full border-2 border-gray-700/80 group-hover:border-orange-500/80 p-1 flex justify-center transition-colors">
-                    <div class="w-1.5 h-2.5 bg-orange-400 rounded-full animate-mouse-wheel"></div>
-                </div>
-            </div>
         </div>
 
         <!-- SEARCH & INTERACTIVE FILTER BAR -->
@@ -1362,22 +1360,6 @@
         const storyKeys = Object.keys(storiesData);
         let currentStoryId = null;
 
-        // SCROLL HELPER FUNCTIONS (NAIK TURUN)
-        function scrollToStories() {
-            const target = document.getElementById('filterTabs');
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function scrollToBottom() {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-
         // 1. LIGHTWEIGHT CANVAS BACKGROUND
         const canvas = document.getElementById('vanilla-canvas');
         const ctx = canvas.getContext('2d');
@@ -1460,15 +1442,25 @@
         }
         animateCanvas();
 
-        // 2. SCROLL REVEAL ANIMATION (MUNCUL NAIK SAAT SCROLL)
+        // 2. CONTINUOUS "FRONT & OUT" SCROLL DYNAMICS
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('active');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-in', 'active');
+                    entry.target.classList.remove('reveal-out-top', 'reveal-out-bottom');
+                } else {
+                    entry.target.classList.remove('reveal-in', 'active');
+                    if (entry.boundingClientRect.top < 0) {
+                        entry.target.classList.add('reveal-out-top');
+                        entry.target.classList.remove('reveal-out-bottom');
+                    } else {
+                        entry.target.classList.add('reveal-out-bottom');
+                        entry.target.classList.remove('reveal-out-top');
+                    }
                 }
             });
-        }, { threshold: 0.06, rootMargin: "0px 0px -20px 0px" });
+        }, { threshold: 0.08, rootMargin: "-20px 0px -20px 0px" });
         revealElements.forEach(el => revealObserver.observe(el));
 
         // 3. MOBILE MENU

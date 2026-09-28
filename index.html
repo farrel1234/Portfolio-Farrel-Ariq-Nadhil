@@ -42,60 +42,69 @@
             background-color: #05070F;
         }
 
-        /* Floating Up-Down Animation (Naik-Turun) */
+        /* Floating Badge Animation */
         @keyframes floatUpDown {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-8px); }
         }
-        @keyframes scrollMouse {
-            0% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(8px); opacity: 0.2; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes chevronPulse {
-            0%, 100% { transform: translateY(0); opacity: 0.5; }
-            50% { transform: translateY(6px); opacity: 1; }
-        }
-
         .animate-float {
             animation: floatUpDown 3.6s ease-in-out infinite;
         }
-        .animate-mouse-wheel {
-            animation: scrollMouse 1.8s ease-in-out infinite;
-        }
-        .animate-chevron-down {
-            animation: chevronPulse 1.8s ease-in-out infinite;
-        }
 
-        /* Smooth & Staggered Reveal Animations (Muncul Naik saat Scroll) */
+        /* Modern "Front & Out" Scroll Dynamics */
         .reveal { 
             opacity: 0; 
-            transform: translateY(40px); 
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
-            will-change: transform, opacity;
+            transform: perspective(1000px) translateY(45px) scale(0.92); 
+            filter: blur(5px);
+            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+                        filter 0.75s cubic-bezier(0.16, 1, 0.3, 1); 
+            will-change: transform, opacity, filter;
         }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
+        .reveal.reveal-in,
+        .reveal.active { 
+            opacity: 1; 
+            transform: perspective(1000px) translateY(0) scale(1); 
+            filter: blur(0px);
+        }
+        .reveal.reveal-out-top {
+            opacity: 0;
+            transform: perspective(1000px) translateY(-40px) scale(0.94);
+            filter: blur(4px);
+        }
+        .reveal.reveal-out-bottom {
+            opacity: 0;
+            transform: perspective(1000px) translateY(45px) scale(0.92);
+            filter: blur(5px);
+        }
+        .reveal.reveal-in.delay-100 { transition-delay: 100ms; }
+        .reveal.reveal-in.delay-200 { transition-delay: 200ms; }
+        .reveal.reveal-in.delay-300 { transition-delay: 300ms; }
+        .reveal.reveal-out-top,
+        .reveal.reveal-out-bottom {
+            transition-delay: 0ms !important;
+        }
+
+        /* Card and Interactive hover lift when active in front */
+        .reveal.reveal-in.group[onclick]:hover,
+        .reveal.reveal-in.hover-lift:hover {
+            transform: perspective(1000px) translateY(-8px) scale(1.02);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                transition: none !important;
+            }
+        }
     </style>
 </head>
 <body class="text-gray-200 font-sans relative antialiased overflow-x-hidden bg-galaxy-dark">
 
     <!-- LIGHTWEIGHT CANVAS BACKGROUND -->
     <canvas id="vanilla-canvas"></canvas>
-
-    <!-- FLOATING SCROLL CONTROLLER (NAIK TURUN) -->
-    <div id="scrollController" class="fixed bottom-24 right-6 z-40 flex flex-col gap-2.5 transition-all duration-300">
-        <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" title="Scroll ke Atas (Naik)" 
-                class="w-12 h-12 rounded-full bg-gray-900/90 backdrop-blur-md border border-gray-700/80 text-gray-400 hover:text-purple-400 hover:border-purple-500/60 hover:-translate-y-1 transition-all duration-200 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.5)] active:scale-95 group">
-            <i class="fas fa-chevron-up text-sm group-hover:-translate-y-0.5 transition-transform"></i>
-        </button>
-        <button onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })" title="Scroll ke Bawah (Turun)" 
-                class="w-12 h-12 rounded-full bg-gray-900/90 backdrop-blur-md border border-gray-700/80 text-gray-400 hover:text-purple-400 hover:border-purple-500/60 hover:translate-y-1 transition-all duration-200 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.5)] active:scale-95 group">
-            <i class="fas fa-chevron-down text-sm group-hover:translate-y-0.5 transition-transform"></i>
-        </button>
-    </div>
 
     <!-- AUDIO TOGGLE -->
     <button id="musicToggle" class="fixed bottom-6 right-6 z-40 bg-gray-900/80 backdrop-blur-md border border-gray-700 p-3 rounded-full shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:bg-gray-800 hover:border-purple-400 hover:scale-110 transition-all duration-300 focus:outline-none flex items-center justify-center w-12 h-12 group">
@@ -137,7 +146,7 @@
         <!-- Glowing Orb behind text -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
         
-        <div class="max-w-4xl mx-auto text-center z-10 reveal">
+        <div class="max-w-4xl mx-auto text-center z-10 reveal reveal-in">
             <div class="inline-block bg-white/5 border border-white/10 text-purple-300 text-xs font-semibold px-5 py-2 rounded-full mb-8 backdrop-blur-sm tracking-wider uppercase animate-float">
                 Software Engineer • UI/UX Enthusiast
             </div>
@@ -155,16 +164,6 @@
                 <a href="#experience" class="w-full sm:w-auto bg-purple-600 hover:bg-purple-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all hover:-translate-y-1 text-center">Explore Architecture</a>
                 <a href="folder magang/CV Farrel Ariq Nadhil.pdf" target="_blank" download class="w-full sm:w-auto bg-transparent border border-purple-500 hover:bg-purple-500/10 text-purple-400 font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center gap-2"><i class="fas fa-download"></i> Download CV</a>
                 <a href="folder magang/Transkrip Nilai Farrel Ariq Nadhil.pdf" target="_blank" download class="w-full sm:w-auto bg-transparent border border-orange-500 hover:bg-orange-500/10 text-orange-400 font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-1 flex items-center justify-center gap-2"><i class="fas fa-file-alt"></i> Download Transkrip</a>
-            </div>
-
-            <!-- BOUNCING SCROLL DOWN INDICATOR (NAIK-TURUN) -->
-            <div class="mt-14 flex flex-col items-center justify-center cursor-pointer group" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })" title="Scroll ke About">
-                <span class="text-xs uppercase tracking-widest text-gray-500 group-hover:text-purple-400 transition-colors mb-2 font-mono flex items-center gap-1.5">
-                    Scroll down <i class="fas fa-chevron-down text-[10px] animate-chevron-down text-purple-400"></i>
-                </span>
-                <div class="w-6 h-10 rounded-full border-2 border-gray-700/80 group-hover:border-purple-500/80 p-1 flex justify-center transition-colors">
-                    <div class="w-1.5 h-2.5 bg-purple-400 rounded-full animate-mouse-wheel"></div>
-                </div>
             </div>
         </div>
     </section>
@@ -596,16 +595,25 @@
         }
         setTimeout(typeWriter, 500);
 
-        // 4. SCROLL REVEAL ANIMATION 
+        // 4. CONTINUOUS "FRONT & OUT" SCROLL DYNAMICS
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target);
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-in', 'active');
+                    entry.target.classList.remove('reveal-out-top', 'reveal-out-bottom');
+                } else {
+                    entry.target.classList.remove('reveal-in', 'active');
+                    if (entry.boundingClientRect.top < 0) {
+                        entry.target.classList.add('reveal-out-top');
+                        entry.target.classList.remove('reveal-out-bottom');
+                    } else {
+                        entry.target.classList.add('reveal-out-bottom');
+                        entry.target.classList.remove('reveal-out-top');
+                    }
                 }
             });
-        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        }, { threshold: 0.08, rootMargin: "-20px 0px -20px 0px" });
         revealElements.forEach(el => revealObserver.observe(el));
 
         // 5. AUDIO LOGIC
