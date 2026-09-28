@@ -1152,6 +1152,17 @@
                 </div>
             </article>
         </div>
+        
+        <!-- PAGINATION CONTROLS -->
+        <div id="paginationControls" class="flex justify-center items-center gap-2 mt-12 hidden">
+            <button id="prevPageBtn" class="w-10 h-10 rounded-full bg-gray-800/80 border border-gray-700 text-gray-400 hover:text-orange-400 hover:border-orange-500/50 transition flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div id="pageNumbers" class="flex items-center gap-2"></div>
+            <button id="nextPageBtn" class="w-10 h-10 rounded-full bg-gray-800/80 border border-gray-700 text-gray-400 hover:text-orange-400 hover:border-orange-500/50 transition flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
 
         <!-- NO RESULTS FOUND PLACEHOLDER (Hidden by default) -->
         <div id="noResults" class="hidden text-center py-16 px-4 bg-galaxy-card/40 rounded-3xl border border-gray-800/60 mt-4">
@@ -1563,21 +1574,66 @@
             isMusicPlaying = !isMusicPlaying;
         });
 
-        // 5. FILTERING & SEARCH SYSTEM
+        // 5. FILTERING, SEARCH & PAGINATION SYSTEM
         const filterButtons = document.querySelectorAll('.filter-btn');
-        const storyCards = document.querySelectorAll('.story-card');
+        const storyCards = Array.from(document.querySelectorAll('.story-card'));
         const searchInput = document.getElementById('searchInput');
         const clearSearchBtn = document.getElementById('clearSearch');
         const noResults = document.getElementById('noResults');
+        const paginationControls = document.getElementById('paginationControls');
+        const prevPageBtn = document.getElementById('prevPageBtn');
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        const pageNumbers = document.getElementById('pageNumbers');
 
         let activeFilter = 'all';
+        let currentPage = 1;
+        const itemsPerPage = 6;
+        let filteredCards = [];
+
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+            
+            if (totalPages <= 1) {
+                paginationControls.classList.add('hidden');
+            } else {
+                paginationControls.classList.remove('hidden');
+                
+                prevPageBtn.disabled = currentPage === 1;
+                nextPageBtn.disabled = currentPage === totalPages;
+                
+                pageNumbers.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = `w-8 h-8 rounded-full text-xs font-bold transition flex items-center justify-center ${i === currentPage ? 'bg-orange-500 text-white shadow-[0_0_10px_rgba(249,115,22,0.5)]' : 'text-gray-400 hover:bg-gray-800 hover:text-orange-400'}`;
+                    btn.innerText = i;
+                    btn.onclick = () => {
+                        currentPage = i;
+                        applyPagination();
+                        window.scrollTo({top: document.getElementById('storiesGrid').offsetTop - 100, behavior: 'smooth'});
+                    };
+                    pageNumbers.appendChild(btn);
+                }
+            }
+        }
+
+        function applyPagination() {
+            storyCards.forEach(card => card.classList.add('hidden'));
+            
+            const startIdx = (currentPage - 1) * itemsPerPage;
+            const endIdx = startIdx + itemsPerPage;
+            
+            filteredCards.slice(startIdx, endIdx).forEach(card => {
+                card.classList.remove('hidden');
+            });
+            
+            renderPagination();
+        }
 
         function filterStories() {
             const query = searchInput.value.trim().toLowerCase();
             clearSearchBtn.classList.toggle('hidden', query.length === 0);
 
-            let visibleCount = 0;
-            storyCards.forEach(card => {
+            filteredCards = storyCards.filter(card => {
                 const category = card.getAttribute('data-category');
                 const title = card.querySelector('h3').textContent.toLowerCase();
                 const desc = card.querySelector('p').textContent.toLowerCase();
@@ -1586,16 +1642,64 @@
                 const matchesFilter = (activeFilter === 'all' || category === activeFilter);
                 const matchesSearch = (query === '' || title.includes(query) || desc.includes(query) || tags.includes(query));
 
-                if (matchesFilter && matchesSearch) {
-                    card.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    card.classList.add('hidden');
-                }
+                return matchesFilter && matchesSearch;
             });
 
-            noResults.classList.toggle('hidden', visibleCount > 0);
+            noResults.classList.toggle('hidden', filteredCards.length > 0);
+            
+            currentPage = 1; // Reset to page 1 on new filter
+            applyPagination();
         }
+
+        if (prevPageBtn && nextPageBtn) {
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    applyPagination();
+                    window.scrollTo({top: document.getElementById('storiesGrid').offsetTop - 100, behavior: 'smooth'});
+                }
+            });
+            nextPageBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    applyPagination();
+                    window.scrollTo({top: document.getElementById('storiesGrid').offsetTop - 100, behavior: 'smooth'});
+                }
+            });
+        }
+
+        // Initialize pagination
+        filterStories();
+
+        // 5.5 3D MAGNETIC TILT (BOOK COVER EFFECT)
+        storyCards.forEach(card => {
+            card.style.transformStyle = 'preserve-3d';
+            
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -6; // lift effect
+                const rotateY = ((x - centerX) / centerX) * 6;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02) translateY(-4px)`;
+                card.style.transition = 'transform 0.1s ease-out, box-shadow 0.1s ease-out';
+                card.style.boxShadow = '0 25px 50px -12px rgba(0,0,0,0.8), 0 0 15px rgba(249,115,22,0.15)';
+                card.style.zIndex = '10';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateY(0)`;
+                card.style.transition = 'transform 0.5s ease-out, box-shadow 0.5s ease-out';
+                card.style.boxShadow = '';
+                card.style.zIndex = '';
+                setTimeout(() => { 
+                    card.style.transition = ''; 
+                }, 500);
+            });
+        });
 
         filterButtons.forEach(btn => {
             btn.addEventListener('click', () => {
