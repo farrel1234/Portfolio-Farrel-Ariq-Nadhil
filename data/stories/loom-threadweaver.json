@@ -1,0 +1,22 @@
+{
+  "id": "loom-threadweaver",
+  "title": "The Loom of the Thread Weaver",
+  "subtitle": "Spinning concurrent threads of destiny without deadlocks or race conditions.",
+  "category": "fantasy",
+  "badgeText": "Fantasy • Mythological",
+  "badgeClass": "bg-violet-500/20 text-violet-400 border-violet-500/30",
+  "color": "violet",
+  "readTime": "6 min read",
+  "date": "May 2026",
+  "location": "The Celestial Spire of Threads",
+  "quote": "Fate is not a single string; it is a synchronized thread pool running across eternity.",
+  "image": "images/stories/loom-threadweaver.jpg",
+  "tags": [
+    "#ThreadWeaver",
+    "#Concurrency",
+    "#CelestialMyth"
+  ],
+  "excerpt": "At the summit of Mount Aethel, the Three Sisters of the Celestial Loom weave billions of mortal destinies concurrently. But when two threads contend for the same golden spindle, a mortal deadlock threatens the sky.",
+  "initialCoffees": 47,
+  "body": "\n            <p class=\"first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-violet-400 first-letter:mr-3 first-letter:leading-none\">\n                Mortal philosophers imagine fate as a single tapestry woven by an elderly grandmother with a wooden spindle.\n            </p>\n            <p>\n                They have never seen the Spire of Threads.\n            </p>\n            <p>\n                High above the clouds, Goddess Clotho oversaw sixteen thousand shimmering spindles of starlight, spinning sixty-four million concurrent lifelines through an intricate crystal loom. Each thread represented an emperor, a beggar, a farmer, or a scholar.\n            </p>\n            <p>\n                The challenge was not the volume of threads. The challenge was <strong>contention</strong>.\n            </p>\n            <h4 class=\"text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2\"><i class=\"fas fa-infinity text-violet-400\"></i> The Great Deadlock</h4>\n            <p>\n                \"Sister!\" Clotho called across the cosmic hall. \"Thread #9,401—the King of Valoria—is demanding exclusive access to the Crown Resource. But Thread #9,402—his brother—has locked the Royal Armory and is waiting on the Crown!\"\n            </p>\n            <p>\n                The two threads intertwined, vibrating violently. A cold, grey frost began spreading across the tapestry—the dreaded condition known to mortals as a <strong>Deadly Embrace</strong>. Time in Valoria froze. Swords remained half-drawn. Hearts stopped mid-beat.\n            </p>\n            <p>\n                Young apprentice Lachesis stepped forward with her crystal scissors.\n            </p>\n            <blockquote class=\"border-l-4 border-violet-500 pl-4 py-2 my-6 text-violet-200/90 italic bg-violet-950/20 rounded-r-xl\">\n                \"Never lock out of order. Enforce global hierarchy.<br>\n                Release both resources, yield the priority to the younger brother, and re-acquire with exponential backoff.\"\n            </blockquote>\n            <p>\n                She tapped the golden spindle. The knot snapped free. The threads decoupled and resumed their fluid, harmonious spin.\n            </p>\n            <p>\n                Down below in Valoria, the king blinked, lowered his blade, and offered his brother a cup of wine instead. The war was averted because someone in heaven understood lock timeouts.\n            </p>\n        "
+}

@@ -1,0 +1,22 @@
+{
+  "id": "dragon-loop",
+  "title": "The Dragon of the Infinite Loop",
+  "subtitle": "A mythical serpent whose recursive hunger trapped an entire kingdom in an endless dawn.",
+  "category": "fantasy",
+  "badgeText": "Fantasy • Epic Fable",
+  "badgeClass": "bg-amber-500/20 text-amber-400 border-amber-500/30",
+  "color": "amber",
+  "readTime": "5 min read",
+  "date": "April 2026",
+  "location": "The Valley of Ouroboros",
+  "quote": "Every infinite loop is a serpent waiting for its base case to be found.",
+  "image": "images/stories/dragon-loop.jpg",
+  "tags": [
+    "#Ouroboros",
+    "#Recursion",
+    "#DragonFable"
+  ],
+  "excerpt": "The kingdom of Chronos was frozen at 06:00 AM for three hundred years because an ancient dragon coiled in the sky was calling itself recursively without a termination condition.",
+  "initialCoffees": 52,
+  "body": "\n            <p class=\"first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-amber-400 first-letter:mr-3 first-letter:leading-none\">\n                For three centuries, the kingdom of Chronos had never seen high noon.\n            </p>\n            <p>\n                Every morning at 06:00 AM, the roosters crowed. The bakers lit their brick ovens. The town clock struck six. And then, at 06:01 AM, the sky rippled like disturbed pond water, and the sun snapped back down beneath the eastern horizon.\n            </p>\n            <p>\n                High above the storm clouds coiled <strong>Ouroboros</strong>, the Great Serpent of Eternity. Its emerald and gold scales formed a colossal ring fifty miles in diameter, biting its own tail with jaws of pure lightning.\n            </p>\n            <h4 class=\"text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2\"><i class=\"fas fa-redo-alt text-amber-400\"></i> The Call Stack Overflow</h4>\n            <p>\n                Sir Galahad the Logician climbed to the peak of Mount Recursion, carrying no lance or steel shield, but a parchment inscribed with four simple words.\n            </p>\n            <p>\n                \"Beast!\" Galahad shouted into the roaring squall. \"You eat your tail because you believe your function must never terminate! But your stack depth has exceeded forty million cubits! The clouds cannot bear your weight!\"\n            </p>\n            <p>\n                The great dragon rolled an immense golden eye toward the knight. Thunder rumbled from its throat: <em>\"I... AM... RECURSION... I CALL MYSELF FOREVER...\"</em>\n            </p>\n            <blockquote class=\"border-l-4 border-amber-500 pl-4 py-2 my-6 text-amber-200/90 italic bg-amber-950/20 rounded-r-xl\">\n                \"Hear this, Ouroboros,\" Galahad unrolled his scroll. \"if (hunger <= 0) return Peace; else eat(tail - 1);\"\n            </blockquote>\n            <p>\n                The dragon froze. Its titanic jaws relaxed. For the first time in three hundred years, its teeth released its own tail.\n            </p>\n            <p>\n                The loop broke. The serpent uncoiled and dissolved into a gentle shower of golden rain. Below in the valley, the clock struck 06:02 AM. The sun rose into the center of the sky, warm and triumphant.\n            </p>\n        "
+}

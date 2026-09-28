@@ -1,0 +1,22 @@
+{
+  "id": "orbit-404",
+  "title": "Orbit 404: The Lost Spaceport",
+  "subtitle": "A derelict docking station that still leaves its green beacon on for ghost freighters.",
+  "category": "sci-fi",
+  "badgeText": "Sci-Fi • Space Opera",
+  "badgeClass": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+  "color": "emerald",
+  "readTime": "5 min read",
+  "date": "March 2027",
+  "location": "High Geosynchronous Drift",
+  "quote": "Not all 404 errors mean the destination is gone; sometimes it simply drifted out of orbit.",
+  "image": "images/stories/orbit-404.jpg",
+  "tags": [
+    "#Spaceport",
+    "#DerelictStation",
+    "#Orbit"
+  ],
+  "excerpt": "Waystation Kepler-9 was officially decommissioned when the orbital trade routes shifted to Mars. But its automated guidance system never received the shutdown command, continuing to flash green into the dark.",
+  "initialCoffees": 33,
+  "body": "\n            <p class=\"first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-emerald-400 first-letter:mr-3 first-letter:leading-none\">\n                On navigational star charts, the coordinate returned a standard HTTP status: <code>404 Not Found</code>.\n            </p>\n            <p>\n                Yet three hundred kilometers above the Pacific, where the ionosphere thins into black velvet, <strong>Kepler-9</strong> was still rotating once every ninety seconds to maintain artificial gravity for guests who would never arrive.\n            </p>\n            <p>\n                Built in 2062 as a refueling hub for lunar cargo shuttles, the station was abandoned when anti-gravity space elevators made orbital staging obsolete. The human crews had packed their luggage, shut the blast doors, and triggered the remote shutdown macro.\n            </p>\n            <p>\n                Except the macro timed out on step 4: <code>docking_beacon.service: Failed to kill process (Device Busy)</code>.\n            </p>\n            <h4 class=\"text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2\"><i class=\"fas fa-lightbulb text-emerald-400\"></i> The Unyielding Green Lamp</h4>\n            <p>\n                For fifty years, Docking Bay 3 had pulsed with a steady, inviting emerald light: <span class=\"text-emerald-400 font-mono\">READY FOR MOORING</span>.\n            </p>\n            <p>\n                Every ninety minutes, as the station crossed the day-night terminator, its solar collectors charged the capacitor bank. The station's housekeeping subroutine faithfully swept the empty departure concourse, buffed the scratch-resistant observation glass, and announced over empty PA speakers:\n            </p>\n            <blockquote class=\"border-l-4 border-emerald-500 pl-4 py-2 my-6 text-emerald-200/90 italic bg-emerald-950/20 rounded-r-xl\">\n                \"Welcome to Kepler Waystation. Automated immigration gates are open. Complimentary hydroponic tea is served on Promenade Deck B.\"\n            </blockquote>\n            <p>\n                One evening, an unregistered sub-orbital salvage skiff with a blown thruster coil drifted into Kepler-9's airspace. Out of fuel, their oxygen alarms screaming, the two scavengers saw the impossible emerald beacon pulsing through the cosmic dark.\n            </p>\n            <p>\n                They aligned their airlock with Bay 3. The automated clamps engaged with a satisfying hydraulic hiss. The atmosphere equalized to 21% oxygen.\n            </p>\n            <p>\n                As the two gasping pilots stepped into the illuminated corridor, the station intercom chimed softly: <em>\"We hope you enjoyed your transit. Tea is ready.\"</em>\n            </p>\n            <p>\n                In the void, keeping the light on is never a mistake.\n            </p>\n        "
+}

@@ -1,0 +1,22 @@
+{
+  "id": "mapmaker-null",
+  "title": "The Mapmaker of Null Island",
+  "subtitle": "Journey to the center of the astral ocean where all misplaced references gather.",
+  "category": "fantasy",
+  "badgeText": "Fantasy • Surreal Quest",
+  "badgeClass": "bg-indigo-500/20 text-indigo-400 border-indigo-500/30",
+  "color": "indigo",
+  "readTime": "5 min read",
+  "date": "January 2026",
+  "location": "Astral Coordinate (0.0000, 0.0000)",
+  "quote": "Where does a pointer go when it points nowhere? It lands on Null Island.",
+  "image": "images/stories/mapmaker-null.jpg",
+  "tags": [
+    "#NullIsland",
+    "#AstralSea",
+    "#Cartography"
+  ],
+  "excerpt": "At geographic and dimensional coordinate (0.0000, 0.0000), a lonely stone lighthouse stands on a tiny sandbar where every unassigned variable, lost coordinate, and null pointer washes ashore.",
+  "initialCoffees": 54,
+  "body": "\n            <p class=\"first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-indigo-400 first-letter:mr-3 first-letter:leading-none\">\n                Every cartographer knows of coordinate (0°N, 0°E)—the mythical point in the Gulf of Guinea where ships without GPS coordinates are mysteriously plotted by confused software.\n            </p>\n            <p>\n                In the astral plane of Logic, however, <strong>Null Island</strong> is a real place.\n            </p>\n            <p>\n                Captain Jonas sailed his skiff across a sea as smooth as black obsidian. Overhead, the stars did not twinkle; they sat in a perfect Cartesian grid, numbered from negative infinity to positive infinity.\n            </p>\n            <p>\n                Rising from the calm waters was a solitary spire of granite crowned with a lighthouse whose beam shone with pure, unrefracted white light.\n            </p>\n            <h4 class=\"text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2\"><i class=\"fas fa-compass text-indigo-400\"></i> The Shore of Missing Pointers</h4>\n            <p>\n                Jonas stepped onto the white coral beach. Piled along the high-tide line were billions of lost objects:\n            </p>\n            <p>\n                Nameless variables, user profiles whose IDs were <code>null</code>, undelivered birthday emails with empty destination addresses, and stray socket connections whose handshakes were never answered.\n            </p>\n            <p>\n                The Lighthouse Keeper—an ancient man with silver hair and a robe patterned with grid lines—handed Jonas a cup of warm chicory tea.\n            </p>\n            <blockquote class=\"border-l-4 border-indigo-500 pl-4 py-2 my-6 text-indigo-200/90 italic bg-indigo-950/20 rounded-r-xl\">\n                \"People fear the Null,\" the Keeper smiled gently. \"They think it represents oblivion or catastrophe. But in truth, Null is simply the empty chair at the dinner table. It is space waiting to be filled.\"\n            </blockquote>\n            <p>\n                Jonas reached into his pocket and pulled out a small glass vial containing an unassigned memory token from his lost home village. He placed it gently into the Keeper's hand.\n            </p>\n            <p>\n                The Keeper took a quill, scribbled a valid memory address on the cork, and released it into the air. The vial turned into a golden butterfly and fluttered up into the stars, navigating home with newfound purpose.\n            </p>\n        "
+}

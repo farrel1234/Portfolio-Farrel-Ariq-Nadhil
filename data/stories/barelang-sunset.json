@@ -1,0 +1,22 @@
+{
+  "id": "barelang-sunset",
+  "title": "The Barelang Sunset",
+  "subtitle": "Watching the Malacca sky melt into gradients of amber and lavender after a grueling sprint.",
+  "category": "slice-of-life",
+  "badgeText": "Slice of Life • Reflection",
+  "badgeClass": "bg-amber-500/20 text-amber-400 border-amber-500/30",
+  "color": "amber",
+  "readTime": "4 min read",
+  "date": "July 2026",
+  "location": "Tengku Fisabilillah Bridge (Barelang 1)",
+  "quote": "When the cables vibrate against ocean winds, you remember that structure can also be art.",
+  "image": "images/stories/barelang-sunset.jpg",
+  "tags": [
+    "#BarelangBridge",
+    "#GoldenHour",
+    "#Sunset"
+  ],
+  "excerpt": "After delivering a 4-week mobile project sprint, taking the coastal ride to Bridge One in Barelang to lean against the steel railing and watch the sun dip below tropical islands.",
+  "initialCoffees": 48,
+  "body": "\n            <p class=\"first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-amber-400 first-letter:mr-3 first-letter:leading-none\">\n                When you deploy software under a tight deadline, the whole world shrinks to the size of a 14-inch retina display.\n            </p>\n            <p>\n                You stop noticing when day turns into night. You forget what sunlight feels like on the back of your neck. So when the final pull request was merged at 04:30 PM on a Friday, I shut my laptop, grabbed my helmet, and took my motorcycle south toward the Barelang Bridges.\n            </p>\n            <p>\n                Bridge One—the Tengku Fisabilillah cable-stayed bridge—rises sixty meters above the sea, its grand white concrete pylons reaching into the sky like twin cathedral steeples.\n            </p>\n            <h4 class=\"text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2\"><i class=\"fas fa-sun text-amber-400\"></i> The Ocean Gradient</h4>\n            <p>\n                I parked along the pedestrian walkway and leaned my elbows on the weathered steel railing.\n            </p>\n            <p>\n                The sun was descending over the archipelago, painting the clouds in shades of molten apricot, lavender, and dusky indigo. Below the bridge, traditional wooden <em>sampans</em> and fishing kelongs bobbed gently on the calm emerald water, their small outboard motors leaving white foam trails that dissolved into the twilight.\n            </p>\n            <blockquote class=\"border-l-4 border-amber-500 pl-4 py-2 my-6 text-amber-200/90 italic bg-amber-950/20 rounded-r-xl\">\n                \"Code is tension and balance. So is a cable-stayed bridge. Thousands of tons of concrete suspended in mid-air by cables no thicker than your wrist.\"\n            </blockquote>\n            <p>\n                As the sea breeze rushed through the stay-cables, they emitted a low, resonant Aeolian hum—a soft bass chord played by the wind against steel.\n            </p>\n            <p>\n                I closed my eyes and breathed in the salty evening air. In coding, we spend our lives constructing digital architectures that no human eye will ever physically touch. But standing here between the sea and the sky, you realize that the drive to build—to span impossible chasms, whether between islands or between systems—is the most human instinct there is.\n            </p>\n        "
+}

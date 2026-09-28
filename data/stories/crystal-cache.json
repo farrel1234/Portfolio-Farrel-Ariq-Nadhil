@@ -1,0 +1,22 @@
+{
+  "id": "crystal-cache",
+  "title": "The Whispering Crystal of Cache",
+  "subtitle": "Ancient crystals that retain spells for zero-latency retrieval in moments of peril.",
+  "category": "fantasy",
+  "badgeText": "Fantasy • Arcane Caverns",
+  "badgeClass": "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+  "color": "cyan",
+  "readTime": "5 min read",
+  "date": "February 2026",
+  "location": "Caverns of High Memory",
+  "quote": "Memory is fast, but forgetting at the right time is pure sorcery.",
+  "image": "images/stories/crystal-cache.jpg",
+  "tags": [
+    "#CacheMemory",
+    "#AzureCrystals",
+    "#FastRetrieval"
+  ],
+  "excerpt": "Beneath the Citadel of Knowledge lies a cavern of azure crystals where spells frequently cast are cached in light, allowing battlemages to conjure defensive shields in zero milliseconds.",
+  "initialCoffees": 45,
+  "body": "\n            <p class=\"first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-cyan-400 first-letter:mr-3 first-letter:leading-none\">\n                To fetch a spell from the Great Imperial Library took forty-five seconds of pneumatic tube transit and three librarians on roller skates.\n            </p>\n            <p>\n                In wartime, forty-five seconds is three lifetimes.\n            </p>\n            <p>\n                Deep beneath the foundations of the academy lay the <strong>Caverns of the L1 Crystal</strong>. Giant hexagonal pillars of pure piezoelectric quartz rose from the subterranean lake, humming with high-frequency resonance.\n            </p>\n            <h4 class=\"text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2\"><i class=\"fas fa-gem text-cyan-400\"></i> The LRU Eviction Policy</h4>\n            <p>\n                Apprentice Lyra was the Keeper of the Cache. Her duty was delicate: only the thirty-two most frequently cast incantations could be mirrored in the glowing crystal matrix.\n            </p>\n            <p>\n                \"If you store too many spells,\" Lyra instructed her assistant, \"the search latency increases. When the goblin siege engines fire, the Battle Archmage needs the <em>Shield of Iron Wall</em> in zero milliseconds—not after traversing a massive B-tree.\"\n            </p>\n            <p>\n                Suddenly, the alarm gong echoed from the surface. A barrage of flaming catapult rocks was tumbling toward the city walls!\n            </p>\n            <p>\n                On the surface, Archmage Varis thrust forward his hands. He did not send an eagle to the library. He tapped the crystal leyline directly.\n            </p>\n            <blockquote class=\"border-l-4 border-cyan-500 pl-4 py-2 my-6 text-cyan-200/90 italic bg-cyan-950/20 rounded-r-xl\">\n                [CACHE_HIT] Spell: Shield_Iron_Wall.bin<br>\n                Retrieval Latency: 0.12 nanoseconds. Hot partition engaged.\n            </blockquote>\n            <p>\n                A blinding sheet of adamantine light materialized over the city roofs instantly. The boulders shattered harmlessly into gravel. Lyra smiled, adjusted the eviction counter for less-used spells, and watched the azure crystals hum with quiet victory.\n            </p>\n        "
+}

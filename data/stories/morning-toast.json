@@ -1,0 +1,22 @@
+{
+  "id": "morning-toast",
+  "title": "The Sound of Morning Toast",
+  "subtitle": "The quiet, meditative ritual of brewing pour-over coffee before the notification bells chime.",
+  "category": "slice-of-life",
+  "badgeText": "Slice of Life • Cozy Morning",
+  "badgeClass": "bg-orange-500/20 text-orange-400 border-orange-500/30",
+  "color": "orange",
+  "readTime": "3 min read",
+  "date": "April 2026",
+  "location": "Farrel's Kitchen Studio",
+  "quote": "Peace is not the absence of work; it is the presence of hot toast and fresh coffee.",
+  "image": "images/stories/morning-toast.jpg",
+  "tags": [
+    "#MorningRoutine",
+    "#PourOver",
+    "#SlowLiving"
+  ],
+  "excerpt": "At 06:30 AM before turning on the computer, there is a ten-minute window of absolute stillness. The golden sound of the toaster popping and the blooming aroma of hot coffee grounds.",
+  "initialCoffees": 51,
+  "body": "\n            <p class=\"first-letter:float-left first-letter:text-6xl first-letter:font-extrabold first-letter:text-orange-400 first-letter:mr-3 first-letter:leading-none\">\n                The world before 07:00 AM does not demand answers.\n            </p>\n            <p>\n                The morning sunlight slips through the kitchen blinds in long golden slats, illuminating tiny dust motes dancing in the quiet air. My phone is still face down on the bedside table. My laptop is asleep in its case.\n            </p>\n            <p>\n                In the kitchen, I initiate the only manual algorithm of the day that requires no compiler.\n            </p>\n            <h4 class=\"text-xl font-bold text-white mt-8 mb-3 flex items-center gap-2\"><i class=\"fas fa-bread-slice text-orange-400\"></i> The Dual Ritual</h4>\n            <p>\n                Step one: two thick slices of sourdough bread into the toaster. Dial set to three and a half.\n            </p>\n            <p>\n                Step two: twenty grams of Mandheling beans into the hand grinder. The mechanical crunch of the ceramic burr vibrating through my wrist is deeply grounding. It takes thirty-five rotations.\n            </p>\n            <p>\n                I pour ninety-degree water over the dark grounds in the V60 dripper. The coffee blooms—swelling like a miniature volcano, releasing aromas of roasted hazelnuts and dark cacao.\n            </p>\n            <p>\n                And then comes that glorious sound: <em>*CLACK-PING!*</em>\n            </p>\n            <p>\n                The toast pops up, golden-brown, crisp at the crust and soft at the center. I spread salted butter immediately, watching it melt into translucent amber pools across the toasted ridges.\n            </p>\n            <blockquote class=\"border-l-4 border-orange-500 pl-4 py-2 my-6 text-orange-200/90 italic bg-orange-950/20 rounded-r-xl\">\n                \"If you win the first hour of your day with stillness, the chaos of the remaining twenty-three cannot break your stride.\"\n            </blockquote>\n            <p>\n                I sit at the wooden table. First bite: warm, crunchy, savory butter. First sip: clean, bitter, awakening. Now the day can begin.\n            </p>\n        "
+}
