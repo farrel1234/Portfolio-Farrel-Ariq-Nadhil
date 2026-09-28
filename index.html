@@ -140,14 +140,30 @@
         <i id="musicIcon" class="fas fa-volume-mute text-gray-400 group-hover:text-white transition-colors text-lg"></i>
     </button>
 
-    <!-- NAVBAR -->
-    <nav class="fixed top-0 w-full z-40 bg-galaxy-dark/80 backdrop-blur-lg border-b border-gray-800/50 transition-all duration-300">
+    <!-- NAVBAR DENGAN LOGO BARU (< [FN] />) -->
+    <nav class="fixed top-0 w-full z-40 bg-galaxy-dark/80 backdrop-blur-lg border-b border-gray-800/50 transition-all duration-300 mt-1">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <div class="flex-shrink-0 cursor-pointer hover:opacity-80 transition" onclick="window.scrollTo(0,0)">
-                    <span class="text-xl font-bold font-mono tracking-tight">
-                        <span class="text-white">Portfolio </span><span class="bg-gradient-to-r from-orange-400 to-purple-500 bg-clip-text text-transparent">Farrel</span>
-                    </span>
+                
+                <!-- LOGO KOMBINASI: APP ICON + DEV TAGS -->
+                <div class="flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-105 group" onclick="window.scrollTo(0,0)">
+                    <div class="flex items-center gap-1.5 sm:gap-2">
+                        <!-- Kurung Buka (<) -->
+                        <span class="text-gray-500 group-hover:text-orange-400 transition-colors duration-300 font-mono text-2xl sm:text-3xl font-bold">&lt;</span>
+                        
+                        <!-- Kotak App Icon -->
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-orange-500 to-purple-600 flex items-center justify-center shadow-[0_0_15px_rgba(124,58,237,0.4)] group-hover:shadow-[0_0_25px_rgba(249,115,22,0.6)] transition-all duration-300">
+                            <span class="text-white font-black text-lg sm:text-xl font-sans tracking-tighter">FN</span>
+                        </div>
+                        
+                        <!-- Kurung Tutup (/>) -->
+                        <span class="text-gray-500 group-hover:text-purple-400 transition-colors duration-300 font-mono text-2xl sm:text-3xl font-bold">/&gt;</span>
+                        
+                        <!-- Teks Nama Lengkap -->
+                        <span class="text-gray-300 group-hover:text-white transition-colors duration-300 font-bold tracking-[0.2em] text-xs sm:text-sm hidden md:block ml-2 sm:ml-3 border-l border-gray-700 pl-3 sm:pl-4 uppercase">
+                            Farrel Nadhil
+                        </span>
+                    </div>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8 font-medium text-sm">
