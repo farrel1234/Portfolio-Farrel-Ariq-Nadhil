@@ -1305,17 +1305,21 @@
             </div>
 
             <!-- PAGE TURN OVERLAY ANIMATION -->
-            <div id="pageTurnOverlay" class="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-white/10 to-transparent z-40 pointer-events-none opacity-0 transform origin-left transition-all duration-500 ease-in-out"></div>
+            <div id="pageTurnOverlay" class="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-black/40 to-transparent z-40 pointer-events-none opacity-0 transform origin-left transition-all duration-500 ease-in-out"></div>
 
-            <!-- PAGE NAVIGATION BUTTONS (BOTTOM CORNERS) -->
-            <div class="hidden md:flex absolute bottom-0 left-0 w-full justify-between px-6 py-4 z-30 pointer-events-none">
-                <button onclick="turnPage(-1)" id="btnTurnPrev" class="pointer-events-auto px-4 py-2 text-[#666666] hover:text-orange-400 font-bold uppercase tracking-widest text-xs flex items-center gap-2 transition group opacity-50 hover:opacity-100">
-                    <i class="fas fa-long-arrow-alt-left group-hover:-translate-x-1 transition-transform"></i> Prev Page
-                </button>
-                <div class="text-[#555555] font-mono text-xs" id="pageIndicator">Page 1</div>
-                <button onclick="turnPage(1)" id="btnTurnNext" class="pointer-events-auto px-4 py-2 text-[#666666] hover:text-orange-400 font-bold uppercase tracking-widest text-xs flex items-center gap-2 transition group opacity-50 hover:opacity-100">
-                    Next Page <i class="fas fa-long-arrow-alt-right group-hover:translate-x-1 transition-transform"></i>
-                </button>
+            <!-- PAGE NAVIGATION INDICATOR (BOTTOM) -->
+            <div class="hidden md:flex absolute bottom-0 left-0 w-full justify-center px-6 py-4 z-30 pointer-events-none">
+                <div class="text-[#666666] font-mono text-xs font-bold tracking-widest uppercase bg-[#1a1a1a]/80 px-4 py-1.5 rounded-full border border-[#333] shadow-lg backdrop-blur-md" id="pageIndicator">Page 1</div>
+            </div>
+            
+            <!-- SWIPE INSTRUCTION OVERLAY (Fades out) -->
+            <div id="swipeInstruction" class="absolute inset-0 z-50 pointer-events-none flex items-center justify-center transition-opacity duration-1000 opacity-0">
+                <div class="bg-black/80 text-white px-6 py-4 rounded-2xl flex flex-col items-center gap-3 backdrop-blur-md border border-white/10">
+                    <div class="flex gap-4 text-3xl text-orange-400">
+                        <i class="fas fa-hand-point-up animate-pulse"></i>
+                    </div>
+                    <span class="text-sm font-bold uppercase tracking-widest text-gray-300">Drag to turn page</span>
+                </div>
             </div>
             
         </div>
@@ -1804,6 +1808,48 @@
             totalFlipPages = Math.ceil(scrollWidth / viewWidth);
             if(totalFlipPages < 1) totalFlipPages = 1;
         }
+        
+        // DRAG TO FLIP LOGIC
+        let isDraggingPage = false;
+        let dragStartX = 0;
+
+        readerScrollArea.addEventListener('mousedown', (e) => {
+            if (window.innerWidth < 768) return;
+            isDraggingPage = true;
+            dragStartX = e.pageX;
+            readerScrollArea.style.cursor = 'grabbing';
+            document.body.classList.add('select-none'); // Prevent text selection
+            const inst = document.getElementById('swipeInstruction');
+            if(inst) inst.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseup', (e) => {
+            if (!isDraggingPage) return;
+            isDraggingPage = false;
+            readerScrollArea.style.cursor = 'auto';
+            document.body.classList.remove('select-none');
+            const diff = e.pageX - dragStartX;
+            
+            if (diff < -50) {
+                turnPage(1); // Swiped left -> Next page
+            } else if (diff > 50) {
+                turnPage(-1); // Swiped right -> Prev page
+            }
+        });
+        
+        readerScrollArea.addEventListener('touchstart', (e) => {
+            if (window.innerWidth < 768) return;
+            dragStartX = e.touches[0].clientX;
+            const inst = document.getElementById('swipeInstruction');
+            if(inst) inst.style.opacity = '0';
+        }, {passive: true});
+        
+        readerScrollArea.addEventListener('touchend', (e) => {
+            if (window.innerWidth < 768) return;
+            const diff = e.changedTouches[0].clientX - dragStartX;
+            if (diff < -50) turnPage(1);
+            else if (diff > 50) turnPage(-1);
+        }, {passive: true});
 
         function turnPage(direction) {
             if (window.innerWidth < 768) return; // Disable flip on mobile
@@ -1905,6 +1951,17 @@
             setTimeout(() => {
                 calculateTotalPages();
                 updatePageIndicator();
+                
+                // Show swipe instruction on desktop if multiple pages
+                if (window.innerWidth >= 768 && totalFlipPages > 1) {
+                    const inst = document.getElementById('swipeInstruction');
+                    if(inst) inst.style.opacity = '1';
+                    
+                    // Auto hide after 3 seconds
+                    setTimeout(() => {
+                        if(inst) inst.style.opacity = '0';
+                    }, 3000);
+                }
             }, 600); // Wait for open animation to finish before calculating width
         }
 
