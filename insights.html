@@ -123,8 +123,8 @@
 
         /* Cozy Sepia Theme */
         body.theme-sepia .reader-surface {
-            background-color: #17130f !important;
-            border-color: #3d2e20 !important;
+            background-color: rgba(23, 19, 15, 0.8) !important;
+            border-color: rgba(61, 46, 32, 0.5) !important;
         }
         body.theme-sepia .reader-text {
             color: #edd9c2 !important;
@@ -265,7 +265,7 @@
             <!-- TABS -->
             <div id="filterTabs" class="flex justify-center gap-2 sm:gap-3 flex-wrap">
                 <button data-filter="all" class="filter-btn active px-5 sm:px-6 py-2 bg-orange-600/25 text-orange-400 border border-orange-500/40 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300 shadow-[0_0_15px_rgba(249,115,22,0.15)]">
-                    All Stories <span class="ml-1 text-xs opacity-80">(25)</span>
+                    All Stories <span class="ml-1 text-xs opacity-80">(42)</span>
                 </button>
                 <button data-filter="sci-fi" class="filter-btn px-5 sm:px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300 hover:text-white hover:border-gray-500">
                     <i class="fas fa-rocket mr-1 text-xs"></i> Sci-Fi <span class="ml-1 text-xs opacity-75">(9)</span>
@@ -276,12 +276,19 @@
                 <button data-filter="fantasy" class="filter-btn px-5 sm:px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300 hover:text-white hover:border-gray-500">
                     <i class="fas fa-wand-magic-sparkles mr-1 text-xs"></i> Fantasy <span class="ml-1 text-xs opacity-75">(8)</span>
                 </button>
-            </div>
+            
+                <button data-filter="romance" class="filter-btn px-5 sm:px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300 hover:text-white hover:border-gray-500">
+                    <i class="fas fa-heart mr-1 text-xs"></i> Romance <span class="ml-1 text-xs opacity-75">(6)</span>
+                </button>
+                <button data-filter="mystery" class="filter-btn px-5 sm:px-6 py-2 bg-gray-800/50 text-gray-400 border border-gray-700/50 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300 hover:text-white hover:border-gray-500">
+                    <i class="fas fa-search mr-1 text-xs"></i> Mystery <span class="ml-1 text-xs opacity-75">(4)</span>
+                </button>
+</div>
 
             <!-- SEARCH BAR -->
             <div class="relative w-full max-w-md">
                 <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-                <input type="text" id="searchInput" placeholder="Search 25 stories by title, character, or keyword..." 
+                <input type="text" id="searchInput" placeholder="Search 42 stories by title, character, or keyword..." 
                        class="w-full bg-galaxy-card/80 border border-gray-800 rounded-full py-2.5 pl-11 pr-10 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/40 transition">
                 <button id="clearSearch" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 text-xs p-1">
                     <i class="fas fa-times-circle"></i>
@@ -1190,6 +1197,346 @@
                     </div>
                 </div>
             </article>
+
+            <!-- Story 26: Reminders of Him -->
+            <article data-id="reminders-of-him" data-category="romance" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('reminders-of-him')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/reminders-of-him.jpg" alt="Reminders of Him" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-orange-400 text-xs font-bold tracking-wider uppercase">romance</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors line-clamp-2">Reminders of Him</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Saking populernya, saat ini terdapat 94% pengguna Google yang menyukai novel romantis dengan judul R...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-heart mr-1"></i> Colleen Hoover</span>
+                        <span class="text-white group-hover:text-orange-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 27: Remarkably Bright Creatures -->
+            <article data-id="remarkably-bright-creatures" data-category="mystery" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('remarkably-bright-creatures')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/remarkably-bright-creatures.jpg" alt="Remarkably Bright Creatures" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-blue-400 text-xs font-bold tracking-wider uppercase">mystery</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">Remarkably Bright Creatures</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Novel ini bercerita mengenai kehidupan Tova Sullivan. Setelah suaminya meninggal, Tova memulai ruti...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-search mr-1"></i> Shelby Van Pelt</span>
+                        <span class="text-white group-hover:text-blue-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 28: Every Summer After -->
+            <article data-id="every-summer-after" data-category="fiction" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-teal-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('every-summer-after')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/every-summer-after.jpg" alt="Every Summer After" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-teal-400 text-xs font-bold tracking-wider uppercase">fiction</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-teal-400 transition-colors line-clamp-2">Every Summer After</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Pernahkah kamu merasa bahwa kesalahan yang pernah dilakukan bisa membatasi masa depanmu? Kalau perna...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-book mr-1"></i> Carley Fortune</span>
+                        <span class="text-white group-hover:text-teal-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 29: Charlotte’s Web -->
+            <article data-id="charlottes-web" data-category="fiction" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-teal-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('charlottes-web')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/charlottes-web.jpg" alt="Charlotte’s Web" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-teal-400 text-xs font-bold tracking-wider uppercase">fiction</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-teal-400 transition-colors line-clamp-2">Charlotte’s Web</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Kalau kamu termasuk orang yang menyukai buku dari visual, coba deh baca buku ini. Sebab, di di dala...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-book mr-1"></i> E.B. White</span>
+                        <span class="text-white group-hover:text-teal-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 30: The Sense of an Ending -->
+            <article data-id="the-sense-of-an-ending" data-category="fiction" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-teal-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('the-sense-of-an-ending')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/the-sense-of-an-ending.jpg" alt="The Sense of an Ending" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-teal-400 text-xs font-bold tracking-wider uppercase">fiction</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-teal-400 transition-colors line-clamp-2">The Sense of an Ending</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">The Sense of an Ending menceritakan tentang seorang pria bernama Tony Webster yang mencoba memahami ...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-book mr-1"></i> Julian Barnes</span>
+                        <span class="text-white group-hover:text-teal-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 31: Our Souls at Night -->
+            <article data-id="our-souls-at-night" data-category="fiction" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-teal-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('our-souls-at-night')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/our-souls-at-night.jpg" alt="Our Souls at Night" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-teal-400 text-xs font-bold tracking-wider uppercase">fiction</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-teal-400 transition-colors line-clamp-2">Our Souls at Night</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Our Souls at Night bercerita tentang dua orang tetangga tua, Addie Moore dan Louis Waters, yang mem...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-book mr-1"></i> Kent Haruf</span>
+                        <span class="text-white group-hover:text-teal-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 32: Happy Place -->
+            <article data-id="happy-place" data-category="romance" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('happy-place')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/happy-place.jpg" alt="Happy Place" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-orange-400 text-xs font-bold tracking-wider uppercase">romance</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors line-clamp-2">Happy Place</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Happy Place memuat cerita romantis dari pasangan Harriet dan Wyn. yang telah menjalin hubungan seja...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-heart mr-1"></i> Emily Henry</span>
+                        <span class="text-white group-hover:text-orange-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 33: Love on the Brain -->
+            <article data-id="love-on-the-brain" data-category="romance" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('love-on-the-brain')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/love-on-the-brain.jpg" alt="Love on the Brain" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-orange-400 text-xs font-bold tracking-wider uppercase">romance</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors line-clamp-2">Love on the Brain</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Melalui buku ini, sang penulis menceritakan Bee Königswasser yang tertarik dengan pemuda bernama Le...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-heart mr-1"></i> Ali Hazelwood</span>
+                        <span class="text-white group-hover:text-orange-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 34: Things We Never Got Over -->
+            <article data-id="things-we-never-got-over" data-category="romance" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('things-we-never-got-over')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/things-we-never-got-over.jpg" alt="Things We Never Got Over" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-orange-400 text-xs font-bold tracking-wider uppercase">romance</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors line-clamp-2">Things We Never Got Over</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Ringkasnya, novel ini mengisahkan tentang Naomi yang berusaha untuk hidup dengan keponakannya, yait...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-heart mr-1"></i> Lucy Score</span>
+                        <span class="text-white group-hover:text-orange-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 35: The Fault in Our Stars -->
+            <article data-id="the-fault-in-our-stars" data-category="romance" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('the-fault-in-our-stars')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/the-fault-in-our-stars.jpg" alt="The Fault in Our Stars" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-orange-400 text-xs font-bold tracking-wider uppercase">romance</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors line-clamp-2">The Fault in Our Stars</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">The Fault in Our Stars menuliskan kisah tentang Hazel Grace Lancaster, seorang remaja yang menderit...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-heart mr-1"></i> John Green</span>
+                        <span class="text-white group-hover:text-orange-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 36: Eleanor & Park -->
+            <article data-id="eleanor-and-park" data-category="romance" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-orange-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('eleanor-and-park')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/eleanor-and-park.jpg" alt="Eleanor & Park" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-orange-400 text-xs font-bold tracking-wider uppercase">romance</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors line-clamp-2">Eleanor & Park</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Nantinya, kamu akan mengenal tokoh Eleanor, yaitu seorang gadis penuh warna-warni yang memiliki ban...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-heart mr-1"></i> Rainbow Rowell</span>
+                        <span class="text-white group-hover:text-orange-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 37: Cinder -->
+            <article data-id="cinder" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-purple-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('cinder')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/cinder.jpg" alt="Cinder" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-purple-400 text-xs font-bold tracking-wider uppercase">fantasy</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors line-clamp-2">Cinder</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Nah, tokoh utama dalam novel ini adalah Cinder, yaitu seorang remaja yang hidup di kota futuristik ...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-magic mr-1"></i> Marissa Meyer</span>
+                        <span class="text-white group-hover:text-purple-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 38: The No. 1 Ladies’ Detective Agency -->
+            <article data-id="the-no-1-ladies-detective-agency" data-category="mystery" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('the-no-1-ladies-detective-agency')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/the-no-1-ladies-detective-agency.jpg" alt="The No. 1 Ladies’ Detective Agency" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-blue-400 text-xs font-bold tracking-wider uppercase">mystery</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">The No. 1 Ladies’ Detective Agency</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Singkatnya, Precious Ramotswe adalah wanita cerdas dan penuh semangat yang memutuskan untuk membuka...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-search mr-1"></i> Alexander McCall Smith</span>
+                        <span class="text-white group-hover:text-blue-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 39: And Then There Were None -->
+            <article data-id="and-then-there-were-none" data-category="mystery" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('and-then-there-were-none')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/and-then-there-were-none.jpg" alt="And Then There Were None" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-blue-400 text-xs font-bold tracking-wider uppercase">mystery</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">And Then There Were None</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Sinopsis singkatnya, sepuluh orang asing diundang ke sebuah pulau misterius oleh seorang tuan rumah...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-search mr-1"></i> Agatha Christie</span>
+                        <span class="text-white group-hover:text-blue-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 40: The Cuckoo’s Calling -->
+            <article data-id="the-cuckoos-calling" data-category="mystery" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-blue-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('the-cuckoos-calling')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/the-cuckoos-calling.jpg" alt="The Cuckoo’s Calling" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-blue-400 text-xs font-bold tracking-wider uppercase">mystery</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">The Cuckoo’s Calling</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Ceritanya tentang detektif swasta bernama Cormoran Strike yang sedang kesulitan secara finansial ke...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-search mr-1"></i> J.K. Rowling</span>
+                        <span class="text-white group-hover:text-blue-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 41: Coraline -->
+            <article data-id="coraline" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-purple-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('coraline')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/coraline.jpg" alt="Coraline" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-purple-400 text-xs font-bold tracking-wider uppercase">fantasy</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors line-clamp-2">Coraline</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Coraline adalah gadis muda yang merasa bosan dengan hidupnya dan orang tuanya yang sibuk. Suatu har...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-magic mr-1"></i> Neil Gaiman</span>
+                        <span class="text-white group-hover:text-purple-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Story 42: The Graveyard Book -->
+            <article data-id="the-graveyard-book" data-category="fantasy" class="story-card bg-galaxy-card/70 backdrop-blur-md border border-gray-800/70 rounded-3xl overflow-hidden hover:border-purple-500/60 hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] hover:-translate-y-2.5 transition-all duration-300 group reveal delay-100 flex flex-col cursor-pointer" onclick="openStoryReader('the-graveyard-book')">
+                <div class="h-48 relative overflow-hidden flex items-center justify-center border-b border-gray-800/50 bg-black/40">
+                    <img src="images/stories/the-graveyard-book.jpg" alt="The Graveyard Book" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-black/30"></div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-purple-400 text-xs font-bold tracking-wider uppercase">fantasy</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors line-clamp-2">The Graveyard Book</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">Novel ini menceritakan tentang seorang bayi laki-laki yang selamat dari pembunuhan keluarganya dan ...</p>
+                    
+                    <div class="mt-auto pt-5 border-t border-gray-800/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-gray-500"><i class="fas fa-magic mr-1"></i> Neil Gaiman</span>
+                        <span class="text-white group-hover:text-purple-400 transition-colors flex items-center gap-1.5">Read <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </article>
         </div>
         
         <!-- PAGINATION CONTROLS -->
@@ -1239,16 +1586,16 @@
     </main>
 
     <!-- FULLSCREEN READER MODAL (3D FLIPBOOK CONCEPT) -->
-    <div id="readerBackdrop" class="reader-backdrop-hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-2 sm:p-6 transition-opacity duration-500 perspective-[2000px]">
+    <div id="readerBackdrop" class="reader-backdrop-hidden fixed inset-0 z-50 bg-transparent backdrop-blur-md flex items-center justify-center p-2 sm:p-6 transition-opacity duration-500 perspective-[2000px]">
         
         <!-- THE BOOK CONTAINER -->
-        <div id="readerModal" class="reader-modal-hidden bg-[#1E1E1E] rounded-md sm:rounded-xl w-full max-w-5xl h-[85vh] sm:h-[90vh] shadow-[0_30px_60px_rgba(0,0,0,0.8)] flex flex-col relative transition-transform duration-700 transform-style-3d origin-center">
+        <div id="readerModal" class="reader-modal-hidden bg-[#1E1E1E]/80 backdrop-blur-3xl border border-white/5 reader-surface rounded-md sm:rounded-xl w-full max-w-2xl h-[85vh] sm:h-[90vh] shadow-[0_30px_60px_rgba(0,0,0,0.8)] flex flex-col relative transition-transform duration-700 transform-style-3d origin-center">
             
             <!-- BOOK CREASE (SHADOW IN THE MIDDLE) -->
-            <div class="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-20 h-full pointer-events-none z-20 bg-gradient-to-r from-transparent via-black/60 to-transparent"></div>
+            
             
             <!-- STICKY TOP READING BAR -->
-            <div class="border-b border-[#2A2A2A] bg-[#1E1E1E]/95 backdrop-blur-md px-4 sm:px-8 py-3.5 flex items-center justify-between z-30 flex-shrink-0 relative">
+            <div class="border-b border-white/5 bg-transparent px-4 sm:px-8 py-3.5 flex items-center justify-between z-30 flex-shrink-0 relative">
                 <!-- READING PROGRESS BAR (TOP) -->
                 <div id="readingProgress" class="absolute top-0 left-0 h-[3px] bg-gradient-to-r from-orange-400 to-purple-500 w-0 transition-all duration-300"></div>
                 
@@ -1268,6 +1615,12 @@
                         <button onclick="changeFontSize('lg')" title="Large text" class="px-2 py-1 text-xs text-[#888888] hover:text-white transition font-mono">A+</button>
                     </div>
 
+                    
+                    <!-- THEME TOGGLE -->
+                    <button id="themeToggleBtn" onclick="toggleReaderTheme()" title="Warm Theme" class="p-2 rounded-lg bg-[#2A2A2A] hover:bg-orange-500/20 text-[#888888] hover:text-orange-400 transition text-sm flex items-center gap-2 border border-transparent">
+                        <i class="fas fa-mug-hot"></i>
+                    </button>
+                    
                     <!-- CLOSE BUTTON -->
                     <button onclick="closeStoryReader()" title="Close Book (Esc)" class="p-2 rounded-lg bg-[#2A2A2A] hover:bg-red-500/20 text-[#888888] hover:text-red-400 transition ml-2 text-sm flex items-center gap-2">
                         <span class="text-xs font-bold hidden sm:block uppercase tracking-wider">Close</span> <i class="fas fa-times"></i>
@@ -1278,22 +1631,22 @@
             <!-- STORY CONTENT CONTAINER (MULTI-COLUMN ON DESKTOP) -->
             <div id="readerScrollArea" class="flex-grow overflow-x-hidden overflow-y-auto md:overflow-y-hidden md:overflow-x-hidden block px-6 sm:px-12 py-8 relative scroll-smooth bg-[#1E1E1E]">
                 
-                <div id="multiColumnWrapper" class="md:columns-2 md:gap-[80px] md:h-[calc(90vh-140px)] h-auto">
+                <div id="multiColumnWrapper" class="md:columns-1 md:gap-[96px] md:h-[calc(90vh-140px)] h-auto">
                     <!-- STORY HEADER (Always First Column) -->
                     <div class="mb-8 md:mb-12 text-center md:text-left break-inside-avoid">
-                        <h2 id="readerTitle" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#E0E0E0] leading-tight mb-4 tracking-tight font-serif">
+                        <h2 id="readerTitle" class="reader-text text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#E0E0E0] leading-tight mb-4 tracking-tight font-serif">
                             Story Title
                         </h2>
-                        <p id="readerSubtitle" class="text-sm sm:text-base text-[#AAAAAA] italic mb-6">
+                        <p id="readerSubtitle" class="reader-subtext text-sm sm:text-base text-[#AAAAAA] italic mb-6">
                             Subtitle description goes here.
                         </p>
                         <div class="flex items-center justify-center md:justify-start gap-3 text-xs text-[#777777] mb-8 uppercase tracking-widest font-bold">
                             <span>Farrel Ariq Nadhil</span>
                             <span>•</span>
-                            <span id="readerDate">Date</span>
+                            <span id="readerDate" class="reader-subtext">Date</span>
                         </div>
                         
-                        <div id="readerEpigraph" class="p-4 sm:p-5 rounded-lg bg-[#252525] border-l-4 border-orange-500 text-[#CCCCCC] italic text-sm font-serif mb-6">
+                        <div id="readerEpigraph" class="reader-quote p-4 sm:p-5 rounded-lg bg-[#252525] border-l-4 border-orange-500 text-[#CCCCCC] italic text-sm font-serif mb-6">
                             "Epigraph quote"
                         </div>
                     </div>
@@ -1911,13 +2264,9 @@
         }
 
         async function openStoryReader(storyId) {
-            let story;
-            try {
-                const res = await fetch("data/stories/" + storyId + ".json");
-                if (!res.ok) throw new Error("Not found");
-                story = await res.json();
-            } catch(e) {
-                console.error("Failed to lazy load story", e);
+            let story = STORY_DB[storyId];
+            if (!story) {
+                console.error("Failed to lazy load story: Not found in STORY_DB");
                 return;
             }
 
@@ -2245,5 +2594,6 @@
             }
         });
     </script>
+    <script src="data.js"></script>
 </body>
 </html>
