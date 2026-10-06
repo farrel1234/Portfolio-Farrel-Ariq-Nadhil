@@ -316,41 +316,29 @@
                 </p>
             </div>
             
-            <!-- Skills Cards Layout (Grid Anti-Tabrak) -->
-            <div class="relative pb-12 sm:pb-0 w-full">
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-purple-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+            <!-- Interactive Skill Constellation -->
+            <div class="relative w-full min-h-[400px] sm:min-h-[500px] bg-galaxy-card/40 backdrop-blur-sm rounded-3xl border border-gray-800/50 p-6 flex flex-col justify-center overflow-hidden" id="constellation-container">
+                <svg id="constellation-svg" class="absolute inset-0 w-full h-full pointer-events-none z-0"></svg>
                 
-                <div class="grid grid-cols-2 gap-4 sm:gap-6 relative z-10">
-                    <div class="bg-galaxy-card/80 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-gray-800/50 shadow-xl reveal">
-                        <i class="fas fa-mobile-alt text-3xl sm:text-4xl text-blue-400 mb-3 block"></i>
-                        <h4 class="font-bold text-white text-base sm:text-lg">Mobile Native</h4>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">Kotlin & Jetpack Compose</p>
-                    </div>
-                    <div class="bg-galaxy-card/80 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-gray-800/50 shadow-xl reveal delay-100 sm:mt-8">
-                        <i class="fas fa-server text-3xl sm:text-4xl text-purple-400 mb-3 block"></i>
-                        <h4 class="font-bold text-white text-base sm:text-lg">Backend Core</h4>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">PHP, Laravel, MySQL</p>
-                    </div>
-                    <div class="bg-galaxy-card/80 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-gray-800/50 shadow-xl reveal">
-                        <i class="fas fa-eye text-3xl sm:text-4xl text-orange-400 mb-3 block"></i>
-                        <h4 class="font-bold text-white text-base sm:text-lg">Computer Vision</h4>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">Python, OpenCV</p>
-                    </div>
-                    <div class="bg-galaxy-card/80 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-gray-800/50 shadow-xl reveal delay-100 sm:mt-8">
-                        <i class="fab fa-figma text-3xl sm:text-4xl text-pink-400 mb-3 block"></i>
-                        <h4 class="font-bold text-white text-base sm:text-lg">UI/UX Design</h4>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">Figma</p>
-                    </div>
-                    <div class="bg-galaxy-card/80 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-gray-800/50 shadow-xl reveal">
-                        <i class="fab fa-git-alt text-3xl sm:text-4xl text-red-500 mb-3 block"></i>
-                        <h4 class="font-bold text-white text-base sm:text-lg">Version Control</h4>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">Git & GitHub</p>
-                    </div>
-                    <div class="bg-galaxy-card/80 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-gray-800/50 shadow-xl reveal delay-100 sm:mt-8">
-                        <i class="fab fa-html5 text-3xl sm:text-4xl text-cyan-400 mb-3 block"></i>
-                        <h4 class="font-bold text-white text-base sm:text-lg">Frontend Web</h4>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">Tailwind & JS</p>
-                    </div>
+                <!-- Category Nodes (Center/Top) -->
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mb-16 relative z-10">
+                    <div class="skill-category px-6 py-3 rounded-full bg-gray-900/80 border border-blue-500/50 text-blue-400 font-bold cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]" data-category="mobile">Mobile Dev</div>
+                    <div class="skill-category px-6 py-3 rounded-full bg-gray-900/80 border border-purple-500/50 text-purple-400 font-bold cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]" data-category="backend">Web & Backend</div>
+                    <div class="skill-category px-6 py-3 rounded-full bg-gray-900/80 border border-pink-500/50 text-pink-400 font-bold cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(236,72,153,0.5)]" data-category="uiux">UI/UX & Tools</div>
+                    <div class="skill-category px-6 py-3 rounded-full bg-gray-900/80 border border-orange-500/50 text-orange-400 font-bold cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(249,115,22,0.5)]" data-category="cv">Computer Vision</div>
+                </div>
+
+                <!-- Skill Nodes (Bottom/Distributed) -->
+                <div class="flex flex-wrap justify-center gap-3 sm:gap-5 relative z-10">
+                    <div class="skill-node px-4 py-2 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-300 text-sm font-medium transition-all duration-300" data-parent="mobile">Kotlin</div>
+                    <div class="skill-node px-4 py-2 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-300 text-sm font-medium transition-all duration-300" data-parent="mobile">Jetpack Compose</div>
+                    <div class="skill-node px-4 py-2 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-300 text-sm font-medium transition-all duration-300" data-parent="backend">PHP</div>
+                    <div class="skill-node px-4 py-2 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-300 text-sm font-medium transition-all duration-300" data-parent="backend">Laravel</div>
+                    <div class="skill-node px-4 py-2 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-300 text-sm font-medium transition-all duration-300" data-parent="backend">MySQL</div>
+                    <div class="skill-node px-4 py-2 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-300 text-sm font-medium transition-all duration-300" data-parent="uiux">Figma</div>
+                    <div class="skill-node px-4 py-2 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-300 text-sm font-medium transition-all duration-300" data-parent="uiux">Git/GitHub</div>
+                    <div class="skill-node px-4 py-2 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-300 text-sm font-medium transition-all duration-300" data-parent="cv">Python</div>
+                    <div class="skill-node px-4 py-2 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-300 text-sm font-medium transition-all duration-300" data-parent="cv">OpenCV</div>
                 </div>
             </div>
 
@@ -1244,6 +1232,104 @@
                     tabScoreboard.classList.add('opacity-0', 'pointer-events-none');
                 }
             }
+        });
+
+    
+        // 16. INTERACTIVE SKILL CONSTELLATION
+        const categories = document.querySelectorAll('.skill-category');
+        const skills = document.querySelectorAll('.skill-node');
+        const svgCanvas = document.getElementById('constellation-svg');
+        const container = document.getElementById('constellation-container');
+
+        function drawLines(categoryNode) {
+            if(!svgCanvas || !container) return;
+            svgCanvas.innerHTML = '';
+            const categoryId = categoryNode.getAttribute('data-category');
+            const targetSkills = document.querySelectorAll(`.skill-node[data-parent="${categoryId}"]`);
+            
+            const containerRect = container.getBoundingClientRect();
+            const catRect = categoryNode.getBoundingClientRect();
+            const startX = catRect.left - containerRect.left + catRect.width / 2;
+            const startY = catRect.top - containerRect.top + catRect.height / 2;
+
+            targetSkills.forEach(skill => {
+                const skillRect = skill.getBoundingClientRect();
+                const endX = skillRect.left - containerRect.left + skillRect.width / 2;
+                const endY = skillRect.top - containerRect.top + skillRect.height / 2;
+
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', startX);
+                line.setAttribute('y1', startY);
+                line.setAttribute('x2', endX);
+                line.setAttribute('y2', endY);
+                
+                // Get border color to match category
+                const compStyle = window.getComputedStyle(categoryNode);
+                let strokeColor = compStyle.borderColor;
+                if(!strokeColor || strokeColor === 'rgba(0, 0, 0, 0)') strokeColor = '#4ade80';
+                
+                line.setAttribute('stroke', strokeColor);
+                line.setAttribute('stroke-width', '2');
+                line.setAttribute('stroke-dasharray', '4,4');
+                line.setAttribute('class', 'opacity-60 transition-all duration-300');
+                svgCanvas.appendChild(line);
+            });
+        }
+
+        let resizeTimeout2;
+        let activeCategory = null;
+
+        categories.forEach(cat => {
+            cat.addEventListener('mouseenter', () => {
+                activeCategory = cat;
+                const catId = cat.getAttribute('data-category');
+                
+                categories.forEach(c => {
+                    if (c !== cat) {
+                        c.style.opacity = '0.3';
+                    } else {
+                        c.style.opacity = '1';
+                    }
+                });
+
+                skills.forEach(s => {
+                    if (s.getAttribute('data-parent') === catId) {
+                        s.style.opacity = '1';
+                        const strokeColor = window.getComputedStyle(cat).borderColor;
+                        s.style.boxShadow = `0 0 15px ${strokeColor}`;
+                        s.style.borderColor = strokeColor;
+                        s.style.color = '#fff';
+                    } else {
+                        s.style.opacity = '0.3';
+                        s.style.boxShadow = 'none';
+                        s.style.borderColor = '';
+                        s.style.color = '';
+                    }
+                });
+
+                drawLines(cat);
+            });
+
+            cat.addEventListener('mouseleave', () => {
+                activeCategory = null;
+                categories.forEach(c => c.style.opacity = '1');
+                skills.forEach(s => {
+                    s.style.opacity = '1';
+                    s.style.boxShadow = 'none';
+                    s.style.borderColor = '';
+                    s.style.color = '';
+                });
+                if(svgCanvas) svgCanvas.innerHTML = '';
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout2);
+            resizeTimeout2 = setTimeout(() => {
+                if (activeCategory) {
+                    drawLines(activeCategory);
+                }
+            }, 100);
         });
 
     </script>
