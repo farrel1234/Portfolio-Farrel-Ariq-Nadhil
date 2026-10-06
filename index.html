@@ -135,6 +135,12 @@
         </div>
     </div>
 
+
+    <!-- TERMINAL TOAST NOTIFICATION -->
+    <div id="terminalToast" class="fixed top-24 right-0 translate-x-full opacity-0 z-50 bg-gray-900/90 backdrop-blur-md border border-gray-700 p-4 rounded-l-xl shadow-[0_0_20px_rgba(37,99,235,0.4)] flex items-center gap-3 transition-all duration-700 max-w-xs sm:max-w-sm pointer-events-none">
+        <i class="fas fa-terminal text-blue-400"></i>
+        <p id="toastMessage" class="text-gray-200 text-sm font-mono truncate"></p>
+    </div>
     <!-- AUDIO TOGGLE -->
     <audio id="bgMusic" loop preload="auto"><source src="bg-music.mp3" type="audio/mpeg"></audio>
     <button id="musicToggle" class="fixed bottom-6 right-6 z-40 bg-gray-900/80 backdrop-blur-md border border-gray-700 p-3 rounded-full shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:bg-gray-800 hover:border-purple-400 hover:scale-110 transition-all duration-300 focus:outline-none flex items-center justify-center w-12 h-12 group">
@@ -823,6 +829,44 @@
             });
         });
 
+                // Terminal Toast Logic
+        let toastTimeout;
+        let toastResetTimeout;
+        function showTerminalToast(msg) {
+            const toast = document.getElementById('terminalToast');
+            const toastMsg = document.getElementById('toastMessage');
+            if(toast && toastMsg) {
+                toastMsg.textContent = msg;
+                
+                // Clear any existing timeouts to prevent overlapping animations
+                clearTimeout(toastTimeout);
+                clearTimeout(toastResetTimeout);
+                
+                // Reset styles instantly
+                toast.style.transition = 'none';
+                toast.classList.add('translate-x-full', 'opacity-0');
+                toast.classList.remove('-translate-x-10');
+                
+                // Animate in from right
+                setTimeout(() => {
+                    toast.style.transition = 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+                    toast.classList.remove('translate-x-full', 'opacity-0');
+                }, 50);
+                
+                // Animate out to left after 3 seconds
+                toastTimeout = setTimeout(() => {
+                    toast.classList.add('-translate-x-10', 'opacity-0');
+                    
+                    // Reset to default hidden state after fade out completes
+                    toastResetTimeout = setTimeout(() => {
+                        toast.style.transition = 'none';
+                        toast.classList.remove('-translate-x-10');
+                        toast.classList.add('translate-x-full');
+                    }, 700);
+                }, 3500);
+            }
+        }
+
         // 10. INTERACTIVE TERMINAL
         const terminalToggle = document.getElementById('terminalToggle');
         const terminalModal = document.getElementById('terminalModal');
@@ -911,7 +955,9 @@
                             response.innerHTML = "Audio not found.";
                         }
                     } else if(cmd === 'echo') {
-                        response.textContent = args.join(' ');
+                        const text = args.join(' ');
+                        response.textContent = `Echoing: ${text}`;
+                        if(text) showTerminalToast(text);
                     } else if(cmd === 'ls' || cmd === 'dir') {
                         response.innerHTML = `<span class="text-blue-400 font-bold">projects/</span> &nbsp; <span class="text-blue-400 font-bold">designs/</span> &nbsp; resume.pdf &nbsp; readme.md`;
                     } else if(cmd === 'cd') {
