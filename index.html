@@ -137,9 +137,9 @@
 
 
     <!-- TERMINAL TOAST NOTIFICATION -->
-    <div id="terminalToast" class="fixed top-24 right-0 translate-x-full opacity-0 z-50 bg-gray-900/90 backdrop-blur-md border border-gray-700 p-4 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.4)] flex items-center gap-3 transition-all duration-700 max-w-xs sm:max-w-sm pointer-events-none">
+    <div id="terminalToast" class="fixed top-24 right-0 translate-x-full opacity-0 z-50 bg-gray-900/90 backdrop-blur-md border border-gray-700 p-4 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.4)] flex items-center gap-3 transition-all duration-700 w-max max-w-none whitespace-nowrap pointer-events-none">
         <i class="fas fa-terminal text-blue-400"></i>
-        <p id="toastMessage" class="text-gray-200 text-sm font-mono truncate"></p>
+        <p id="toastMessage" class="text-gray-200 text-sm font-mono"></p>
     </div>
     <!-- AUDIO TOGGLE -->
     <audio id="bgMusic" loop preload="auto"><source src="bg-music.mp3" type="audio/mpeg"></audio>
