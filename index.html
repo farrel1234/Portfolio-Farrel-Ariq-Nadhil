@@ -173,6 +173,14 @@
         </p>
     </div>
 
+
+    <!-- AFK DVD SCREENSAVER -->
+    <div id="afkOverlay" class="fixed inset-0 bg-black/95 z-[9999] opacity-0 pointer-events-none transition-opacity duration-500 overflow-hidden">
+        <div id="afkLogo" class="absolute top-0 left-0 font-mono font-bold text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-purple-500 whitespace-nowrap tracking-wider" style="will-change: transform;">
+            &lt; FN /&gt;
+        </div>
+    </div>
+
     <!-- TERMINAL TOAST NOTIFICATION -->
     <div id="terminalToast" class="fixed top-24 right-0 translate-x-full opacity-0 z-50 bg-gray-900/90 backdrop-blur-md border border-gray-700 p-4 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.4)] flex items-center gap-3 transition-all duration-700 w-max max-w-none whitespace-nowrap pointer-events-none">
         <i class="fas fa-terminal text-blue-400"></i>
@@ -1093,6 +1101,86 @@
                 "font-size: 14px; font-family: monospace; font-weight: bold; color: #39FF14; background-color: #064e3b; padding: 6px 12px; border-radius: 4px;"
             );
         }, 2000);
+    
+        // 13. DYNAMIC TAB TITLE
+        const originalTitle = document.title;
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "hidden") {
+                document.title = "Hey, I'm compiling! ⚙️";
+            } else {
+                document.title = originalTitle;
+            }
+        });
+
+        // 14. AFK MODE / DVD BOUNCE LOGO
+        let idleTimeout;
+        const afkOverlay = document.getElementById('afkOverlay');
+        const afkLogo = document.getElementById('afkLogo');
+        let isAfk = false;
+        let afkReq;
+
+        let logoX = 0;
+        let logoY = 0;
+        let speedX = 2;
+        let speedY = 2;
+
+        function resetIdleTimer() {
+            if (isAfk) {
+                isAfk = false;
+                if(afkOverlay) {
+                    afkOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+                    afkOverlay.classList.add('opacity-0', 'pointer-events-none');
+                }
+                cancelAnimationFrame(afkReq);
+            }
+            clearTimeout(idleTimeout);
+            idleTimeout = setTimeout(triggerAfkMode, 60000);
+        }
+
+        function triggerAfkMode() {
+            if(!afkOverlay || !afkLogo) return;
+            isAfk = true;
+            afkOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            afkOverlay.classList.add('opacity-100', 'pointer-events-auto');
+            
+            logoX = Math.random() * (window.innerWidth - 150);
+            logoY = Math.random() * (window.innerHeight - 50);
+            speedX = Math.random() > 0.5 ? 2.5 : -2.5;
+            speedY = Math.random() > 0.5 ? 2.5 : -2.5;
+            
+            animateBounce();
+        }
+
+        function animateBounce() {
+            if (!isAfk) return;
+            
+            const rect = afkLogo.getBoundingClientRect();
+            
+            logoX += speedX;
+            logoY += speedY;
+            
+            if (logoX <= 0 || logoX + rect.width >= window.innerWidth) {
+                speedX *= -1;
+            }
+            if (logoY <= 0 || logoY + rect.height >= window.innerHeight) {
+                speedY *= -1;
+            }
+            
+            if(logoX < 0) logoX = 0;
+            if(logoY < 0) logoY = 0;
+            if(logoX + rect.width > window.innerWidth) logoX = window.innerWidth - rect.width;
+            if(logoY + rect.height > window.innerHeight) logoY = window.innerHeight - rect.height;
+
+            afkLogo.style.transform = `translate(${logoX}px, ${logoY}px)`;
+            
+            afkReq = requestAnimationFrame(animateBounce);
+        }
+
+        ['mousemove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(evt => {
+            window.addEventListener(evt, resetIdleTimer, {passive: true});
+        });
+        resetIdleTimer();
+
     </script>
 </body>
 </html>
